@@ -13,6 +13,11 @@ class Restaurant extends MX_Controller {
 				}
 
 				$this->load->library("Restaurant_lib");
+		    $this->load->library('Activity/Activity_lib');
+		    $this->load->library('Wedding/Wedding_lib');
+		    $this->load->library('Tours/Tours_lib');
+		    $this->load->library('Spa/Spa_lib');
+		    $this->load->library('Cars/Cars_lib');
 				$this->load->model("restaurant_model");
 				$this->load->helper("Restaurant_front");
 

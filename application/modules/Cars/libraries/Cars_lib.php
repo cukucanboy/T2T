@@ -68,11 +68,6 @@ class Cars_lib
         $defaultlang = pt_get_default_language();
         $this->ci->load->model('Cars/Cars_model');
         $this->ci->load->helper('Cars/cars_front');
-        $this->ci->load->library('Activity/Activity_lib');
-        $this->ci->load->library('Restaurant/Restaurant_lib');
-        $this->ci->load->library('Wedding/Wedding_lib');
-        $this->ci->load->library('Tours/Tours_lib');
-        $this->ci->load->library('Spa/Spa_lib');
         $searchVars = "";
         if (empty ($lang)) {
             $this->lang = $defaultlang;

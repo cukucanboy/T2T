@@ -72,11 +72,6 @@ class Wedding_lib
         $defaultlang = pt_get_default_language();
         $this->ci->load->model('Wedding/Wedding_model');
         $this->ci->load->helper('Wedding/wedding_front');
-        $this->ci->load->library('Activity/Activity_lib');
-        $this->ci->load->library('Restaurant/Restaurant_lib');
-        $this->ci->load->library('Tours/Tours_lib');
-        $this->ci->load->library('Spa/Spa_lib');
-        $this->ci->load->library('Cars/Cars_lib');
         if (empty($lang)) {
             $this->lang = $defaultlang;
         } else {

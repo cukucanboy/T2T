@@ -13,6 +13,12 @@ class Hotels extends MX_Controller {
 				}
 
         $this->load->library('Hotels/Hotels_lib');
+		    $this->load->library('Activity/Activity_lib');
+		    $this->load->library('Restaurant/Restaurant_lib');
+		    $this->load->library('Wedding/Wedding_lib');
+		    $this->load->library('Tours/Tours_lib');
+		    $this->load->library('Spa/Spa_lib');
+		    $this->load->library('Cars/Cars_lib');
         $this->load->model('Hotels/Hotels_model');
 				$this->data['phone'] = $this->load->get_var('phone');
 				$this->data['contactemail'] = $this->load->get_var('contactemail');

@@ -10,6 +10,11 @@ class Cars extends MX_Controller {
 
 				$this->frontData();
 				$this->load->library("Cars_lib");
+        $this->load->library('Activity/Activity_lib');
+        $this->load->library('Restaurant/Restaurant_lib');
+        $this->load->library('Wedding/Wedding_lib');
+        $this->load->library('Tours/Tours_lib');
+        $this->load->library('Spa/Spa_lib');
 				$this->load->model("cars/Cars_model");
 				$this->load->helper("Cars_front");
 				$this->data['phone'] = $this->load->get_var('phone');

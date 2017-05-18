@@ -292,7 +292,42 @@ class Restaurant_lib
         } else {
             $rrestaurant = "";
         }
+        if (!empty($details[0]->product_related_activity)) {
+          $ractivity = explode(",", $details[0]->product_related_activity);
+        }
+        else {
+          $ractivity = "";
+        }
+        if (!empty($details[0]->product_related_Wedding)) {
+          $rwedding = explode(",", $details[0]->product_related_Wedding);
+        }
+        else {
+          $rwedding = "";
+        }
+        if (!empty($details[0]->product_related_tours)) {
+          $rtour = explode(",", $details[0]->product_related_tours);
+        }
+        else {
+          $rtour = "";
+        }
+        if (!empty($details[0]->product_related_spa)) {
+          $rspa = explode(",", $details[0]->product_related_spa);
+        }
+        else {
+          $rspa = "";
+        }
+        if (!empty($details[0]->product_related_cars)) {
+          $rcar = explode(",", $details[0]->product_related_cars);
+        }
+        else {
+          $rcar = "";
+        }
         $relatedRestaurant = $this->getRelatedRestaurant($rrestaurant);
+        $relatedActivity = $this->ci->Activity_lib->getRelatedActivity($ractivity);
+        $relatedWedding = $this->ci->Wedding_lib->getRelatedWedding($rwedding);
+        $relatedTour = $this->ci->Tours_lib->getRelatedTours($rtour);
+        $relatedSpa = $this->ci->Spa_lib->getRelatedSpa($rspa);
+        $relatedCar = $this->ci->Cars_lib->getRelatedCars($rcar);
         $thumbnail = PT_RESTAURANT_SLIDER_THUMB . $details[0]->thumbnail_image;
         $city = pt_LocationsInfo($details[0]->restaurant_location, $this->lang);
         $location = $city->city; // $details[0]->restaurant_location;
@@ -333,7 +368,60 @@ class Restaurant_lib
         $this->tax_value = $taxcom['taxval'];
         $this->setDeposit($curr->convertPriceFloat($totalCost, 2));
         $depositAmount = $this->deposit;
-        $detailResults = (object)array('id' => $details[0]->restaurant_id, 'title' => $title, 'slug' => $slug, 'bookingSlug' => $bookingSlug, 'thumbnail' => $thumbnail, 'stars' => pt_create_stars($stars), 'starsCount' => $stars, 'location' => $location, 'desc' => $desc, 'inclusions' => $inclusions, 'exclusions' => $exclusions, 'latitude' => $latitude, 'longitude' => $longitude, 'sliderImages' => $sliderImages, 'relatedItems' => $relatedRestaurant, 'paymentOptions' => $paymentOptions, 'metadesc' => $metadesc, 'keywords' => $keywords, 'policy' => $policy, 'website' => $website, 'email' => $email, 'phone' => $phone, 'maxAdults' => $maxAdults, 'maxChild' => $maxChild, 'maxInfant' => $maxInfant, 'adultStatus' => $adultStatus, 'childStatus' => $childStatus, 'infantStatus' => $infantStatus, 'adultPrice' => $adultPrice, 'childPrice' => $childPrice, 'infantPrice' => $infantPrice, 'perAdultPrice' => $perAdultPrice, 'perChildPrice' => $perChildPrice, 'perInfantPrice' => $perInfantPrice, 'currCode' => $curr->code, 'currSymbol' => $curr->symbol, 'date' => $this->date, 'totalCost' => $curr->convertPrice($totalCost), 'comType' => $comm_type, 'comValue' => $comm_value, 'taxType' => $tax_type, 'taxValue' => $tax_value, 'restaurantDays' => $restaurantDays, 'restaurantNights' => $restaurantNights, 'totalDeposit' => $depositAmount, 'mapAddress' => $details[0]->restaurant_mapaddress, 'ogimg' => $ogimg);
+        $detailResults = (object)array(
+          'id' => $details[0]->restaurant_id,
+          'title' => $title,
+          'slug' => $slug,
+          'bookingSlug' => $bookingSlug,
+          'thumbnail' => $thumbnail,
+          'stars' => pt_create_stars($stars),
+          'starsCount' => $stars,
+          'location' => $location,
+          'desc' => $desc,
+          'inclusions' => $inclusions,
+          'exclusions' => $exclusions,
+          'latitude' => $latitude,
+          'longitude' => $longitude,
+          'sliderImages' => $sliderImages,
+          'relatedItems' => $relatedRestaurant,
+          'relatedActivity' => $relatedActivity,
+          'relatedWedding' => $relatedWedding,
+          'relatedTour' => $relatedTour,
+          'relatedSpa' => $relatedSpa,
+          'relatedCar' => $relatedCar,
+          'paymentOptions' => $paymentOptions,
+          'metadesc' => $metadesc,
+          'keywords' => $keywords,
+          'policy' => $policy,
+          'website' => $website,
+          'email' => $email,
+          'phone' => $phone,
+          'maxAdults' => $maxAdults,
+          'maxChild' => $maxChild,
+          'maxInfant' => $maxInfant,
+          'adultStatus' => $adultStatus,
+          'childStatus' => $childStatus,
+          'infantStatus' => $infantStatus,
+          'adultPrice' => $adultPrice,
+          'childPrice' => $childPrice,
+          'infantPrice' => $infantPrice,
+          'perAdultPrice' => $perAdultPrice,
+          'perChildPrice' => $perChildPrice,
+          'perInfantPrice' => $perInfantPrice,
+          'currCode' => $curr->code,
+          'currSymbol' => $curr->symbol,
+          'date' => $this->date,
+          'totalCost' => $curr->convertPrice($totalCost),
+          'comType' => $comm_type,
+          'comValue' => $comm_value,
+          'taxType' => $tax_type,
+          'taxValue' => $tax_value,
+          'restaurantDays' => $restaurantDays,
+          'restaurantNights' => $restaurantNights,
+          'totalDeposit' => $depositAmount,
+          'mapAddress' => $details[0]->restaurant_mapaddress,
+          'ogimg' => $ogimg);
+
         return $detailResults;
     }
 

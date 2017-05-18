@@ -61,7 +61,7 @@ class Hotels_lib {
   public $sliderImages;
   public $latitude;
   public $logitude;
-  //public $relatedHotels;
+  public $relatedHotels;
   //public $relatedActivity;
   //public $relatedRestaurant;
   //public $relatedWedding;
@@ -79,12 +79,6 @@ class Hotels_lib {
     $this->db = $this->ci->db;
     $this->appSettings = $this->ci->Settings_model->get_settings_data();
     $this->ci->load->model('Hotels/Hotels_model');
-    $this->ci->load->library('Activity/Activity_lib');
-    $this->ci->load->library('Restaurant/Restaurant_lib');
-    $this->ci->load->library('Wedding/Wedding_lib');
-    $this->ci->load->library('Tours/Tours_lib');
-    $this->ci->load->library('Spa/Spa_lib');
-    $this->ci->load->library('Cars/Cars_lib');
 
     $this->currencysign = $this->appSettings[0]->currency_sign;
     $this->currencycode = $this->appSettings[0]->currency_code;

@@ -13,6 +13,12 @@ class Spa extends MX_Controller {
 				}
 
 				$this->load->library("Spa_lib");
+				$this->load->library('Hotels/Hotels_lib');
+		    $this->load->library('Activity/Activity_lib');
+		    $this->load->library('Restaurant/Restaurant_lib');
+		    $this->load->library('Wedding/Wedding_lib');
+		    $this->load->library('Tours/Tours_lib');
+		    $this->load->library('Cars/Cars_lib');
 				$this->load->model("spa_model");
 				$this->load->helper("Spa_front");
 

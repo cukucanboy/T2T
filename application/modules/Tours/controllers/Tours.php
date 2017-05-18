@@ -18,6 +18,12 @@ class Tours extends MX_Controller
 
 
         $this->load->library("Tours_lib");
+        $this->load->library('Hotels/Hotels_lib');
+		    $this->load->library('Activity/Activity_lib');
+		    $this->load->library('Restaurant/Restaurant_lib');
+		    $this->load->library('Wedding/Wedding_lib');
+		    $this->load->library('Spa/Spa_lib');
+		    $this->load->library('Cars/Cars_lib');
         $this->load->model("tours_model");
         $this->load->helper("Tours_front");
 
