@@ -128,7 +128,6 @@ function charge($tokenkey, $amount)
         'currency' => 'thb',
         'card' => $tokenkey
     ));
-
     return $charge;
   } catch (Exception $e) {
       return array("status" => "tokenfail", "message" => "cannot requires process. please contact administrator.");
