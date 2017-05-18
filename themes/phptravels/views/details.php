@@ -840,12 +840,6 @@
 
 
 <!------------------------  Related Listings   ------------------------------>
-<?php /*
-echo "<pre>";
-print_r($module->relatedItems);
-echo "</pre>";
-*/
- ?>
 <?php if (!empty($module->relatedItems)) { ?>
     <div class="bgwhite">
         <div class="container">
@@ -907,13 +901,344 @@ echo "</pre>";
 <?php } ?>
 <!------------------------  Related Listings   ------------------------------>
 
+<!------------------------  Related Activity   ------------------------------>
+<?php if (!empty($module->relatedActivity)) { ?>
+    <div class="bgwhite">
+        <div class="container">
+            <br><br>
+            <?php if (pt_main_module_available('activity')) { ?>
+                <div class="col-md-12 row5">
+                    <div class="form-group">
+                        <h2 class="main-title go-right">Related Activity</h2>
+                        <div class="clearfix"></div>
+                        <i class="tiltle-line go-right"></i>
+                    </div>
+                </div>
+                <?php foreach ($module->relatedActivity as $item) { ?>
+                    <div class="col-md-3 row5">
+                        <a href="<?php echo $item->slug; ?>">
+                            <div class="featured">
+                                <div class="col-xs-12 go-right wow fadeIn">
+                                    <div class="row">
+                                        <div class="load">
+                                            <img class="img-responsive lazy" <?php echo $lazy; ?>
+                                                 data-lazy="<?php echo $item->thumbnail; ?>"/>
+                                            <img class="overlay" src="<?php echo $theme_url; ?>assets/img/overlay.png"
+                                                 style="z-index: 3">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <?php if ($item->price > 0) { ?>
+                                    <div class="text-center featured-price">
+                                        <div class="text-center">
+                                            <small><?php echo $item->currCode; ?></small> <?php echo $item->currSymbol; ?><?php echo $item->price; ?>
+                                        </div>
+                                    </div>
+                                <?php } ?>
+                                <div class="col-xs-12 go-right wow fadeIn featured-title">
+                                    <div class="p5">
+                                        <div class="strong"><?php echo character_limiter($item->title, 25); ?></div>
+                                        <?php echo $item->stars; ?>
+                                        <div class=""><i
+                                                    class="icon-location-6 go-right"></i> <?php echo character_limiter($item->location, 20); ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                <?php } ?>
+            <?php } ?>
+
+            <!-- ending related -->
+        </div>
+    </div>
+<?php } ?>
+<!------------------------  Related Activity   ------------------------------>
+
+<!------------------------  Related Restaurant   ------------------------------>
+<?php if (!empty($module->relatedRestaurant)) { ?>
+    <div class="bgwhite">
+        <div class="container">
+            <br><br>
+            <?php if (pt_main_module_available('restaurant')) { ?>
+                <div class="col-md-12 row5">
+                    <div class="form-group">
+                        <h2 class="main-title go-right">Related Restaurant</h2>
+                        <div class="clearfix"></div>
+                        <i class="tiltle-line go-right"></i>
+                    </div>
+                </div>
+                <?php foreach ($module->relatedRestaurant as $item) { ?>
+                    <div class="col-md-3 row5">
+                        <a href="<?php echo $item->slug; ?>">
+                            <div class="featured">
+                                <div class="col-xs-12 go-right wow fadeIn">
+                                    <div class="row">
+                                        <div class="load">
+                                            <img class="img-responsive lazy" <?php echo $lazy; ?>
+                                                 data-lazy="<?php echo $item->thumbnail; ?>"/>
+                                            <img class="overlay" src="<?php echo $theme_url; ?>assets/img/overlay.png"
+                                                 style="z-index: 3">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <?php if ($item->price > 0) { ?>
+                                    <div class="text-center featured-price">
+                                        <div class="text-center">
+                                            <small><?php echo $item->currCode; ?></small> <?php echo $item->currSymbol; ?><?php echo $item->price; ?>
+                                        </div>
+                                    </div>
+                                <?php } ?>
+                                <div class="col-xs-12 go-right wow fadeIn featured-title">
+                                    <div class="p5">
+                                        <div class="strong"><?php echo character_limiter($item->title, 25); ?></div>
+                                        <?php echo $item->stars; ?>
+                                        <div class=""><i
+                                                    class="icon-location-6 go-right"></i> <?php echo character_limiter($item->location, 20); ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                <?php } ?>
+            <?php } ?>
+
+            <!-- ending related -->
+        </div>
+    </div>
+<?php } ?>
+<!------------------------  Related Restaurant   ------------------------------>
+
+<!------------------------  Related Wedding   ------------------------------>
+<?php if (!empty($module->relatedWedding)) { ?>
+    <div class="bgwhite">
+        <div class="container">
+            <br><br>
+            <?php if (pt_main_module_available('wedding')) { ?>
+                <div class="col-md-12 row5">
+                    <div class="form-group">
+                        <h2 class="main-title go-right">Related Wedding</h2>
+                        <div class="clearfix"></div>
+                        <i class="tiltle-line go-right"></i>
+                    </div>
+                </div>
+                <?php foreach ($module->relatedWedding as $item) { ?>
+                    <div class="col-md-3 row5">
+                        <a href="<?php echo $item->slug; ?>">
+                            <div class="featured">
+                                <div class="col-xs-12 go-right wow fadeIn">
+                                    <div class="row">
+                                        <div class="load">
+                                            <img class="img-responsive lazy" <?php echo $lazy; ?>
+                                                 data-lazy="<?php echo $item->thumbnail; ?>"/>
+                                            <img class="overlay" src="<?php echo $theme_url; ?>assets/img/overlay.png"
+                                                 style="z-index: 3">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <?php if ($item->price > 0) { ?>
+                                    <div class="text-center featured-price">
+                                        <div class="text-center">
+                                            <small><?php echo $item->currCode; ?></small> <?php echo $item->currSymbol; ?><?php echo $item->price; ?>
+                                        </div>
+                                    </div>
+                                <?php } ?>
+                                <div class="col-xs-12 go-right wow fadeIn featured-title">
+                                    <div class="p5">
+                                        <div class="strong"><?php echo character_limiter($item->title, 25); ?></div>
+                                        <?php echo $item->stars; ?>
+                                        <div class=""><i
+                                                    class="icon-location-6 go-right"></i> <?php echo character_limiter($item->location, 20); ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                <?php } ?>
+            <?php } ?>
+
+            <!-- ending Wedding -->
+        </div>
+    </div>
+<?php } ?>
+<!------------------------  Related Wedding   ------------------------------>
+
+<!------------------------  Related Tours   ------------------------------>
+<?php if (!empty($module->relatedTour)) { ?>
+    <div class="bgwhite">
+        <div class="container">
+            <br><br>
+            <?php if (pt_main_module_available('tours')) { ?>
+                <div class="col-md-12 row5">
+                    <div class="form-group">
+                        <h2 class="main-title go-right">Related Tours</h2>
+                        <div class="clearfix"></div>
+                        <i class="tiltle-line go-right"></i>
+                    </div>
+                </div>
+                <?php foreach ($module->relatedTour as $item) { ?>
+                    <div class="col-md-3 row5">
+                        <a href="<?php echo $item->slug; ?>">
+                            <div class="featured">
+                                <div class="col-xs-12 go-right wow fadeIn">
+                                    <div class="row">
+                                        <div class="load">
+                                            <img class="img-responsive lazy" <?php echo $lazy; ?>
+                                                 data-lazy="<?php echo $item->thumbnail; ?>"/>
+                                            <img class="overlay" src="<?php echo $theme_url; ?>assets/img/overlay.png"
+                                                 style="z-index: 3">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <?php if ($item->price > 0) { ?>
+                                    <div class="text-center featured-price">
+                                        <div class="text-center">
+                                            <small><?php echo $item->currCode; ?></small> <?php echo $item->currSymbol; ?><?php echo $item->price; ?>
+                                        </div>
+                                    </div>
+                                <?php } ?>
+                                <div class="col-xs-12 go-right wow fadeIn featured-title">
+                                    <div class="p5">
+                                        <div class="strong"><?php echo character_limiter($item->title, 25); ?></div>
+                                        <?php echo $item->stars; ?>
+                                        <div class=""><i
+                                                    class="icon-location-6 go-right"></i> <?php echo character_limiter($item->location, 20); ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                <?php } ?>
+            <?php } ?>
+
+            <!-- ending Related -->
+        </div>
+    </div>
+<?php } ?>
+<!------------------------  Related Tours   ------------------------------>
+
+<!------------------------  Related Spa   ------------------------------>
+<?php if (!empty($module->relatedSpa)) { ?>
+    <div class="bgwhite">
+        <div class="container">
+            <br><br>
+            <?php if (pt_main_module_available('spa')) { ?>
+                <div class="col-md-12 row5">
+                    <div class="form-group">
+                        <h2 class="main-title go-right">Related Spa</h2>
+                        <div class="clearfix"></div>
+                        <i class="tiltle-line go-right"></i>
+                    </div>
+                </div>
+                <?php foreach ($module->relatedSpa as $item) { ?>
+                    <div class="col-md-3 row5">
+                        <a href="<?php echo $item->slug; ?>">
+                            <div class="featured">
+                                <div class="col-xs-12 go-right wow fadeIn">
+                                    <div class="row">
+                                        <div class="load">
+                                            <img class="img-responsive lazy" <?php echo $lazy; ?>
+                                                 data-lazy="<?php echo $item->thumbnail; ?>"/>
+                                            <img class="overlay" src="<?php echo $theme_url; ?>assets/img/overlay.png"
+                                                 style="z-index: 3">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <?php if ($item->price > 0) { ?>
+                                    <div class="text-center featured-price">
+                                        <div class="text-center">
+                                            <small><?php echo $item->currCode; ?></small> <?php echo $item->currSymbol; ?><?php echo $item->price; ?>
+                                        </div>
+                                    </div>
+                                <?php } ?>
+                                <div class="col-xs-12 go-right wow fadeIn featured-title">
+                                    <div class="p5">
+                                        <div class="strong"><?php echo character_limiter($item->title, 25); ?></div>
+                                        <?php echo $item->stars; ?>
+                                        <div class=""><i
+                                                    class="icon-location-6 go-right"></i> <?php echo character_limiter($item->location, 20); ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                <?php } ?>
+            <?php } ?>
+
+            <!-- ending Related -->
+        </div>
+    </div>
+<?php } ?>
+<!------------------------  Related Spa   ------------------------------>
+
+<!------------------------  Related Car   ------------------------------>
+<?php if (!empty($module->relatedCar)) { ?>
+    <div class="bgwhite">
+        <div class="container">
+            <br><br>
+            <?php if (pt_main_module_available('car')) { ?>
+                <div class="col-md-12 row5">
+                    <div class="form-group">
+                        <h2 class="main-title go-right">Related Car</h2>
+                        <div class="clearfix"></div>
+                        <i class="tiltle-line go-right"></i>
+                    </div>
+                </div>
+                <?php foreach ($module->relatedCar as $item) { ?>
+                    <div class="col-md-3 row5">
+                        <a href="<?php echo $item->slug; ?>">
+                            <div class="featured">
+                                <div class="col-xs-12 go-right wow fadeIn">
+                                    <div class="row">
+                                        <div class="load">
+                                            <img class="img-responsive lazy" <?php echo $lazy; ?>
+                                                 data-lazy="<?php echo $item->thumbnail; ?>"/>
+                                            <img class="overlay" src="<?php echo $theme_url; ?>assets/img/overlay.png"
+                                                 style="z-index: 3">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <?php if ($item->price > 0) { ?>
+                                    <div class="text-center featured-price">
+                                        <div class="text-center">
+                                            <small><?php echo $item->currCode; ?></small> <?php echo $item->currSymbol; ?><?php echo $item->price; ?>
+                                        </div>
+                                    </div>
+                                <?php } ?>
+                                <div class="col-xs-12 go-right wow fadeIn featured-title">
+                                    <div class="p5">
+                                        <div class="strong"><?php echo character_limiter($item->title, 25); ?></div>
+                                        <?php echo $item->stars; ?>
+                                        <div class=""><i
+                                                    class="icon-location-6 go-right"></i> <?php echo character_limiter($item->location, 20); ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                <?php } ?>
+            <?php } ?>
+
+            <!-- ending Related -->
+        </div>
+    </div>
+<?php } ?>
+<!------------------------  Related Car   ------------------------------>
+
 <!------------------------  Nearby Related Listings   ------------------------------>
 <hr />
-<?php
-  echo "<pre>";
-  print_r($module->nearbyrelatedItems);
-  echo "</pre>";
- ?>
 <?php if (!empty($module->nearbyrelatedItems)) { ?>
     <div class="bgwhite">
         <div class="container">

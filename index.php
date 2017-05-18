@@ -5,8 +5,8 @@
 	define('TIMEZONE', $timezone);
 */
 
-define('ENVIRONMENT', 'production');
-//define('ENVIRONMENT', 'development');
+//define('ENVIRONMENT', 'production');
+define('ENVIRONMENT', 'development');
 
 
 switch (ENVIRONMENT)

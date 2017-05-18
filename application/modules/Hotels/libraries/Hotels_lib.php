@@ -61,7 +61,13 @@ class Hotels_lib {
   public $sliderImages;
   public $latitude;
   public $logitude;
-  public $relatedHotels;
+  //public $relatedHotels;
+  //public $relatedActivity;
+  //public $relatedRestaurant;
+  //public $relatedWedding;
+  //public $relatedTour;
+  //public $relatedSpa;
+  //public $relatedCar;
   public $selectedLocation;
   public $keywords;
   public $metadesc;
@@ -73,6 +79,13 @@ class Hotels_lib {
     $this->db = $this->ci->db;
     $this->appSettings = $this->ci->Settings_model->get_settings_data();
     $this->ci->load->model('Hotels/Hotels_model');
+    $this->ci->load->library('Activity/Activity_lib');
+    $this->ci->load->library('Restaurant/Restaurant_lib');
+    $this->ci->load->library('Wedding/Wedding_lib');
+    $this->ci->load->library('Tours/Tours_lib');
+    $this->ci->load->library('Spa/Spa_lib');
+    $this->ci->load->library('Cars/Cars_lib');
+
     $this->currencysign = $this->appSettings[0]->currency_sign;
     $this->currencycode = $this->appSettings[0]->currency_code;
     $this->checkin = $this->ci->input->get('checkin');
@@ -392,7 +405,50 @@ $result = $this->db->get('pt_hotels')->result();*/
     else {
       $rhotels = "";
     }
+    if (!empty($details[0]->product_related_activity)) {
+      $ractivity = explode(",", $details[0]->product_related_activity);
+    }
+    else {
+      $ractivity = "";
+    }
+    if (!empty($details[0]->product_related_restaurant)) {
+      $rrestaurant = explode(",", $details[0]->product_related_restaurant);
+    }
+    else {
+      $rrestaurant = "";
+    }
+    if (!empty($details[0]->product_related_Wedding)) {
+      $rwedding = explode(",", $details[0]->product_related_Wedding);
+    }
+    else {
+      $rwedding = "";
+    }
+    if (!empty($details[0]->product_related_tours)) {
+      $rtour = explode(",", $details[0]->product_related_tours);
+    }
+    else {
+      $rtour = "";
+    }
+    if (!empty($details[0]->product_related_spa)) {
+      $rspa = explode(",", $details[0]->product_related_spa);
+    }
+    else {
+      $rspa = "";
+    }
+    if (!empty($details[0]->product_related_cars)) {
+      $rcar = explode(",", $details[0]->product_related_cars);
+    }
+    else {
+      $rcar = "";
+    }
+
     $relatedHotels = $this->getRelatedHotels($rhotels);
+    $relatedActivity = $this->ci->Activity_lib->getRelatedActivity($ractivity);
+    $relatedRestaurant = $this->ci->Restaurant_lib->getRelatedRestaurant($rrestaurant);
+    $relatedWedding = $this->ci->Wedding_lib->getRelatedWedding($rwedding);
+    $relatedTour = $this->ci->Tours_lib->getRelatedTours($rtour);
+    $relatedSpa = $this->ci->Spa_lib->getRelatedSpa($rspa);
+    $relatedCar = $this->ci->Cars_lib->getRelatedCars($rcar);
     $thumbnail = PT_HOTELS_SLIDER_THUMBS . $details[0]->thumbnail_image;
     $city = pt_LocationsInfo($details[0]->hotel_city, $this->lang);
 //	$this->isfeatured = $this->is_featured();
@@ -410,7 +466,35 @@ $result = $this->db->get('pt_hotels')->result();*/
     $defcheckout = $details[0]->hotel_check_out;
     $this->tripadvisorid = $tripadvisorid;
     $sliderImages = $this->hotelImages($details[0]->hotel_id);
-    $detailResults = (object) array('id' => $details[0]->hotel_id, 'title' => $title, 'slug' => $slug, 'bookingSlug' => $bookingSlug, 'thumbnail' => $thumbnail, 'stars' => pt_create_stars($stars), 'starsCount' => $stars, 'location' => $city->city, 'desc' => $desc, 'amenities' => $amenities, 'latitude' => $latitude, 'longitude' => $longitude, 'sliderImages' => $sliderImages, 'relatedItems' => $relatedHotels, 'paymentOptions' => $paymentOptions, 'defcheckin' => $defcheckin, 'defcheckout' => $defcheckout, 'metadesc' => $metadesc, 'keywords' => $keywords, 'policy' => $policy, 'tripadvisorid' => $tripadvisorid, 'mapAddress' => $details[0]->hotel_map_city);
+    $detailResults = (object) array(
+      'id' => $details[0]->hotel_id,
+      'title' => $title,
+      'slug' => $slug,
+      'bookingSlug' => $bookingSlug,
+      'thumbnail' => $thumbnail,
+      'stars' => pt_create_stars($stars),
+      'starsCount' => $stars,
+      'location' => $city->city,
+      'desc' => $desc,
+      'amenities' => $amenities,
+      'latitude' => $latitude,
+      'longitude' => $longitude,
+      'sliderImages' => $sliderImages,
+      'relatedItems' => $relatedHotels,
+      'relatedActivity' => $relatedActivity,
+      'relatedRestaurant' => $relatedRestaurant,
+      'relatedWedding' => $relatedWedding,
+      'relatedTour' => $relatedTour,
+      'relatedSpa' => $relatedSpa,
+      'relatedCar' => $relatedCar,
+      'paymentOptions' => $paymentOptions,
+      'defcheckin' => $defcheckin,
+      'defcheckout' => $defcheckout,
+      'metadesc' => $metadesc,
+      'keywords' => $keywords,
+      'policy' => $policy,
+      'tripadvisorid' => $tripadvisorid,
+      'mapAddress' => $details[0]->hotel_map_city);
     return $detailResults;
   }
   function hotel_short_details($id = null) {
@@ -977,6 +1061,43 @@ $result = $this->db->get('pt_hotels')->result();*/
     $result = $this->getLimitedResultObject($resulthotels);
     return $result;
   }
+
+  //make a result object limited data of hotels array
+    function getLimitedResultObject($hotels) {
+      $this->ci->load->library('currconverter');
+      $result = array();
+      $curr = $this->ci->currconverter;
+      if (!empty($hotels)) {
+        foreach ($hotels as $h) {
+          $this->set_id($h->hotel_id);
+          $this->hotel_short_details();
+          $bestprice = $this->bestPrice();
+          $price = $bestprice;
+          $tripAdvisorID = $this->tripadvisorid;
+          $tripStatus = $this->tripAdvisorStatus();
+          if ($tripStatus && !empty($tripAdvisorID)) {
+            $avgReviews = $this->tripAdvisorData($tripAdvisorID);
+            if (empty($avgReviews->overall)) {
+              $avgReviews = $this->hotelReviewsAvg();
+            }
+          }
+          else {
+            $avgReviews = $this->hotelReviewsAvg();
+          }
+          if (!empty($this->title)) {
+            $result[] = (object) array(
+              'id' => $this->hotelid,
+              'title' => $this->title,
+              'desc' => $this->desc,
+              'slug' => base_url() . 'hotels/' . $this->slug, 'thumbnail' => $this->thumbnail, 'stars' => pt_create_stars($this->stars),'starsCount' => $this->stars, 'location' => $this->location, 'price' => $price, 'currCode' => $curr->code, 'currSymbol' => $curr->symbol, 'avgReviews' => $avgReviews, 'latitude' => $this->latitude, 'longitude' => $this->longitude);
+          }
+        }
+      }
+      $this->currencycode = $curr->code;
+      $this->currencysign = $curr->symbol;
+      return $result;
+    }
+
   function hero_hotels_list() {
     $this->db->select('front_homepage_hero');
     $rslt = $this->db->get('pt_front_settings')->result();
@@ -1135,37 +1256,7 @@ $result = $this->db->get('pt_hotels')->result();*/
     $this->currencysign = $curr->symbol;
     return $result;
   }
-//make a result object limited data of hotels array
-  function getLimitedResultObject($hotels) {
-    $this->ci->load->library('currconverter');
-    $result = array();
-    $curr = $this->ci->currconverter;
-    if (!empty($hotels)) {
-      foreach ($hotels as $h) {
-        $this->set_id($h->hotel_id);
-        $this->hotel_short_details();
-        $bestprice = $this->bestPrice();
-        $price = $bestprice;
-        $tripAdvisorID = $this->tripadvisorid;
-        $tripStatus = $this->tripAdvisorStatus();
-        if ($tripStatus && !empty($tripAdvisorID)) {
-          $avgReviews = $this->tripAdvisorData($tripAdvisorID);
-          if (empty($avgReviews->overall)) {
-            $avgReviews = $this->hotelReviewsAvg();
-          }
-        }
-        else {
-          $avgReviews = $this->hotelReviewsAvg();
-        }
-        if (!empty($this->title)) {
-          $result[] = (object) array('id' => $this->hotelid, 'title' => $this->title, 'desc' => $this->desc, 'slug' => base_url() . 'hotels/' . $this->slug, 'thumbnail' => $this->thumbnail, 'stars' => pt_create_stars($this->stars),'starsCount' => $this->stars, 'location' => $this->location, 'price' => $price, 'currCode' => $curr->code, 'currSymbol' => $curr->symbol, 'avgReviews' => $avgReviews, 'latitude' => $this->latitude, 'longitude' => $this->longitude);
-        }
-      }
-    }
-    $this->currencycode = $curr->code;
-    $this->currencysign = $curr->symbol;
-    return $result;
-  }
+
 //make a result object of Rooms Array
   function getRoomsResultObject($rooms, $checkin = null, $checkout = null) {
     if (empty($checkin)) {
@@ -1297,15 +1388,15 @@ $result = $this->db->get('pt_hotels')->result();*/
     $sprice = str_replace(";", ",", $sprice);
     $sprice = explode(",", $sprice);
     $result = new stdClass;
-    //add  If 
+    //add  If
     if(!empty($result->minprice)){
    $result->minprice = $sprice[0];
     }
- 
+
      if(!empty($result->maxprice)){
     $result->maxprice = $sprice[1];
     }
-   
+
 
     return $result;
 

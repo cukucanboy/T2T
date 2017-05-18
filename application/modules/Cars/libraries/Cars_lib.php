@@ -68,6 +68,11 @@ class Cars_lib
         $defaultlang = pt_get_default_language();
         $this->ci->load->model('Cars/Cars_model');
         $this->ci->load->helper('Cars/cars_front');
+        $this->ci->load->library('Activity/Activity_lib');
+        $this->ci->load->library('Restaurant/Restaurant_lib');
+        $this->ci->load->library('Wedding/Wedding_lib');
+        $this->ci->load->library('Tours/Tours_lib');
+        $this->ci->load->library('Spa/Spa_lib');
         $searchVars = "";
         if (empty ($lang)) {
             $this->lang = $defaultlang;
@@ -348,14 +353,43 @@ class Cars_lib
             $rcars = "";
 
         }
-
-        if (!empty($details[0]->car_nearby_related)) {
-            $nearbyrcar = $details[0]->car_nearby_related;
-        } else {
-            $nearbyrcar = "";
+        if (!empty($details[0]->product_related_activity)) {
+          $ractivity = explode(",", $details[0]->product_related_activity);
+        }
+        else {
+          $ractivity = "";
+        }
+        if (!empty($details[0]->product_related_restaurant)) {
+          $rrestaurant = explode(",", $details[0]->product_related_restaurant);
+        }
+        else {
+          $rrestaurant = "";
+        }
+        if (!empty($details[0]->product_related_wedding)) {
+          $rwedding = explode(",", $details[0]->product_related_wedding);
+        }
+        else {
+          $rwedding = "";
+        }
+        if (!empty($details[0]->product_related_tours)) {
+          $rtour = explode(",", $details[0]->product_related_tours);
+        }
+        else {
+          $rtour = "";
+        }
+        if (!empty($details[0]->product_related_spa)) {
+          $rspa = explode(",", $details[0]->product_related_spa);
+        }
+        else {
+          $rspa = "";
         }
 
         $relatedCars = $this->getRelatedCars($rcars);
+        $relatedActivity = $this->ci->Activity_lib->getRelatedActivity($ractivity);
+        $relatedRestaurant = $this->ci->Restaurant_lib->getRelatedRestaurant($rrestaurant);
+        $relatedWedding = $this->ci->Wedding_lib->getRelatedWedding($rwedding);
+        $relatedTour = $this->ci->Tours_lib->getRelatedTours($rtour);
+        $relatedSpa = $this->ci->Spa_lib->getRelatedSpa($rspa);
         //$nearbyrelatedCar = $this->getNearbyRelatedCar($nearbyrcar);
 
         $thumbnail = PT_CARS_SLIDER_THUMB . $details[0]->thumbnail_image;
@@ -418,6 +452,11 @@ class Cars_lib
           'longitude' => $longitude,
           'sliderImages' => $sliderImages,
           'relatedItems' => $relatedCars,
+          'relatedActivity' => $relatedActivity,
+          'relatedRestaurant' => $relatedRestaurant,
+          'relatedWedding' => $relatedWedding,
+          'relatedTour' => $relatedTour,
+          'relatedSpa' => $relatedSpa,
         //  'nearbyrelatedItems' => $nearbyrelatedCar,
           'paymentOptions' => $paymentOptions,
           'metadesc' => $metadesc,
@@ -1653,12 +1692,12 @@ class Cars_lib
             $result->pickup = $pickup->city;
             $this->pickupLocationName = $pickup->city;
         }
-       
+
         if(!empty($drop->drop)){
             $result->drop = $drop->city;
             $this->dropoffLocationName = $drop->city;
         }
-     
+
         return $result;
 
     }

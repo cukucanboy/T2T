@@ -186,8 +186,8 @@
                         <div class="panel-heading">Related Products</div>
                         <div class="panel-body">
 
-<?php  
-print_r($all_activity);
+<?php
+//print_r($all_activity);
 echo @$tdata[0]->product_related_activity;
 ?>
                     <!--Related Activity -->
@@ -195,7 +195,7 @@ echo @$tdata[0]->product_related_activity;
                         <label class="col-md-2 control-label text-left">Related Activity</label>
                         <div class="col-md-8">
                           <select multiple class="chosen-multi-select" name="relatedProdActivity[]">
-                            <?php if(!empty($all_activity)){ $activityRelated = explode(",",$tdata[0]->product_related_activity);
+                            <?php if(!empty($all_activity)){ $activityRelated = explode(",",$hdata[0]->product_related_activity);
                               foreach($all_activity as $t):
                               ?>
                             <option value="<?php echo $t->activity_id;?>" <?php if(in_array($t->activity_id,$activityRelated)){echo "selected";} ?>  ><?php echo $t->activity_title;?></option>
@@ -209,7 +209,7 @@ echo @$tdata[0]->product_related_activity;
                         <label class="col-md-2 control-label text-left">Related Restaurant</label>
                         <div class="col-md-8">
                           <select multiple class="chosen-multi-select" name="relatedProdRestaurant[]">
-                            <?php if(!empty($all_restaurant)){ $restaurantRelated = explode(",",$tdata[0]->product_related_restaurant);
+                            <?php if(!empty($all_restaurant)){ $restaurantRelated = explode(",",$hdata[0]->product_related_restaurant);
                               foreach($all_restaurant as $t):
                               ?>
                             <option value="<?php echo $t->restaurant_id;?>" <?php if(in_array($t->restaurant_id,$restaurantRelated)){echo "selected";} ?>  ><?php echo $t->restaurant_title;?></option>
@@ -221,8 +221,11 @@ echo @$tdata[0]->product_related_activity;
                       <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
                         <label class="col-md-2 control-label text-left">Related Wedding</label>
                         <div class="col-md-8">
+                          <?php
+                            echo $hdata[0]->product_related_wedding;
+                           ?>
                           <select multiple class="chosen-multi-select" name="relatedProdWedding[]">
-                            <?php if(!empty($all_wedding)){ $weddingRelated = explode(",",$tdata[0]->product_related_wedding);
+                            <?php if(!empty($all_wedding)){ $weddingRelated = explode(",",$hdata[0]->product_related_Wedding);
                               foreach($all_wedding as $t):
                               ?>
                             <option value="<?php echo $t->wedding_id;?>" <?php if(in_array($t->wedding_id,$weddingRelated)){echo "selected";} ?>  ><?php echo $t->wedding_title;?></option>
@@ -236,7 +239,7 @@ echo @$tdata[0]->product_related_activity;
                         <label class="col-md-2 control-label text-left">Related tour</label>
                         <div class="col-md-8">
                           <select multiple class="chosen-multi-select" name="relatedProdTours[]">
-                            <?php if(!empty($all_tours)){$toursRelated = explode(",",$tdata[0]->product_related_tours);
+                            <?php if(!empty($all_tours)){$toursRelated = explode(",",$hdata[0]->product_related_tours);
                               foreach($all_tours as $t):
                               ?>
                             <option value="<?php echo $t->tour_id;?>" <?php if(in_array($t->tour_id,$toursRelated)){echo "selected";} ?>  ><?php echo $t->tour_title;?></option>
@@ -250,7 +253,7 @@ echo @$tdata[0]->product_related_activity;
                         <label class="col-md-2 control-label text-left">Related Spa</label>
                         <div class="col-md-8">
                           <select multiple class="chosen-multi-select" name="relatedProdspa[]">
-                            <?php if(!empty($all_spa)){ $spaRelated = explode(",",$tdata[0]->product_related_spa);
+                            <?php if(!empty($all_spa)){ $spaRelated = explode(",",$hdata[0]->product_related_spa);
                               foreach($all_spa as $t):
                               ?>
                             <option value="<?php echo $t->spa_id;?>" <?php if(in_array($t->spa_id,$spaRelated)){echo "selected";} ?>  ><?php echo $t->spa_title;?></option>
@@ -264,7 +267,7 @@ echo @$tdata[0]->product_related_activity;
                         <label class="col-md-2 control-label text-left">Related Car</label>
                         <div class="col-md-8">
                           <select multiple class="chosen-multi-select" name="relatedProdCars[]">
-                            <?php if(!empty($all_cars)){ $carsRelated = explode(",",$tdata[0]->product_related_cars);
+                            <?php if(!empty($all_cars)){ $carsRelated = explode(",",$hdata[0]->product_related_cars);
                               foreach($all_cars as $t):
                               ?>
                             <option value="<?php echo $t->car_id;?>" <?php if(in_array($t->car_id,$carsRelated)){echo "selected";} ?>  ><?php echo $t->car_title;?></option>

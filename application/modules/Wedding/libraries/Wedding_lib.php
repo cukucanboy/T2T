@@ -52,6 +52,14 @@ class Wedding_lib
     public $guestCount;
     public $createdAt;
     public $langdef;
+    //Related//
+    //public $relatedHotels;
+    //public $relatedActivity;
+    //public $relatedRestaurant;
+    //public $relatedWedding;
+    //public $relatedTour;
+    //public $relatedSpa;
+    //public $relatedCar;
 
     function __construct()
     {
@@ -64,6 +72,11 @@ class Wedding_lib
         $defaultlang = pt_get_default_language();
         $this->ci->load->model('Wedding/Wedding_model');
         $this->ci->load->helper('Wedding/wedding_front');
+        $this->ci->load->library('Activity/Activity_lib');
+        $this->ci->load->library('Restaurant/Restaurant_lib');
+        $this->ci->load->library('Tours/Tours_lib');
+        $this->ci->load->library('Spa/Spa_lib');
+        $this->ci->load->library('Cars/Cars_lib');
         if (empty($lang)) {
             $this->lang = $defaultlang;
         } else {
@@ -292,7 +305,43 @@ class Wedding_lib
         } else {
             $rwedding = "";
         }
+        if (!empty($details[0]->product_related_activity)) {
+          $ractivity = explode(",", $details[0]->product_related_activity);
+        }
+        else {
+          $ractivity = "";
+        }
+        if (!empty($details[0]->product_related_restaurant)) {
+          $rrestaurant = explode(",", $details[0]->product_related_restaurant);
+        }
+        else {
+          $rrestaurant = "";
+        }
+        if (!empty($details[0]->product_related_tours)) {
+          $rtour = explode(",", $details[0]->product_related_tours);
+        }
+        else {
+          $rtour = "";
+        }
+        if (!empty($details[0]->product_related_spa)) {
+          $rspa = explode(",", $details[0]->product_related_spa);
+        }
+        else {
+          $rspa = "";
+        }
+        if (!empty($details[0]->product_related_cars)) {
+          $rcar = explode(",", $details[0]->product_related_cars);
+        }
+        else {
+          $rcar = "";
+        }
+
         $relatedWedding = $this->getRelatedWedding($rwedding);
+        $relatedActivity = $this->ci->Activity_lib->getRelatedActivity($ractivity);
+        $relatedRestaurant = $this->ci->Restaurant_lib->getRelatedRestaurant($rrestaurant);
+        $relatedTour = $this->ci->Tours_lib->getRelatedTours($rtour);
+        $relatedSpa = $this->ci->Spa_lib->getRelatedSpa($rspa);
+        $relatedCar = $this->ci->Cars_lib->getRelatedCars($rcar);
         $thumbnail = PT_WEDDING_SLIDER_THUMB . $details[0]->thumbnail_image;
         $city = pt_LocationsInfo($details[0]->wedding_location, $this->lang);
         $location = $city->city; // $details[0]->wedding_location;
@@ -333,7 +382,59 @@ class Wedding_lib
         $this->tax_value = $taxcom['taxval'];
         $this->setDeposit($curr->convertPriceFloat($totalCost, 2));
         $depositAmount = $this->deposit;
-        $detailResults = (object)array('id' => $details[0]->wedding_id, 'title' => $title, 'slug' => $slug, 'bookingSlug' => $bookingSlug, 'thumbnail' => $thumbnail, 'stars' => pt_create_stars($stars), 'starsCount' => $stars, 'location' => $location, 'desc' => $desc, 'inclusions' => $inclusions, 'exclusions' => $exclusions, 'latitude' => $latitude, 'longitude' => $longitude, 'sliderImages' => $sliderImages, 'relatedItems' => $relatedWedding, 'paymentOptions' => $paymentOptions, 'metadesc' => $metadesc, 'keywords' => $keywords, 'policy' => $policy, 'website' => $website, 'email' => $email, 'phone' => $phone, 'maxAdults' => $maxAdults, 'maxChild' => $maxChild, 'maxInfant' => $maxInfant, 'adultStatus' => $adultStatus, 'childStatus' => $childStatus, 'infantStatus' => $infantStatus, 'adultPrice' => $adultPrice, 'childPrice' => $childPrice, 'infantPrice' => $infantPrice, 'perAdultPrice' => $perAdultPrice, 'perChildPrice' => $perChildPrice, 'perInfantPrice' => $perInfantPrice, 'currCode' => $curr->code, 'currSymbol' => $curr->symbol, 'date' => $this->date, 'totalCost' => $curr->convertPrice($totalCost), 'comType' => $comm_type, 'comValue' => $comm_value, 'taxType' => $tax_type, 'taxValue' => $tax_value, 'weddingDays' => $weddingDays, 'weddingNights' => $weddingNights, 'totalDeposit' => $depositAmount, 'mapAddress' => $details[0]->wedding_mapaddress, 'ogimg' => $ogimg);
+        $detailResults = (object)array(
+          'id' => $details[0]->wedding_id,
+          'title' => $title,
+          'slug' => $slug,
+          'bookingSlug' => $bookingSlug,
+          'thumbnail' => $thumbnail,
+          'stars' => pt_create_stars($stars),
+          'starsCount' => $stars,
+          'location' => $location,
+          'desc' => $desc,
+          'inclusions' => $inclusions,
+          'exclusions' => $exclusions,
+          'latitude' => $latitude,
+          'longitude' => $longitude,
+          'sliderImages' => $sliderImages,
+          'relatedItems' => $relatedWedding,
+          'relatedActivity' => $relatedActivity,
+          'relatedRestaurant' => $relatedRestaurant,
+          'relatedTour' => $relatedTour,
+          'relatedSpa' => $relatedSpa,
+          'relatedCar' => $relatedCar,
+          'paymentOptions' => $paymentOptions,
+          'metadesc' => $metadesc,
+          'keywords' => $keywords,
+          'policy' => $policy,
+          'website' => $website,
+          'email' => $email,
+          'phone' => $phone,
+          'maxAdults' => $maxAdults,
+          'maxChild' => $maxChild,
+          'maxInfant' => $maxInfant,
+          'adultStatus' => $adultStatus,
+          'childStatus' => $childStatus,
+          'infantStatus' => $infantStatus,
+          'adultPrice' => $adultPrice,
+          'childPrice' => $childPrice,
+          'infantPrice' => $infantPrice,
+          'perAdultPrice' => $perAdultPrice,
+          'perChildPrice' => $perChildPrice,
+          'perInfantPrice' => $perInfantPrice,
+          'currCode' => $curr->code,
+          'currSymbol' => $curr->symbol,
+          'date' => $this->date,
+          'totalCost' => $curr->convertPrice($totalCost),
+          'comType' => $comm_type,
+          'comValue' => $comm_value,
+          'taxType' => $tax_type,
+          'taxValue' => $tax_value,
+          'weddingDays' => $weddingDays,
+          'weddingNights' => $weddingNights,
+          'totalDeposit' => $depositAmount,
+          'mapAddress' => $details[0]->wedding_mapaddress,
+          'ogimg' => $ogimg);
         return $detailResults;
     }
 
