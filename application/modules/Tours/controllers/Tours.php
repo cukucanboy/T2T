@@ -15,6 +15,8 @@ class Tours extends MX_Controller
             Module_404();
         }
 
+
+
         $this->load->library("Tours_lib");
         $this->load->model("tours_model");
         $this->load->helper("Tours_front");
@@ -47,6 +49,9 @@ class Tours extends MX_Controller
         $this->data['selectedInfants'] = $this->Tours_lib->infants;
 
     }
+
+
+
 
     public function index()
     {
@@ -94,6 +99,9 @@ class Tours extends MX_Controller
             $this->listing();
         }
     }
+
+
+
 
     function listing($offset = null)
     {

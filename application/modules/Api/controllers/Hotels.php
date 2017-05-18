@@ -26,7 +26,7 @@ class Hotels extends REST_Controller {
 		}
 
 		function featured_get() {
-				$list = $this->apihotels_model->get_featured_hotels();
+				$list = $this->Hotels_lib->getFeaturedHotels();
 				if (!empty ($list)) {
 						$this->response(array('response' => $list, 'error' => array('status' => FALSE,'msg' => '')), 200);
 
@@ -96,7 +96,7 @@ class Hotels extends REST_Controller {
                 }
 
 
-				$details['hotel']->desc = strip_tags($details['hotel']->desc);
+				$details['hotel']->desc = html_entity_decode(strip_tags($details['hotel']->desc), ENT_QUOTES);
 
 
 				$details['rooms'] = $this->Hotels_lib->hotel_rooms($details['hotel']->id,$checkin,$checkout);
@@ -182,8 +182,8 @@ class Hotels extends REST_Controller {
 				$this->response(array('response' => '', 'error' => array('status' => TRUE,'msg' => 'Query missing')), 200);
 		}
 
-		if (!empty ($suggestions['items'])) {
-		$this->response(array('response' => $suggestions['items'], 'error' => array('status' => FALSE,'msg' => '')), 200);
+		if (!empty ($suggestions['forApi']['items'])) {
+		$this->response(array('response' => $suggestions['forApi']['items'], 'error' => array('status' => FALSE,'msg' => '')), 200);
 		}
 		else {
 		$this->response(array('response' => '', 'error' => array('status' => TRUE,'msg' => 'Results could not be found')), 200);

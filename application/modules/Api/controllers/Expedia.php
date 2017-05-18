@@ -315,14 +315,28 @@ class Expedia extends REST_Controller {
 				$adults = $this->input->get('adults');
 				$rooms = "room1=$adults";
 				$str1 = $this->apiurl . "info?minorRev=" . $this->rev . "&cid=" . $this->cid ."&sig=".$this->sig."&apiKey=" . $this->apiKey . "&customerUserAgent=" . $this->customerUserAgent . "&customerIpAddress=" . $this->customerIpAddress . "&customerSessionId=" . $customerSessionId . "&locale=" . $this->local . "&currencyCode=" . $this->currency . "&hotelId=" . $hotelId . "&options=0";
-				$response['response']['hoteldata'] = $this->apiCall($str1);
+				$hotelDetailsResult = $this->apiCall($str1);
+				$response['response']['hoteldata'] = $this->getHotelDetailsObject($hotelId, $hotelDetailsResult);
+
 //rooms availability info
 				$str2 = $this->apiurl . "avail?minorRev=" . $this->rev . "&cid=" . $this->cid . "&sig=".$this->sig."&apiKey=" . $this->apiKey . "&customerUserAgent=" . $this->customerUserAgent . "&customerIpAddress=" . $this->customerIpAddress . "&customerSessionId=" . $customerSessionId . "&locale=" . $this->local . "&currencyCode=" . $this->currency . "&hotelId=" . $hotelId . "&arrivalDate=" . $checkIn . "&departureDate=" . $checkOut . "&roomTypeCode=" . $roomcode . "&rateKey=" . $ratekey . "&rateCode=" . $ratecode . "&includeDetails=true&includeRoomImages=true&options=ROOM_TYPES,ROOM_AMENITIES&" . $rooms;
-				$response['response']['roomsdata'] = $this->apiCall($str2);
+				$roomresponse = $this->apiCall($str2);
+
+				$roomsInfo = $roomresponse->HotelRoomAvailabilityResponse;
+
+				$response['response']['roomsdata'] = $this->getRoomsObject($roomsInfo);
+
+				$this->load->library("Ean/Ean_lib");
+				$city = $response['response']['hoteldata']->location;
+
+				$response['response']['relatedItems'] = $this->Ean_lib->getRelatedHotels($city);
+				$configdata = $this->ci->Settings_model->get_front_settings("ean");
+				$response['response']['totalStay'] = $this->Ean_lib->totalStay;
+				$response['response']['testingMode'] = $configdata[0]->testing_mode;
 				$this->response($response, 200);
 		}
 
-        function getCardTypes_get(){
+    function getCardTypes_get(){
             //TODO
             $hotelId = $this->get('hotelId');
             $customerSessionId = $this->get('customerSessionId');
@@ -359,6 +373,7 @@ class Expedia extends REST_Controller {
 			else {
 			$itid = $responseData->HotelRoomReservationResponse->itineraryId;
 			$confirmation = $responseData->HotelRoomReservationResponse->confirmationNumbers;
+			$responseData->HotelRoomReservationResponse->checkInInstructions = strip_tags(html_entity_decode($responseData->HotelRoomReservationResponse->checkInInstructions));
 
 			}
 			if ($itid > 1 && !empty($confirmation)) {
@@ -375,6 +390,87 @@ class Expedia extends REST_Controller {
 			}
 			$this->response($responseData, 200);
 
+		}
+
+
+
+		public function getHotelDetailsObject($hotelid, $result){
+			$response = new stdClass;
+			$resultData = $result->HotelInformationResponse;
+			$hotelSummary = $resultData->HotelSummary;
+			$hotelDetails = $resultData->HotelDetails;
+			$amenities = $resultData->RoomTypes->RoomType[0]->roomAmenities->RoomAmenity;
+			$images = $resultData->HotelImages->HotelImage;
+
+			if($hotelSummary->hotelRating < 1){ $hrating = 1;	}else{ $hrating = $hotelSummary->hotelRating;    }
+
+
+			$response->id =  $hotelid;
+			$response->title =  $hotelSummary->name;
+			$response->desc = strip_tags(html_entity_decode($hotelDetails->propertyDescription));
+			$response->location =  $hotelSummary->city ;
+			$response->price =  round($hotelSummary->lowRate,2) ;
+			$response->hotelAddress =  $hotelSummary->locationDescription;
+			$response->latitude =  $hotelSummary->latitude;
+			$response->longitude =  $hotelSummary->longitude;
+			$response->policy =  html_entity_decode($hotelDetails->hotelPolicy);
+			$response->checkInInstructions = strip_tags(html_entity_decode($hotelDetails->checkInInstructions));
+			$response->stars =  $hrating;
+			if(!empty($amenities)){
+				foreach($amenities as $amt){
+					$response->amenities[] = (object)array('name' => ucwords($amt->amenity));
+				}
+			}
+
+			if(!empty($images)){
+				foreach($images as $img){
+					$response->sliderImages[] = array('fullImage' => str_replace("_b", "_z",$img->url), 'thumbImage' => str_replace("_t", "_b",$img->thumbnailUrl));
+				}
+			}
+
+
+			return $response;
+		}
+
+		public function getRoomsObject($result){
+			$response = new stdClass;
+
+			$response->specialCheckInInstructions =  strip_tags(html_entity_decode($result->specialCheckInInstructions));
+			$response->checkInInstructions =  strip_tags(html_entity_decode($result->checkInInstructions));
+			$rooms =  $result->HotelRoomResponse;
+			$roomsData = array();
+			$response->errorMsg = "";
+
+			if(!empty($result->EanWsError)){
+          $response->errorMsg = $result->EanWsError->verboseMessage;
+      }
+
+			if(!empty($rooms)){
+				$response->hasRooms = TRUE;
+				foreach($rooms as $r){
+					$roomImagesCount = $r->RoomImages->{"@size"};
+					$thumbnail = "";
+					if($roomImagesCount == 1){
+						$thumbnail = $r->RoomImages->RoomImage->url;
+					}else if($roomImagesCount > 1){
+						$thumbnail = $r->RoomImages->RoomImage[0]->url;
+					}
+					$roomsData[] = (object)array(
+						'id' => $r->RoomType->{"@roomTypeId"},
+						'title' => html_entity_decode($r->rateDescription),
+						'price' => $r->RateInfos->RateInfo->ChargeableRateInfo->{"@averageRate"},
+						'currency' => $r->RateInfos->RateInfo->ChargeableRateInfo->{"@currencyCode"},
+						'thumbnail' => $thumbnail
+					);
+
+
+				}
+			}else{
+				$response->hasRooms = FALSE;
+
+			}
+			$response->roomsList = $roomsData;
+			return $response;
 		}
 
 }

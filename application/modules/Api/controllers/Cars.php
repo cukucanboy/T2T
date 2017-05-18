@@ -26,17 +26,20 @@ class Cars extends REST_Controller {
     }
 
     function list_get() {
+
         $offset = $this->get('offset');
         $list = $this->Cars_lib->show_cars($offset);
 
-        if (!empty ($list['all_cars'])) {
+        $Objresponse = $list['all_cars'];
+        $totalPages = ceil($list['paginationinfo']['totalrows'] / $list['paginationinfo']['perpage']);
+        if (!empty ($Objresponse)){
+            $this->response(array('response' => $Objresponse, 'error' => array('status' => FALSE,'msg' => ''), 'totalPages' => $totalPages), 200);
 
-            $this->response(array('response' => $list['all_cars'], 'error' => array('status' => FALSE,'msg' => '')), 200);
+        }else {
+        $this->response(array('response' => '', 'error' => array('status' => TRUE,'msg' => 'Results not found')), 200);
+        }
 
-        }
-        else {
-            $this->response(array('response' => '', 'error' => array('status' => TRUE,'msg' => 'Cars could not be found')), 200);
-        }
+
     }
 
     function locations_get(){
@@ -80,7 +83,7 @@ $this->response(array('response' => array('pickupLocations' => $pickuplocations,
         $details['car'] = $this->Cars_lib->car_details($id, $date);
         $details['car']->pickupLocationList = $this->Cars_lib->getPickupLocationsList($id);
         $details['car']->dropoffLocationList = $this->Cars_lib->getDropLocationsList($id);
-        $details['car']->desc = strip_tags($details['car']->desc);
+        $details['car']->desc = html_entity_decode(strip_tags($details['car']->desc),ENT_QUOTES);
 
         if (pt_is_module_enabled('reviews')) {
                         $details['reviews'] = $this->Cars_lib->car_reviews_for_api($details['car']->id);
@@ -89,9 +92,9 @@ $this->response(array('response' => array('pickupLocations' => $pickuplocations,
 
         if (!empty ($details)) {
             $this->response(array('response' => $details, 'error' => array('status' => FALSE,'msg' => '')), 200);
-        }else {
+        }else{
 
-    $this->response(array('response' => '', 'error' => array('status' => TRUE,'msg' => 'Car Details could not be found')), 200);
+           $this->response(array('response' => '', 'error' => array('status' => TRUE,'msg' => 'Car Details could not be found')), 200);
 
         }
 

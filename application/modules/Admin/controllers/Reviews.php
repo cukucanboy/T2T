@@ -23,7 +23,7 @@ if(!pt_permissions('reviews',$this->data['userloggedin'])){
 redirect('admin');
 }
 $this->load->model('Reviews_model');
-$this->data['modModel'] = $this->modules_model;
+$this->data['modModel'] = @$this->modules_model;
 }
 
 

@@ -1,4 +1,4 @@
-<?php  header('Access-Control-Allow-Origin: *');   
+<?php  header('Access-Control-Allow-Origin: *');
 
 
 
@@ -39,7 +39,7 @@ class Contact extends REST_Controller
 
 
         parent::__construct();
-        
+
         if(!$this->isValidApiKey){
         $this->response($this->invalidResponse, 400);
         }
@@ -50,7 +50,7 @@ class Contact extends REST_Controller
 
 
 
-    
+
 
 
 
@@ -86,7 +86,7 @@ class Contact extends REST_Controller
 
 
 
-        'contact_address' => $info[0]->contact_address,
+        'contact_address' => strip_tags($info[0]->contact_address),
 
 
 

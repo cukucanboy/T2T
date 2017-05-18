@@ -54,7 +54,7 @@ class Restaurantback extends MX_Controller {
 if(!$chk){
 redirect('admin');
 }*/
-				$this->data['c_model'] = $this->countries_model;
+				$this->data['c_model'] = @$this->countries_model;
 				if (!pt_permissions('restaurant', $this->data['userloggedin'])) {
 						redirect('admin');
 				}
@@ -145,7 +145,7 @@ redirect('admin');
 
 				  }else{
 
-				$this->data['data_relate'] = $this->Restaurant_model->data_for_relate_near_by(); //add by poy
+
 				$addrestaurant = $this->input->post('submittype');
 				$this->data['adultStatus'] = "";
 				$this->data['childStatus'] = "readonly";
@@ -192,6 +192,16 @@ redirect('admin');
 						$this->data['restaurantpayments'] = $this->Restaurant_model->get_tsettings_data("tpayments");
 						$this->data['all_countries'] = $this->Countries_model->get_all_countries();
 						$this->data['all_restaurant'] = $this->Restaurant_model->select_related_restaurant($this->data['userloggedin']);
+
+						/* product_related */
+$this->data['all_hotels'] = $this->Hotels_model->select_related_hotels($this->data['userloggedin']);
+//$this->data['all_restaurant'] = $this->Restaurant_model->select_related_restaurant($this->data['userloggedin']);
+$this->data['all_wedding'] = $this->Wedding_model->select_related_wedding($this->data['userloggedin']);
+$this->data['all_tours'] = $this->Tours_model->select_related_tours($this->data['userloggedin']);
+$this->data['all_spa'] = $this->Spa_model->select_related_spa($this->data['userloggedin']);
+$this->data['all_activity'] = $this->Activity_model->select_related_activity($this->data['userloggedin']);
+$this->data['all_cars'] = $this->Cars_model->select_related_cars($this->data['userloggedin']);
+/* product_related */
 
 						$this->load->model('Admin/Locations_model');
 
@@ -362,7 +372,6 @@ redirect('admin');
                         }
 
 						$this->data['all_restaurant'] = $this->Restaurant_model->select_related_restaurant($this->data['tdata'][0]->restaurant_id);
-						$this->data['data_relate'] = $this->Restaurant_model->data_for_relate_near_by(); //add by poy
 						$this->data['map_data'] = $this->Restaurant_model->get_restaurant_map($this->data['tdata'][0]->restaurant_id);
 						$this->data['maxmaporder'] = $this->Restaurant_model->max_map_order($this->data['tdata'][0]->restaurant_id);
 						$this->data['has_start'] = $this->Restaurant_model->has_start_end_city("start", $this->data['tdata'][0]->restaurant_id);

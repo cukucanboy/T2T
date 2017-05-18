@@ -1594,14 +1594,14 @@ $total['rev_wedding'] = $trevcounts;
 
 		function moduleConfigFieldOutput($values) {
 	if (!$values['Value']) {
-		$values['Value'] = $values['Default'];
+		$values['Value'] = @$values['Default'];
 	}
 
 
 	if ($values['Type'] == "text") {
 		$code = "<input type=\"text\" name=\"" . $values['Name'] . "\" size=\"" . $values['Size'] . "\" value=\"" . $values['Value'] . "\" />";
 
-		if ($values['Description']) {
+		if (isset($values['Description'])) {
 			$code .= " " . $values['Description'];
 		}
 	}
@@ -1621,7 +1621,7 @@ $total['rev_wedding'] = $trevcounts;
 					$code .= " checked=\"checked\"";
 				}
 
-				$code .= " /> " . $values['Description'] . "</label>";
+				$code .= " /> " . @$values['Description'] . "</label>";
 			}
 			else {
 				if ($values['Type'] == "dropdown") {
@@ -1669,8 +1669,8 @@ $total['rev_wedding'] = $trevcounts;
 					}
 					else {
 						if ($values['Type'] == "textarea") {
-							$cols = ($values['Cols'] ? $values['Cols'] : "60");
-							$rows = ($values['Rows'] ? $values['Rows'] : "5");
+							$cols = (@$values['Cols'] ? $values['Cols'] : "60");
+							$rows = (@$values['Rows'] ? $values['Rows'] : "5");
 							$code = "<textarea name=\"" . $values['Name'] . "\" cols=\"" . $cols . "\" rows=\"" . $rows . "\">" . $values['Value'] . "</textarea>";
 
 							if ($values['Description']) {
@@ -1882,18 +1882,6 @@ if (!function_exists('pt_WeddingPhotosCount')) {
 }
 
 
-if (!function_exists('pt_DestinationInfo')) {
-
-		function pt_DestinationInfo($destid, $lang = null) {
-				$CI = get_instance();
-				$CI->load->model('Destinations/Destinations_model');
-				$res = $CI->Destinations_model->getDestinationDetails($destid, $lang);
-				return $res;
-		}
-
-}
-
-//end New  Modules
 
 if (!function_exists('pt_LocationsInfo')) {
 

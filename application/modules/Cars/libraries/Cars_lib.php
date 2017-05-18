@@ -356,11 +356,17 @@ class Cars_lib
         }
 
         $relatedCars = $this->getRelatedCars($rcars);
-        $nearbyrelatedCar = $this->getNearbyRelatedCar($nearbyrcar);
+        //$nearbyrelatedCar = $this->getNearbyRelatedCar($nearbyrcar);
+
         $thumbnail = PT_CARS_SLIDER_THUMB . $details[0]->thumbnail_image;
+
         $carLocation = $this->getCarLocation($carid);
+
         $city = pt_LocationsInfo($carLocation, $this->lang);
+
+
         $location = $city->city;
+
         $latitude = $city->latitude;
         $longitude = $city->longitude;
 
@@ -412,7 +418,7 @@ class Cars_lib
           'longitude' => $longitude,
           'sliderImages' => $sliderImages,
           'relatedItems' => $relatedCars,
-          'nearbyrelatedItems' => $nearbyrelatedCar,
+        //  'nearbyrelatedItems' => $nearbyrelatedCar,
           'paymentOptions' => $paymentOptions,
           'metadesc' => $metadesc,
           'keywords' => $keywords,
@@ -551,7 +557,7 @@ class Cars_lib
             $this->db->where('item_id', $carid);
             $this->db->where('trans_lang', $this->lang);
             $res = $this->db->get('pt_cars_translation')->result();
-            $title = $res[0]->trans_title;
+            $title = @$res[0]->trans_title;
             if (empty ($title)) {
                 $title = $deftitle;
             }
@@ -572,7 +578,7 @@ class Cars_lib
             $this->db->where('item_id', $carid);
             $this->db->where('trans_lang', $this->lang);
             $res = $this->db->get('pt_cars_translation')->result();
-            $desc = $res[0]->trans_desc;
+            $desc = @$res[0]->trans_desc;
             if (empty ($desc)) {
                 $desc = $defdesc;
             }
@@ -591,7 +597,7 @@ class Cars_lib
             $this->db->where('item_id', $carid);
             $this->db->where('trans_lang', $this->lang);
             $res = $this->db->get('pt_cars_translation')->result();
-            $policy = $res[0]->trans_policy;
+            $policy = @$res[0]->trans_policy;
             if (empty ($policy)) {
                 $policy = $defpolicy;
             }
@@ -611,7 +617,7 @@ class Cars_lib
             $this->db->where('item_id', $carid);
             $this->db->where('trans_lang', $this->lang);
             $res = $this->db->get('pt_cars_translation')->result();
-            $keywords = $res[0]->metakeywords;
+            $keywords = @$res[0]->metakeywords;
             if (empty ($keywords)) {
                 $keywords = $defkeywords;
             }
@@ -630,7 +636,7 @@ class Cars_lib
             $this->db->where('item_id', $carid);
             $this->db->where('trans_lang', $this->lang);
             $res = $this->db->get('pt_cars_translation')->result();
-            $meta = $res[0]->metadesc;
+            $meta = @$res[0]->metadesc;
             if (empty ($meta)) {
                 $meta = $defmeta;
             }
@@ -957,22 +963,12 @@ class Cars_lib
 
         }
         $result = $this->getLimitedResultObject($resultcars);
+
+
         return $result;
+
     }
 
-    function getNearbyRelatedCar($car)
-    {
-      $resultcars = array();
-      $result = array();
-      if (!empty($cars)) {
-          foreach ($cars as $c) {
-                  $resultcars[] = (object)array('car_id' => $c);
-          }
-
-      }
-      $result = $this->getLimitedResultObject($resultcars);
-      return $result;
-    }
 
     //Populate Car Types according to the location selected
 
@@ -1653,13 +1649,17 @@ class Cars_lib
         $result = new stdClass;
         $pickup = pt_LocationsInfo($this->pickupLocation, $this->lang);
         $drop = pt_LocationsInfo($this->dropoffLocation, $this->lang);
-        $result->pickup = $pickup->city;
-        $result->drop = $drop->city;
-
-        $this->pickupLocationName = $pickup->city;
-        $this->dropoffLocationName = $drop->city;
+        if(!empty($pickup->city)){
+            $result->pickup = $pickup->city;
+            $this->pickupLocationName = $pickup->city;
+        }
+       
+        if(!empty($drop->drop)){
+            $result->drop = $drop->city;
+            $this->dropoffLocationName = $drop->city;
+        }
+     
         return $result;
-
 
     }
 

@@ -361,9 +361,13 @@ class Accounts extends MX_Controller
             $this->data['profile'] = "";
             $this->data['permitted'] = array();
         }
-        $appliedFor = json_decode($this->data['profile'][0]->appliedfor);
-        $this->data['appliedFor'] = ucfirst($appliedFor->appliedfor);
-        $this->data['propertyName'] = $appliedFor->name;
+
+        if(isset($this->data['profile'][0]->appliedfor)){
+            $appliedFor = json_decode($this->data['profile'][0]->appliedfor);
+            $this->data['appliedFor'] = ucfirst($appliedFor->appliedfor);
+            $this->data['propertyName'] = $appliedFor->name;
+        }
+
 
 
         if ($args == 'add') {

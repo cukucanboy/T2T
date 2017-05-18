@@ -22,33 +22,32 @@ class Locations_model extends CI_Model {
 
 		//get details of location
 		function getLocationDetails($id, $lang = null){
+
 			$this->db->where('id',$id);
-
-			// if(!empty($this->userloggedin)){
-			//
-			// if(!$this->isSuperAdmin){
-			// 	$this->db->where('user',$this->userloggedin);
-			// 	$this->db->or_where('user',NULL);
-			// }else{
-			// 	$user = NULL;
-			// }
-			//
-			// }
-
 			$result = $this->db->get('pt_locations')->result();
 
+
 			$response = new stdClass;
+
+//var_dump($response);
+
 			$this->load->model('Admin/Countries_model');
+			//add  Check  Data
+			if(!empty($result[0]->country)){
 			$response->country = $this->Countries_model->getCountryInfo($result[0]->country);
+			}
+			
 			if(!empty($result[0]->location)){
 				$response->isValid = TRUE;
 			}else{
 				$response->isValid = FALSE;
 			}
-
 			if(empty($lang) || $lang == DEFLANG){
-
-			$response->city = $result[0]->location;
+//add if
+if(!empty($result[0]->location)){
+$response->city = $result[0]->location;
+}
+			
 
 			}else{
 
@@ -57,7 +56,10 @@ class Locations_model extends CI_Model {
 			$Transresult = $this->db->get('pt_locations_translation')->result();
 			if(empty($Transresult[0]->loc_name)){
 
-			$response->city = $result[0]->location;
+			//add if
+if(!empty($result[0]->location)){
+$response->city = $result[0]->location;
+}
 
 			}else{
 
@@ -68,10 +70,25 @@ class Locations_model extends CI_Model {
 
 			}
 
-			$response->latitude = $result[0]->latitude;
-			$response->longitude = $result[0]->longitude;
-			$response->status = $result[0]->status;
+
+if(!empty($result[0]->latitude)){
+$response->latitude = $result[0]->latitude;
+}
+
+if(!empty($result[0]->latitude)){
+$response->longitude = $result[0]->longitude;
+}
+
+if(!empty($result[0]->latitude)){
+$response->status = $result[0]->status;
+}
+
+
 			$response->id = $id;
+
+
+			
+
 			return $response;
 
 		}

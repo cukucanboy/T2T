@@ -19,7 +19,7 @@ class Extras extends MX_Controller {
 				$this->data['role'] = $this->role;
 				$this->accType = $this->session->userdata('pt_accountType');
     
-   	 			$this->data['modModel'] = $this->modules_model;
+   	 			$this->data['modModel'] = @$this->modules_model;
 		}
 
 		function listings($module,$items = null, $supplierItems = null){
@@ -42,8 +42,10 @@ class Extras extends MX_Controller {
 
 		  	 
 		  }
-
-		  	$this->data['otherItems'] = implode(",",$otherItems);
+if(isset($otherItems)){
+$this->data['otherItems'] = implode(",",$otherItems);
+}
+		  	
 
 /*		  foreach($items as $i){
 		  	$supplierItems[] = $i->id; 

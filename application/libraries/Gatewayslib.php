@@ -45,7 +45,7 @@ class Gatewayslib
         while (false !== $file = readdir($dh)) {
             $fileext = explode(".", $file, 2);
 
-            if (((trim($file) && $file != "index.php") && $fileext[1] == "php") && !in_array($fileext[0], $this->includedmodules)) {
+            if (((trim($file) && @$file != "index.php") && @$fileext[1] == "php") && !in_array($fileext[0],$this->includedmodules)) {
                 $this->includedmodules[] = $fileext[0];
                 $gwv_modulename = $fileext[0];
 

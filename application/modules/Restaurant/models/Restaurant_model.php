@@ -164,14 +164,6 @@ class Restaurant_model extends CI_Model {
 				$paymentopt = @ implode(",", $this->input->post('restaurantpayments'));
 				$relatedrestaurant = @ implode(",", $this->input->post('relatedrestaurant'));
 
-        $nearbydata = $this->input->post('nearbyrelatedrestaurant');
-        if(!empty($nearbydata)){
-          $checknearby = $this->convert_json(@ implode(",", $nearbydata));
-          $nearbyrelatedrestaurant = $checknearby;
-        }else{
-          $nearbyrelatedrestaurant = '';
-        }
-
 
 				$featured = $this->input->post('isfeatured');
 				if(empty($featured)){
@@ -232,9 +224,7 @@ class Restaurant_model extends CI_Model {
 					'restaurant_nights' => intval($this->input->post('restaurantnights')),
 					'restaurant_privacy' => $this->input->post('restaurantprivacy'),
 					'restaurant_status' => $this->input->post('restauranttatus'),
-					'restaurant_related' => $relatedrestaurant,
-          'restaurant_nearby_related' => $nearbyrelatedrestaurant,
-          'restaurant_order' => $restaurantorder,
+					'restaurant_related' => $relatedrestaurant, 'restaurant_order' => $restaurantorder,
 					'restaurant_comm_fixed' => $commfixed, 'restaurant_comm_percentage' => $commper,
 					'restaurant_tax_fixed' => $taxfixed, 'restaurant_tax_percentage' => $taxper,
 					'restaurant_email' => $this->input->post('restaurantemail'),
@@ -294,14 +284,6 @@ class Restaurant_model extends CI_Model {
 				$exclusions = @ implode(",", $this->input->post('restaurantexclusions'));
 				$paymentopt = @ implode(",", $this->input->post('restaurantpayments'));
 				$relatedrestaurant = @ implode(",", $this->input->post('relatedrestaurant'));
-
-        $nearbydata = $this->input->post('nearbyrelatedrestaurant');
-        if(!empty($nearbydata)){
-          $nearbytmp = @ implode(",", $nearbydata);
-          $nearbyrelatedrestaurant = $this->convert_json($nearbytmp);
-        }else{
-          $nearbyrelatedrestaurant = '';
-        }
 
 				$featured = $this->input->post('isfeatured');
 
@@ -363,7 +345,6 @@ class Restaurant_model extends CI_Model {
 					'restaurant_privacy' => $this->input->post('restaurantprivacy'),
 					'restaurant_status' => $this->input->post('restauranttatus'),
 					'restaurant_related' => $relatedrestaurant,
-          'restaurant_nearby_related' => $nearbyrelatedrestaurant,
 					'restaurant_comm_fixed' => $commfixed, 'restaurant_comm_percentage' => $commper,
 					'restaurant_tax_fixed' => $taxfixed, 'restaurant_tax_percentage' => $taxper,
 					'restaurant_email' => $this->input->post('restaurantemail'),
@@ -376,71 +357,6 @@ class Restaurant_model extends CI_Model {
 
 				$this->updateRestaurantLocations($this->input->post('locations'), $id);
 	}
-
-  function convert_json($nearbyrelatedtour)
-  {
-    $return_js = [];
-    $data = explode(',',$nearbyrelatedtour);
-    foreach ($data as $key) {
-      //print_r($key);
-      $getmd = substr($key,-2);
-      $getid = substr($key, 0, -2);
-      $chkmd = $this->chkmodulefw($getmd);
-      $row['id'] = $getid;
-      $row['module'] = $chkmd;
-      array_push($return_js,$row);
-    }
-    return json_encode($return_js);
-
-  }
-
-  function chkmodulefw($module)
-  {
-    $list = array('advertising' => 'ad', 'car' => 'ca', 'spa' => 'sp', 'entertainment' => 'et', 'activity' => 'at' ,'tour' => 'to', 'restaurant' => 'rt' ,'wedding' => 'wd' , 'hotel' => 'ht');
-    $key = array_search($module ,$list);
-    return $key;
-  }
-
-  function chkmodulerr($module)
-  {
-    $list = array('ad' => 'advertising', 'ca' => 'car', 'sp' => 'spa', 'et' => 'entertainment', 'at' => 'activity' ,'to' => 'tour', 'rt' => 'restaurant' ,'wd' => 'wedding' , 'ht' => 'hotel');
-    $key = array_search($module ,$list);
-    return $key;
-  }
-
-  function nearbyhtml($data)
-  {
-    $items = json_decode($data);
-    foreach ($items as $key => $value)
-    {
-      $md = $this->chkmodulerr($value->module);
-      $list .= $value->id.'' .$md .',';
-    }
-    return $list;
-  }
-
-  // get data all module to relate product
-  function data_for_relate_near_by()
-  {
-    $sql = ("SELECT hotel_id as id,hotel_title as title, 'hotel' as module FROM pt_hotels
-      UNION ALL
-      SELECT car_id as id,car_title as title, 'car' as module FROM pt_cars
-      UNION ALL
-      SELECT spa_id as id,spa_title as title, 'spa' as module FROM pt_spa
-      UNION ALL
-      SELECT activity_id as id,activity_title as title, 'activity' as module FROM pt_activity
-      UNION ALL
-      SELECT tour_id as id,tour_title as title, 'tour' as module FROM pt_tours
-      UNION ALL
-      SELECT restaurant_id as id,restaurant_title as title, 'restaurant' as module FROM pt_restaurant
-      UNION ALL
-      SELECT wedding_id as id,wedding_title as title, 'wedding' as module FROM pt_wedding
-      UNION ALL
-      SELECT entertainment_id as id,entertainment_title as title, 'entertainment' as module FROM pt_entertainment;"
-    );
-    $query = $this->db->query($sql);
-    return $query->result();
-  }
 
 // Add restaurant settings data
 		function add_settings_data() {

@@ -163,8 +163,17 @@ class Activity_model extends CI_Model {
 				$exclusions = @ implode(",", $this->input->post('activityexclusions'));
 				$paymentopt = @ implode(",", $this->input->post('activitypayments'));
 				$relatedactivity = @ implode(",", $this->input->post('relatedactivity'));
-        $checknearby = $this->convert_json(@ implode(",", $this->input->post('nearbyrelatedactivity')));
-        $nearbyrelatedactivity = $checknearby;
+
+				// Start Related Products 1
+				$relatedProdHotels = @ implode(",", $this->input->post('relatedProdHotels'));
+				$relatedProdTestaurant = @ implode(",", $this->input->post('relatedProdRestaurant'));
+				$relatedProdTours = @ implode(",", $this->input->post('relatedProdTours'));
+				$relatedProdWedding = @ implode(",", $this->input->post('relatedProdWedding'));
+				$relatedProdCars = @ implode(",", $this->input->post('relatedProdCars'));
+				$relatedProdSpa = @ implode(",", $this->input->post('relatedProdspa'));
+				// End Related Products
+
+
 
 				$featured = $this->input->post('isfeatured');
 				if(empty($featured)){
@@ -206,7 +215,7 @@ class Activity_model extends CI_Model {
 					'activity_latitude' => $this->input->post('latitude'),
 					'activity_longitude' => $this->input->post('longitude'),
 					'activity_mapaddress' => $this->input->post('activitymapaddress'),
-	                //'activity_basic_price' => $this->input->post('basic'),
+	                		//'activity_basic_price' => $this->input->post('basic'),
 					//'activity_basic_discount' => $this->input->post('discount'),
 					'activity_meta_title' => $this->input->post('activitymetatitle'),
 					'activity_meta_keywords' => $this->input->post('activitykeywords'),
@@ -226,7 +235,16 @@ class Activity_model extends CI_Model {
 					'activity_privacy' => $this->input->post('activityprivacy'),
 					'activity_status' => $this->input->post('activitytatus'),
 					'activity_related' => $relatedactivity,
-          'activity_nearby_related' => $nearbyrelatedactivity,
+					/* product_related */
+					'product_related_hotels' =>$relatedProdHotels,
+					'product_related_restaurant' =>$relatedProdTestaurant,
+					'product_related_wedding' =>$relatedProdWedding,
+					'product_related_tours' => $relatedProdTours,
+					'product_related_spa' => $relatedProdSpa,
+					'product_related_cars' => $relatedProdCars,
+					/* product_related */
+
+
           'activity_order' => $activityorder,
 					'activity_comm_fixed' => $commfixed, 'activity_comm_percentage' => $commper,
 					'activity_tax_fixed' => $taxfixed, 'activity_tax_percentage' => $taxper,
@@ -287,8 +305,16 @@ class Activity_model extends CI_Model {
 				$exclusions = @ implode(",", $this->input->post('activityexclusions'));
 				$paymentopt = @ implode(",", $this->input->post('activitypayments'));
 				$relatedactivity = @ implode(",", $this->input->post('relatedactivity'));
-        $nearbytmp = @ implode(",", $this->input->post('nearbyrelatedactivity'));
-        $nearbyrelatedactivity = $this->convert_json($nearbytmp);
+
+				// Start Related Products
+				$relatedProdHotels = @ implode(",", $this->input->post('relatedProdHotels'));
+				$relatedProdTestaurant = @ implode(",", $this->input->post('relatedProdRestaurant'));
+				$relatedProdTours = @ implode(",", $this->input->post('relatedProdTours'));
+				$relatedProdWedding = @ implode(",", $this->input->post('relatedProdWedding'));
+				$relatedProdCars = @ implode(",", $this->input->post('relatedProdCars'));
+				$relatedProdSpa = @ implode(",", $this->input->post('relatedProdspa'));
+				// End Related Products
+
 
 				$featured = $this->input->post('isfeatured');
 
@@ -330,7 +356,7 @@ class Activity_model extends CI_Model {
 					'activity_latitude' => $this->input->post('latitude'),
 					'activity_longitude' => $this->input->post('longitude'),
 					'activity_mapaddress' => $this->input->post('activitymapaddress'),
-	                //'activity_basic_price' => $this->input->post('basic'),
+	                		//'activity_basic_price' => $this->input->post('basic'),
 					//'activity_basic_discount' => $this->input->post('discount'),
 					'activity_meta_title' => $this->input->post('activitymetatitle'),
 					'activity_meta_keywords' => $this->input->post('activitykeywords'),
@@ -350,7 +376,18 @@ class Activity_model extends CI_Model {
 					'activity_privacy' => $this->input->post('activityprivacy'),
 					'activity_status' => $this->input->post('activitytatus'),
 					'activity_related' => $relatedactivity,
-          'activity_nearby_related' => $nearbyrelatedactivity,
+
+					/* product_related */
+					'product_related_hotels' =>$relatedProdHotels,
+					'product_related_restaurant' =>$relatedProdTestaurant,
+					'product_related_wedding' =>$relatedProdWedding,
+					'product_related_tours' => $relatedProdTours,
+					'product_related_spa' => $relatedProdSpa,
+					'product_related_cars' => $relatedProdCars,
+					/* product_related */
+
+
+
 					'activity_comm_fixed' => $commfixed, 'activity_comm_percentage' => $commper,
 					'activity_tax_fixed' => $taxfixed, 'activity_tax_percentage' => $taxper,
 					'activity_email' => $this->input->post('activityemail'),

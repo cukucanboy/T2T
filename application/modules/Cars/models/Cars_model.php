@@ -189,16 +189,8 @@ $this->db->join('pt_car_images','pt_cars.car_id = pt_car_images.cimg_car_id','le
 
         $paymentopt =  @implode(",",$this->input->post('carpayments'));
 				$relatedcars = @implode(",", $this->input->post('relatedcars'));
-
-				$nearbydata = $this->input->post('nearbyrelatedcar');
-				if(!empty($nearbydata)){
-					$checknearby = $this->convert_json(@ implode(",", $nearbydata));
-					$nearbyrelatedcar = $checknearby;
-				}else{
-					$nearbyrelatedcar = '';
-				}
-
-
+				$checknearby = $this->convert_json(@ implode(",", $this->input->post('nearbyrelatedcar')));
+		    $nearbyrelatedcar = $checknearby;
 
 				$stars = $this->input->post('carstars');
 				if(empty($stars)){
@@ -303,14 +295,8 @@ $this->db->join('pt_car_images','pt_cars.car_id = pt_car_images.cimg_car_id','le
 
 				$paymentopt = @ implode(",", $this->input->post('carpayments'));
 				$relatedcars = @ implode(",", $this->input->post('relatedcars'));
-
-				$nearbydata = $this->input->post('nearbyrelatedcar');
-		    if(!empty($nearbydata)){
-					$nearbytmp = @ implode(",", $nearbydata);
-					$nearbyrelatedcar = $this->convert_json($nearbytmp);
-		    }else{
-		      $nearbyrelatedcar = '';
-		    }
+				$nearbytmp = @ implode(",", $this->input->post('nearbyrelatedcar'));
+		    $nearbyrelatedcar = $this->convert_json($nearbytmp);
 
 				$featured = $this->input->post('isfeatured');
 

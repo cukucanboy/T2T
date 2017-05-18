@@ -148,7 +148,6 @@ class Carsback extends MX_Controller {
 		function add() {
 				$this->load->model('Cars/Cars_uploads_model');
 				$addcar = $this->input->post('submittype');
-				$this->data['data_relate'] = $this->Cars_model->data_for_relate_near_by(); //add by poy
 				$this->data['submittype'] = "add";
 
 				if (!empty ($addcar)) {
@@ -177,6 +176,17 @@ $this->form_validation->set_rules('enddate','car End Date', 'trim|required');
 						$this->data['carpayments'] = $this->Cars_model->get_csettings_data("cpayments");
 						$this->data['all_countries'] = $this->Countries_model->get_all_countries();
 						$this->data['all_cars'] = $this->Cars_model->select_related_cars();
+
+												/* product_related */
+$this->data['all_hotels'] = $this->Hotels_model->select_related_hotels($this->data['userloggedin']);
+$this->data['all_restaurant'] = $this->Restaurant_model->select_related_restaurant($this->data['userloggedin']);
+$this->data['all_wedding'] = $this->Wedding_model->select_related_wedding($this->data['userloggedin']);
+$this->data['all_tours'] = $this->Tours_model->select_related_tours($this->data['userloggedin']);
+$this->data['all_spa'] = $this->Spa_model->select_related_spa($this->data['userloggedin']);
+$this->data['all_activity'] = $this->Activity_model->select_related_activity($this->data['userloggedin']);
+//$this->data['all_cars'] = $this->Cars_model->select_related_cars($this->data['userloggedin']);
+/* product_related */
+
 						$this->data['main_content'] = 'Cars/manage';
 						$this->data['page_title'] = 'Add Car';
 						$this->load->view('Admin/template', $this->data);

@@ -55,7 +55,7 @@ class hotelsback extends MX_Controller {
 				$this->load->helper('Hotels/hotels');
 				$this->data['languages'] = pt_get_languages();
 				$this->load->helper('xcrud');
-				$this->data['c_model'] = $this->countries_model;
+				$this->data['c_model'] = @$this->countries_model;
 				$this->data['tripadvisor'] = $this->ptmodules->is_mod_available_enabled("tripadvisor");
                 $this->data['addpermission'] = true;
                 if($this->role == "supplier" || $this->role == "admin"){
@@ -170,7 +170,7 @@ class hotelsback extends MX_Controller {
 				$this->LoadXcrudHotelSettings("hpayments");
 				$this->LoadXcrudHotelSettings("ramenities");
 				$this->LoadXcrudHotelSettings("rtypes");
-                $this->data['typeSettings'] = $this->Hotels_model->get_hotel_settings_data();
+                		$this->data['typeSettings'] = $this->Hotels_model->get_hotel_settings_data();
 				$this->data['all_hotels'] = $this->Hotels_model->all_hotels_names();
 				@ $this->data['settings'] = $this->Settings_model->get_front_settings("hotels");
 				$this->data['main_content'] = 'Hotels/settings';
@@ -185,8 +185,8 @@ class hotelsback extends MX_Controller {
 
 				  }else{
                 $this->load->model('Admin/Uploads_model');
-								$addhotel = $this->input->post('submittype');
-								$this->data['data_relate'] = $this->Hotels_model->data_for_relate_near_by(); // add by poy
+		$addhotel = $this->input->post('submittype');
+		$this->data['data_relate'] = $this->Hotels_model->data_for_relate_near_by(); // add by poy
                 $this->data['submittype'] = "add";
 
 				if (!empty ($addhotel)) {
@@ -214,6 +214,19 @@ class hotelsback extends MX_Controller {
 						$this->data['hamts'] = pt_get_hsettings_data("hamenities");
 						$this->data['hpayments'] = pt_get_hsettings_data("hpayments");
 						$this->data['all_hotels'] = $this->Hotels_model->select_related_hotels($this->data['userloggedin']);
+						
+/* product_related */
+$this->data['all_restaurant'] = $this->Restaurant_model->select_related_restaurant($this->data['userloggedin']);
+$this->data['all_wedding'] = $this->Wedding_model->select_related_wedding($this->data['userloggedin']);
+$this->data['all_tours'] = $this->Tours_model->select_related_tours($this->data['userloggedin']);
+$this->data['all_spa'] = $this->Spa_model->select_related_spa($this->data['userloggedin']);
+$this->data['all_activity'] = $this->Activity_model->select_related_activity($this->data['userloggedin']);
+$this->data['all_cars'] = $this->Cars_model->select_related_cars($this->data['userloggedin']);
+/* product_related */
+						
+						
+						
+						
 						$this->load->model('Admin/Locations_model');
 						$this->data['locations'] = $this->Locations_model->getLocationsBackend();
 						$this->load->view('Admin/template', $this->data);
@@ -290,6 +303,18 @@ class hotelsback extends MX_Controller {
 						$this->data['hpayments'] = pt_get_hsettings_data("hpayments");
 						$this->data['hotelpaytypes'] = explode(",", $this->data['hdata'][0]->hotel_payment_opt);
 						$this->data['all_hotels'] = $this->Hotels_model->select_related_hotels($this->data['userloggedin']);
+						
+					/* product_related */
+					$this->data['all_restaurant'] = $this->Restaurant_model->select_related_restaurant($this->data['userloggedin']);
+					$this->data['all_wedding'] = $this->Wedding_model->select_related_wedding($this->data['userloggedin']);
+					$this->data['all_tours'] = $this->Tours_model->select_related_tours($this->data['userloggedin']);
+					$this->data['all_spa'] = $this->Spa_model->select_related_spa($this->data['userloggedin']);
+					$this->data['all_activity'] = $this->Activity_model->select_related_activity($this->data['userloggedin']);
+					$this->data['all_cars'] = $this->Cars_model->select_related_cars($this->data['userloggedin']);
+					/* product_related */
+						
+						
+						
 						$this->load->model('Admin/Locations_model');
 						$this->data['locations'] = $this->Locations_model->getLocationsBackend();
 						$this->data['hotelid'] = $this->data['hdata'][0]->hotel_id;
@@ -836,7 +861,7 @@ if(!$this->data['addpermission'] && !$this->editpermission && !$this->deleteperm
 
 			 $hotels = $this->Hotels_model->all_hotels();
 
-			echo  modules :: run('Admin/extras/listings','hotels',$hotels);
+			echo  modules::run('Admin/extras/listings','hotels',$hotels);
 
 		}
 

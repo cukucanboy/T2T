@@ -39,7 +39,7 @@ $(function(){
 
 })
 </script>
-<h3 class="margin-top-0"><?php echo $headingText;?></h3>
+<h3 class="margin-top-0"><?php echo @$headingText;?></h3>
 
     <div class="output"></div>
 <form action="" method="POST" class="offer-form" onsubmit="return false;" >

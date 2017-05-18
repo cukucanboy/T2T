@@ -292,15 +292,7 @@ class Wedding_lib
         } else {
             $rwedding = "";
         }
-
-        if (!empty($details[0]->wedding_nearby_related)) {
-            $nearbyrwedding = explode(",", $details[0]->wedding_nearby_related);
-        } else {
-            $nearbyrwedding = "";
-        }
-
         $relatedWedding = $this->getRelatedWedding($rwedding);
-        $nearbyrelatedWedding = $this->getNearbyRelatedWedding($nearbyrwedding);
         $thumbnail = PT_WEDDING_SLIDER_THUMB . $details[0]->thumbnail_image;
         $city = pt_LocationsInfo($details[0]->wedding_location, $this->lang);
         $location = $city->city; // $details[0]->wedding_location;
@@ -341,55 +333,7 @@ class Wedding_lib
         $this->tax_value = $taxcom['taxval'];
         $this->setDeposit($curr->convertPriceFloat($totalCost, 2));
         $depositAmount = $this->deposit;
-        $detailResults = (object)array(
-          'id' => $details[0]->wedding_id,
-          'title' => $title,
-          'slug' => $slug,
-          'bookingSlug' => $bookingSlug,
-          'thumbnail' => $thumbnail,
-          'stars' => pt_create_stars($stars),
-          'starsCount' => $stars,
-          'location' => $location,
-          'desc' => $desc,
-          'inclusions' => $inclusions,
-          'exclusions' => $exclusions,
-          'latitude' => $latitude,
-          'longitude' => $longitude,
-          'sliderImages' => $sliderImages,
-          'relatedItems' => $relatedWedding,
-          'nearbyrelatedItems' => $nearbyrelatedWedding,
-          'paymentOptions' => $paymentOptions,
-          'metadesc' => $metadesc,
-          'keywords' => $keywords,
-          'policy' => $policy,
-          'website' => $website,
-          'email' => $email,
-          'phone' => $phone,
-          'maxAdults' => $maxAdults,
-          'maxChild' => $maxChild,
-          'maxInfant' => $maxInfant,
-          'adultStatus' => $adultStatus,
-          'childStatus' => $childStatus,
-          'infantStatus' => $infantStatus,
-          'adultPrice' => $adultPrice,
-          'childPrice' => $childPrice,
-          'infantPrice' => $infantPrice,
-          'perAdultPrice' => $perAdultPrice,
-          'perChildPrice' => $perChildPrice,
-          'perInfantPrice' => $perInfantPrice,
-          'currCode' => $curr->code,
-          'currSymbol' => $curr->symbol,
-          'date' => $this->date,
-          'totalCost' => $curr->convertPrice($totalCost),
-          'comType' => $comm_type,
-          'comValue' => $comm_value,
-          'taxType' => $tax_type,
-          'taxValue' => $tax_value,
-          'weddingDays' => $weddingDays,
-          'weddingNights' => $weddingNights,
-          'totalDeposit' => $depositAmount,
-          'mapAddress' => $details[0]->wedding_mapaddress,
-          'ogimg' => $ogimg);
+        $detailResults = (object)array('id' => $details[0]->wedding_id, 'title' => $title, 'slug' => $slug, 'bookingSlug' => $bookingSlug, 'thumbnail' => $thumbnail, 'stars' => pt_create_stars($stars), 'starsCount' => $stars, 'location' => $location, 'desc' => $desc, 'inclusions' => $inclusions, 'exclusions' => $exclusions, 'latitude' => $latitude, 'longitude' => $longitude, 'sliderImages' => $sliderImages, 'relatedItems' => $relatedWedding, 'paymentOptions' => $paymentOptions, 'metadesc' => $metadesc, 'keywords' => $keywords, 'policy' => $policy, 'website' => $website, 'email' => $email, 'phone' => $phone, 'maxAdults' => $maxAdults, 'maxChild' => $maxChild, 'maxInfant' => $maxInfant, 'adultStatus' => $adultStatus, 'childStatus' => $childStatus, 'infantStatus' => $infantStatus, 'adultPrice' => $adultPrice, 'childPrice' => $childPrice, 'infantPrice' => $infantPrice, 'perAdultPrice' => $perAdultPrice, 'perChildPrice' => $perChildPrice, 'perInfantPrice' => $perInfantPrice, 'currCode' => $curr->code, 'currSymbol' => $curr->symbol, 'date' => $this->date, 'totalCost' => $curr->convertPrice($totalCost), 'comType' => $comm_type, 'comValue' => $comm_value, 'taxType' => $tax_type, 'taxValue' => $tax_value, 'weddingDays' => $weddingDays, 'weddingNights' => $weddingNights, 'totalDeposit' => $depositAmount, 'mapAddress' => $details[0]->wedding_mapaddress, 'ogimg' => $ogimg);
         return $detailResults;
     }
 
@@ -422,7 +366,7 @@ class Wedding_lib
         $this->bookingSlug = $details[0]->wedding_slug . $this->urlVars;
         $city = pt_LocationsInfo($details[0]->wedding_location, $this->lang);
         $this->location = $city->city;
-        //$details[0]->wedding_location;
+//$details[0]->wedding_location;
         $this->latitude = $details[0]->wedding_latitude;
         $this->longitude = $details[0]->wedding_longitude;
         $this->thumbnail = PT_WEDDING_SLIDER_THUMB . $details[0]->thumbnail_image;
@@ -540,19 +484,6 @@ class Wedding_lib
         }
         $result = $this->getLimitedResultObject($resultwedding);
         return $result;
-    }
-
-    function getNearbyRelatedWedding($wedding)
-    {
-      $resultwedding = array();
-      $result = array();
-      if (!empty($wedding)) {
-          foreach ($wedding as $t) {
-                  $resultwedding[] = (object)array('wedding_id' => $t);
-              }
-      }
-      $result = $this->getLimitedResultObject($resultwedding);
-      return $result;
     }
 
 // Get Wedding updated Price on changing adults, child and infant count.

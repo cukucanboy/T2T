@@ -40,7 +40,7 @@
   })
 </script>
 <h3 class="margin-top-0"><?php //echo $tdata[0]->activity_title;?></h3>
-<?php print_r($tobj); ?>
+<?php print_r(@$tobj); ?>
 <div class="output"></div>
 <form class="form-horizontal activity-form" method="POST" action="" enctype="multipart/form-data"  onsubmit="return false;" >
   <div class="panel panel-default">
@@ -62,21 +62,21 @@
             <label class="col-md-2 control-label text-left">Status</label>
             <div class="col-md-2">
               <select  class="form-control" name="activitytatus">
-                <option value="Yes" <?php if($tdata[0]->activity_status == "Yes"){echo "selected";} ?> >Enabled</option>
-                <option value="No" <?php if($tdata[0]->activity_status == "No"){echo "selected";} ?> >Disabled</option>
+                <option value="Yes" <?php if(@$tdata[0]->activity_status == "Yes"){echo "selected";} ?> >Enabled</option>
+                <option value="No" <?php if(@$tdata[0]->activity_status == "No"){echo "selected";} ?> >Disabled</option>
               </select>
             </div>
           </div>
           <div class="row form-group">
             <label class="col-md-2 control-label text-left">Activity Name</label>
             <div class="col-md-4">
-              <input class="form-control" type="text" placeholder="Activity Name" name="activityname" value="<?php echo $tdata[0]->activity_title;?>" >
+              <input class="form-control" type="text" placeholder="Activity Name" name="activityname" value="<?php echo @$tdata[0]->activity_title;?>" >
             </div>
           </div>
           <div class="row form-group">
             <label class="col-md-2 control-label text-left">Activity Description</label>
             <div class="col-md-10">
-              <?php $this->ckeditor->editor('activitydesc', $tdata[0]->activity_desc, $ckconfig,'activitydesc'); ?>
+              <?php $this->ckeditor->editor('activitydesc', @$tdata[0]->activity_desc, $ckconfig,'activitydesc'); ?>
             </div>
           </div>
           <div class="row form-group">
@@ -150,7 +150,6 @@
                         $("#infantbtn").text("Enable");
                         $("#infantstatus").val("0");
 
-
                         }
 
                     });
@@ -174,7 +173,6 @@
                           $(".child").prop("readonly",true);
                         $("#childbtn").text("Enable");
                         $("#childstatus").val("0");
-
 
                         }
 
@@ -218,7 +216,7 @@
                 <option value="0">Select</option>
                 <?php
                   for($stars=0;$stars <=5;$stars++){?>
-                <option value="<?php echo $stars;?>" <?php if($stars == $tdata[0]->activity_stars ){echo "selected";} ?> ><?php echo $stars;?></option>
+                <option value="<?php echo $stars;?>" <?php if($stars == @$tdata[0]->activity_stars ){echo "selected";} ?> ><?php echo $stars;?></option>
                 <?php   } ?>
               </select>
             </div>
@@ -241,7 +239,6 @@
             </div>
           </div>
 
-
           <div class="row form-group">
             <label class="col-md-2 control-label text-left">Activity Type</label>
             <div class="col-md-4">
@@ -249,7 +246,7 @@
                 <option value="">Select</option>
                 <?php if(!empty($activitytypes)){
                   foreach($activitytypes as $tt){ ?>
-                <option value="<?php echo $tt->sett_id;?>" <?php if($tdata[0]->activity_type ==  $tt->sett_id ){echo "selected";} ?> ><?php echo $tt->sett_name;?></option>
+                <option value="<?php echo $tt->sett_id;?>" <?php if(@$tdata[0]->activity_type ==  $tt->sett_id ){echo "selected";} ?> ><?php echo $tt->sett_name;?></option>
                 <?php  } } ?>
               </select>
             </div>
@@ -259,15 +256,15 @@
             <label class="col-md-2 control-label text-left">Featured</label>
             <div class="col-md-2">
               <select  Placeholder="No" class="form-control" Placeholder="No" name="isfeatured" id="isfeatured" onchange="changecollapse(this.options[this.selectedIndex].value,'Featured')">
-                <option  value="no" <?php if($tdata[0]->activity_is_featured == "no"){echo "selected";} ?> >No</option>
-                <option  value="yes" <?php if($tdata[0]->activity_is_featured == "yes"){echo "selected";} ?> >Yes</option>
+                <option  value="no" <?php if(@$tdata[0]->activity_is_featured == "no"){echo "selected";} ?> >No</option>
+                <option  value="yes" <?php if(@$tdata[0]->activity_is_featured == "yes"){echo "selected";} ?> >Yes</option>
               </select>
             </div>
             <div class="col-md-2">
-              <input class="form-control dpd1" type="text" placeholder="From" value="<?php if(empty($tdata[0]->activity_featured_forever)){ echo pt_show_date_php($tdata[0]->activity_featured_from);}?>" name="ffrom" >
+              <input class="form-control dpd1" type="text" placeholder="From" value="<?php if(empty($tdata[0]->activity_featured_forever)){ echo @pt_show_date_php($tdata[0]->activity_featured_from);}?>" name="ffrom" >
             </div>
             <div class="col-md-2">
-              <input class="form-control dpd2" type="text" placeholder="To" value="<?php if(empty($tdata[0]->activity_featured_forever)){ echo pt_show_date_php($tdata[0]->activity_featured_to);}?>" name="fto" >
+              <input class="form-control dpd2" type="text" placeholder="To" value="<?php if(empty($tdata[0]->activity_featured_forever)){ echo @pt_show_date_php($tdata[0]->activity_featured_to);}?>" name="fto" >
             </div>
           <?php  }else{ ?>
           <input type="hidden" name="isfeatured" value="<?php echo @$tdata[0]->activity_is_featured; ?>">
@@ -282,7 +279,7 @@
             <div class="panel-heading">Locations</div>
             <div class="panel-body">
 
-            <?php  for($i=1; $i<=10; $i++) { $locationName =  $activitylocations[$i]->name; ?>
+            <?php  for($i=1; $i<=3; $i++) { $locationName =  @$activitylocations[$i]->name; ?>
 
             <label class="col-md-2 control-label text-left">Location <?php echo $i; ?></label>
             <div class="col-md-6">
@@ -334,34 +331,32 @@
             </div>
           </div>
 
-          <div class="row form-group">
 
-          </div>
           <div class="row form-group">
             <label class="col-md-2 control-label text-left text-success">Deposit / Commission</label>
             <div class="col-md-2">
             <?php  if($isadmin){ ?>
               <select name="deposittype" class="form-control">
-                <option value="fixed" <?php if($activitydeposittype == "fixed"){ echo "selected";} ?> >Fixed</option>
-                <option value="percentage" <?php if($activitydeposittype == "percentage"){ echo "selected";} ?> >Percentage</option>
+                <option value="fixed" <?php if(@$activitydeposittype == "fixed"){ echo "selected";} ?> >Fixed</option>
+                <option value="percentage" <?php if(@$activitydeposittype == "percentage"){ echo "selected";} ?> >Percentage</option>
               </select>
-               <?php }else{ ?><input type="text" class="form-control" name="deposittype" value="<?php echo $activitydeposittype; ?>" readonly="readonly"><?php } ?>
+               <?php }else{ ?><input type="text" class="form-control" name="deposittype" value="<?php echo @$activitydeposittype; ?>" readonly="readonly"><?php } ?>
 
             </div>
             <div class="col-md-2">
-              <input type="text" class="form-control" id="" placeholder="" name="depositvalue" value="<?php echo $activitydepositval; ?>" <?php if(!$isadmin){ echo "readonly"; } ?>  >
+              <input type="text" class="form-control" id="" placeholder="" name="depositvalue" value="<?php echo @$activitydepositval; ?>" <?php if(!$isadmin){ echo "readonly"; } ?>  >
             </div>
           </div>
           <div class="row form-group">
             <label class="col-md-2 control-label text-left text-danger">Vat Tax</label>
             <div class="col-md-2">
               <select name="taxtype" class="form-control">
-                <option value="fixed" <?php if($activitytaxtype == "fixed"){ echo "selected";} ?> >Fixed</option>
-                <option value="percentage" <?php if($activitytaxtype == "percentage"){ echo "selected";} ?> >Percentage</option>
+                <option value="fixed" <?php if(@$activitytaxtype == "fixed"){ echo "selected";} ?> >Fixed</option>
+                <option value="percentage" <?php if(@$activitytaxtype == "percentage"){ echo "selected";} ?> >Percentage</option>
               </select>
             </div>
             <div class="col-md-2">
-              <input class="form-control" id="" Placeholder="" type="text" name="taxvalue" value="<?php echo $activitytaxval; ?>"  />
+              <input class="form-control" id="" Placeholder="" type="text" name="taxvalue" value="<?php echo @$activitytaxval; ?>"  />
             </div>
           </div>
 
@@ -379,39 +374,96 @@
             </div>
           </div>
 
-          <!--Near by tour-->
-          <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
-            <label class="col-md-2 control-label text-left">Nearby Related</label>
-            <div class="col-md-8">
-              <select multiple class="chosen-multi-select" name="nearbyrelatedactivity[]">
-                <?php if(!empty($data_relate)){
-                  $activitynearbyrelated = explode(",",$this->Activity_model->nearbyhtml($tdata[0]->activity_nearby_related));
-                  foreach($data_relate as $t):
-                    if($t->module == "hotel"){
-                      $module = "ht";
-                    }elseif($t->module == "car"){
-                      $module = "ca";
-                    }elseif ($t->module == "spa") {
-                      $module = "sp";
-                    }elseif ($t->module == "activity") {
-                      $module = "at";
-                    }elseif ($t->module == "tour") {
-                      $module = "to";
-                    }elseif ($t->module == "restaurant") {
-                      $module = "rt";
-                    }elseif ($t->module == "wedding") {
-                      $module = "wd";
-                    }elseif ($t->module == "advertising") {
-                      $module = "ad";
-                    }
+      <div class="panel panel-default">
+            <div class="panel-heading">Related Products</div>
+            <div class="panel-body">
 
-                    $value = $t->id.''.$module ;
+        <!--Related Hotels -->
+          <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
+            <label class="col-md-2 control-label text-left">Related Hotels</label>
+            <div class="col-md-8">
+              <select multiple class="chosen-multi-select" name="relatedProdHotels[]">
+                <?php if(!empty($all_hotels)){ $hotelsRelated = explode(",",$tdata[0]->product_related_hotels);
+                  foreach($all_hotels as $t):
                   ?>
-                <option value="<?= $value ?>" <?php if(in_array($value,$activitynearbyrelated)){echo "selected";} ?>  ><?php echo $t->title;?></option>
+                <option value="<?php echo $t->hotel_id;?>" <?php if(in_array($t->hotel_id,$hotelsRelated)){echo "selected";} ?>  ><?php echo $t->hotel_title;?></option>
                 <?php endforeach; } ?>
               </select>
             </div>
           </div>
+
+        <!--Related Restaurant -->
+          <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
+            <label class="col-md-2 control-label text-left">Related Restaurant</label>
+            <div class="col-md-8">
+              <select multiple class="chosen-multi-select" name="relatedProdRestaurant[]">
+                <?php if(!empty($all_restaurant)){ $restaurantRelated = explode(",",$tdata[0]->product_related_restaurant);
+                  foreach($all_restaurant as $t):
+                  ?>
+                <option value="<?php echo $t->restaurant_id;?>" <?php if(in_array($t->restaurant_id,$restaurantRelated)){echo "selected";} ?>  ><?php echo $t->restaurant_title;?></option>
+                <?php endforeach; } ?>
+              </select>
+            </div>
+          </div>
+        <!--Related Wedding -->
+          <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
+            <label class="col-md-2 control-label text-left">Related Wedding</label>
+            <div class="col-md-8">
+              <select multiple class="chosen-multi-select" name="relatedProdWedding[]">
+                <?php if(!empty($all_wedding)){ $weddingRelated = explode(",",$tdata[0]->product_related_wedding);
+                  foreach($all_wedding as $t):
+                  ?>
+                <option value="<?php echo $t->wedding_id;?>" <?php if(in_array($t->wedding_id,$weddingRelated)){echo "selected";} ?>  ><?php echo $t->wedding_title;?></option>
+                <?php endforeach; } ?>
+              </select>
+            </div>
+          </div>
+
+        <!--Related Tour -->
+          <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
+            <label class="col-md-2 control-label text-left">Related tour</label>
+            <div class="col-md-8">
+              <select multiple class="chosen-multi-select" name="relatedProdTours[]">
+                <?php if(!empty($all_tours)){$toursRelated = explode(",",$tdata[0]->product_related_tours);
+                  foreach($all_tours as $t):
+                  ?>
+                <option value="<?php echo $t->tour_id;?>" <?php if(in_array($t->tour_id,$toursRelated)){echo "selected";} ?>  ><?php echo $t->tour_title;?></option>
+                <?php endforeach; } ?>
+              </select>
+            </div>
+          </div>
+
+        <!--Related Spa -->
+          <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
+            <label class="col-md-2 control-label text-left">Related Spa</label>
+            <div class="col-md-8">
+              <select multiple class="chosen-multi-select" name="relatedProdspa[]">
+                <?php if(!empty($all_spa)){ $spaRelated = explode(",",$tdata[0]->product_related_spa);
+                  foreach($all_spa as $t):
+                  ?>
+                <option value="<?php echo $t->spa_id;?>" <?php if(in_array($t->spa_id,$spaRelated)){echo "selected";} ?>  ><?php echo $t->spa_title;?></option>
+                <?php endforeach; } ?>
+              </select>
+            </div>
+          </div>
+
+        <!--Related Car -->
+          <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
+            <label class="col-md-2 control-label text-left">Related Car</label>
+            <div class="col-md-8">
+              <select multiple class="chosen-multi-select" name="relatedProdCars[]">
+                <?php if(!empty($all_cars)){ $carsRelated = explode(",",$tdata[0]->product_related_cars);
+                  foreach($all_cars as $t):
+                  ?>
+                <option value="<?php echo $t->car_id;?>" <?php if(in_array($t->car_id,$carsRelated)){echo "selected";} ?>  ><?php echo $t->car_title;?></option>
+                <?php endforeach; } ?>
+              </select>
+            </div>
+          </div>
+            </div>
+          </div>
+
+
 
          <!-- Address and Map -->
 
@@ -423,7 +475,7 @@
         <tr>
         <td>Address on Map</td>
         <td>
-        <input type="text" class="form-control Places" id="mapaddress" name="activitymapaddress" value="<?php echo $tdata[0]->activity_mapaddress;?>">
+        <input type="text" class="form-control Places" id="mapaddress" name="activitymapaddress" value="<?php echo @$tdata[0]->activity_mapaddress;?>">
         </td>
         </tr>
         <tr>
@@ -431,11 +483,11 @@
         </tr>
         <tr>
         <td>Latitude</td>
-        <td><input type="text" class="form-control" id="latitude" value="<?php echo $tdata[0]->activity_latitude;?>"  name="latitude" /></td>
+        <td><input type="text" class="form-control" id="latitude" value="<?php echo @$tdata[0]->activity_latitude;?>"  name="latitude" /></td>
         </tr>
         <tr>
         <td>Longitude</td>
-        <td><input type="text" class="form-control" id="longitude" value="<?php echo $tdata[0]->activity_longitude;?>"  name="longitude" /></td>
+        <td><input type="text" class="form-control" id="longitude" value="<?php echo @$tdata[0]->activity_longitude;?>"  name="longitude" /></td>
         </tr>
         </table>
 
@@ -450,7 +502,7 @@
         </div>
           <!-- Address and Map -->
 
-        </div>
+
         <div class="tab-pane wow fadeIn animated in" id="INCLUSIONS">
           <div class="row form-group">
             <div class="col-md-12">
@@ -460,15 +512,28 @@
               <div class="clearfix"></div>
               <hr>
               <div class="clearfix"></div>
-              <?php   $inclusions = explode(",",$tdata[0]->activity_amenities);
-                foreach($activityinclusions as $ti){ ?>
+
+              <?php
+              if(isset($tdata[0]->activity_amenities)){
+              $inclusions = explode(",",$tdata[0]->activity_amenities);
+              }
+
+                foreach($activityinclusions as $ti){
+                  ?>
               <div class="col-md-4">
-                <label class="pointer"><input class="checkboxcls" <?php if($submittype == "add"){ if( $ti->sett_selected == "Yes"){echo "checked";} }else{ if(in_array($ti->sett_id,$inclusions)){ echo "checked"; } } ?> type="checkbox" name="activityamenities[]" value="<?php echo $ti->sett_id;?>"  > <?php echo $ti->sett_name;?></label>
+                <label class="pointer"><input class="checkboxcls" <?php
+                if($submittype == "add"){
+                  if($ti->sett_selected == "Yes")
+                  {echo "checked";}
+                }else{
+                  if(in_array($ti->sett_id,$inclusions)){ echo "checked"; } } ?>
+                type="checkbox" name="activityamenities[]" value="<?php echo $ti->sett_id;?>"  > <?php echo $ti->sett_name;?></label>
               </div>
               <?php } ?>
             </div>
           </div>
         </div>
+
         <div class="tab-pane wow fadeIn animated in" id="EXCLUSIONS">
           <div class="row form-group">
             <div class="col-md-12">
@@ -478,7 +543,11 @@
               <div class="clearfix"></div>
               <hr>
               <div class="clearfix"></div>
-              <?php  $exclusions = explode(",",$tdata[0]->activity_exclusions);
+              <?php
+              if(isset($tdata[0]->activity_exclusions)){
+              $exclusions = explode(",",$tdata[0]->activity_exclusions);
+              }
+
                 foreach($activityexclusions as $te){ ?>
               <div class="col-md-4">
                 <label class="pointer"><input class="checkboxcls" <?php if($submittype == "add"){ if( $te->sett_selected == "Yes"){echo "checked";} }else{ if(in_array($te->sett_id,$exclusions)){ echo "checked"; } } ?> type="checkbox" name="activityexclusions[]" value="<?php echo $te->sett_id;?>"  > <?php echo $te->sett_name;?></label>
@@ -491,19 +560,19 @@
           <div class="row form-group">
             <label class="col-md-2 control-label text-left">Meta Title</label>
             <div class="col-md-6">
-              <input class="form-control" type="text" placeholder="Meta title" name="activitymetatitle"  value="<?php echo $tdata[0]->activity_meta_title;?>">
+              <input class="form-control" type="text" placeholder="Meta title" name="activitymetatitle"  value="<?php echo @$tdata[0]->activity_meta_title;?>">
             </div>
           </div>
           <div class="row form-group">
             <label class="col-md-2 control-label text-left">Meta Keywords</label>
             <div class="col-md-6">
-              <input class="form-control" type="text" placeholder="Meta keywords" name="activitykeywords"  value="<?php echo $tdata[0]->activity_meta_keywords;?>">
+              <input class="form-control" type="text" placeholder="Meta keywords" name="activitykeywords"  value="<?php echo @$tdata[0]->activity_meta_keywords;?>">
             </div>
           </div>
           <div class="row form-group">
             <label class="col-md-2 control-label text-left">Meta Description</label>
             <div class="col-md-6">
-              <textarea class="form-control" placeholder="Meta description here..." name="activitymetadesc" rows="5"><?php echo $tdata[0]->activity_meta_desc;?></textarea>
+              <textarea class="form-control" placeholder="Meta description here..." name="activitymetadesc" rows="5"><?php echo @$tdata[0]->activity_meta_desc;?></textarea>
             </div>
           </div>
         </div>
@@ -521,7 +590,7 @@
           <div class="row form-group">
             <label class="col-md-2 control-label text-left">Policy And Terms</label>
             <div class="col-md-8">
-              <textarea class="form-control" placeholder="Privacy Policy..." name="activityprivacy" rows="3"><?php echo $tdata[0]->activity_privacy;?> </textarea>
+              <textarea class="form-control" placeholder="Privacy Policy..." name="activityprivacy" rows="3"><?php echo @$tdata[0]->activity_privacy;?> </textarea>
             </div>
           </div>
         </div>
@@ -529,7 +598,7 @@
           <div class="row form-group">
             <label class="col-md-2 control-label text-left">Activity Operator's Email</label>
             <div class="col-md-4">
-              <input class="form-control" type="email" placeholder="Activity's Email" name="activityemail"  value="<?php echo $tdata[0]->activity_email;?>" >
+              <input class="form-control" type="email" placeholder="Activity's Email" name="activityemail"  value="<?php echo @$tdata[0]->activity_email;?>" >
             </div>
           </div>
           <div class="row form-group">
@@ -600,7 +669,11 @@
           <?php } } ?>
         </div>
       </div>
-    </div>
+
+
+
+ </div>
+
     <div class="panel-footer">
       <input type="hidden" id="slug" value="<?php echo @$tdata[0]->activity_slug;?>" />
       <input type="hidden" name="submittype" value="<?php echo $submittype;?>" />
@@ -610,6 +683,7 @@
       <input type="hidden" name="infantstatus" id="infantstatus" value="<?php echo $infantInput;?>" />
       <button class="btn btn-primary submitfrm" id="<?php echo $submittype; ?>"> Submit </button>
     </div>
+
   </div>
 </form>
 
@@ -663,8 +737,6 @@
                 $('#latitude').val(marker_positions.lat());
 
                 $('#longitude').val(marker_positions.lng());
-
-
 
             });
 
@@ -750,11 +822,7 @@ map.setZoom(16);
 
                 $('#longitude').val(marker_positions.lng());
 
-
-
             });
-
-
 
       $('#latitude').val(place.geometry.location.lat());
       $('#longitude').val(place.geometry.location.lng());
@@ -769,9 +837,6 @@ map.setZoom(16);
 
         });
 
-
-
-
       }
 
 
@@ -779,7 +844,6 @@ map.setZoom(16);
 <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $appSettings->mapApi; ?>&libraries=places&callback=initAutocomplete"
          async defer></script>
  <!-- Google Places -->
-
 <script>
   $(document).ready(function() {
       if (window.location.hash != "") {

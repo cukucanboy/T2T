@@ -3,9 +3,9 @@ if (!defined('BASEPATH'))
 		exit ('No direct script access allowed');
 
 class Activityback extends MX_Controller {
-	    public $accType = "";
-		private $langdef;
-		public  $editpermission = true;
+	public $accType = "";
+	private $langdef;
+	public  $editpermission = true;
         public  $deletepermission = true;
 
 		function __construct() {
@@ -54,7 +54,7 @@ class Activityback extends MX_Controller {
 if(!$chk){
 redirect('admin');
 }*/
-				$this->data['c_model'] = $this->countries_model;
+				$this->data['c_model'] = @$this->countries_model;
 				if (!pt_permissions('activity', $this->data['userloggedin'])) {
 						redirect('admin');
 				}
@@ -141,10 +141,9 @@ redirect('admin');
 		function add() {
 
 			if(!$this->data['addpermission']){
-                 backError_404($this->data);
+                	 backError_404($this->data);
 
 				  }else{
-
 
 				$addactivity = $this->input->post('submittype');
 				$this->data['adultStatus'] = "";
@@ -154,13 +153,12 @@ redirect('admin');
 				$this->data['childInput'] = "0";
 				$this->data['infantInput'] = "0";
 
-                $this->data['submittype'] = "add";
+                		$this->data['submittype'] = "add";
 
 				if (!empty ($addactivity)) {
 						$this->form_validation->set_rules('activityname', 'Activity Name', 'trim|required');
 						$this->form_validation->set_rules('activitytype', 'Activity Type', 'trim|required');
 						$this->form_validation->set_rules('adultprice', 'Adult Price', 'trim|required');
-
 
 						if ($this->form_validation->run() == FALSE) {
 								echo '<div class="alert alert-danger">' . validation_errors() . '</div><br>';
@@ -184,23 +182,29 @@ redirect('admin');
 				}
 				else {
 
-						$this->data['activitytypes'] = $this->Activity_model->get_tsettings_data("ttypes");
-						$this->data['activitycategories'] = $this->Activity_model->get_tsettings_data("tcategory");
-						$this->data['activityratings'] = $this->Activity_model->get_tsettings_data("tratings");
-						$this->data['activityinclusions'] = $this->Activity_model->get_tsettings_data("tamenities");
-						$this->data['activityexclusions'] = $this->Activity_model->get_tsettings_data("texclusions");
-						$this->data['activitypayments'] = $this->Activity_model->get_tsettings_data("tpayments");
-						$this->data['all_countries'] = $this->Countries_model->get_all_countries();
-						$this->data['all_activity'] = $this->Activity_model->select_related_activity($this->data['userloggedin']);
+$this->data['activitytypes'] = $this->Activity_model->get_tsettings_data("ttypes");
+$this->data['activitycategories'] = $this->Activity_model->get_tsettings_data("tcategory");
+$this->data['activityratings'] = $this->Activity_model->get_tsettings_data("tratings");
+$this->data['activityinclusions'] = $this->Activity_model->get_tsettings_data("tamenities");
+$this->data['activityexclusions'] = $this->Activity_model->get_tsettings_data("texclusions");
+$this->data['activitypayments'] = $this->Activity_model->get_tsettings_data("tpayments");
+$this->data['all_countries'] = $this->Countries_model->get_all_countries();
+$this->data['all_activity'] = $this->Activity_model->select_related_activity($this->data['userloggedin']);
+/* product_related */
+$this->data['all_hotels'] = $this->Hotels_model->select_related_hotels($this->data['userloggedin']);
+$this->data['all_restaurant'] = $this->Restaurant_model->select_related_restaurant($this->data['userloggedin']);
+$this->data['all_wedding'] = $this->Wedding_model->select_related_wedding($this->data['userloggedin']);
+$this->data['all_tours'] = $this->Tours_model->select_related_tours($this->data['userloggedin']);
+$this->data['all_spa'] = $this->Spa_model->select_related_spa($this->data['userloggedin']);
+//$this->data['all_activity'] = $this->Activity_model->select_related_activity($this->data['userloggedin']);
+$this->data['all_cars'] = $this->Cars_model->select_related_cars($this->data['userloggedin']);
+/* product_related */
+			$this->load->model('Admin/Locations_model');
+			$this->data['main_content'] = 'Activity/manage';
+			$this->data['page_title'] = 'Add Activity';
+			$this->data['headingText'] = 'Add Activity';
+			$this->load->view('Admin/template', $this->data);
 
-						$this->load->model('Admin/Locations_model');
-
-						//$this->data['locations'] = $this->Locations_model->getLocationsBackend();
-
-						$this->data['main_content'] = 'Activity/manage';
-						$this->data['page_title'] = 'Add Activity';
-						$this->data['headingText'] = 'Add Activity';
-						$this->load->view('Admin/template', $this->data);
 				}
 			}
 
@@ -243,31 +247,13 @@ redirect('admin');
 				$this->LoadXcrudActivitySettings("tpayments");
 				$this->LoadXcrudActivitySettings("texclusions");
 
-                $this->data['typeSettings'] = $this->Activity_model->get_activity_settings_data();
+                		$this->data['typeSettings'] = $this->Activity_model->get_activity_settings_data();
 
-				@ $this->data['settings'] = $this->Settings_model->get_front_settings("activity");
+				$this->data['settings'] = $this->Settings_model->get_front_settings("activity");
 				$this->data['main_content'] = 'Activity/settings';
 				$this->data['page_title'] = 'Activity Settings';
 				$this->load->view('Admin/template', $this->data);
 
-		/*
-				$this->load->model('admin/settings_model');
-				$this->data['all_countries'] = $this->Countries_model->get_all_countries();
-				$updatesett = $this->input->post('updatesettings');
-				if (!empty ($updatesett)) {
-						$this->Settings_model->update_front_settings();
-						redirect('admin/activity/settings');
-				}
-				$this->data['activitytypes'] = $this->Activity_model->get_activity_settings_data("ttypes");
-				$this->data['activitycategories'] = $this->Activity_model->get_activity_settings_data("tcategory");
-				$this->data['activityratings'] = $this->Activity_model->get_activity_settings_data("tratings");
-				$this->data['activityinclusions'] = $this->Activity_model->get_activity_settings_data("tamenities");
-				$this->data['activityexclusions'] = $this->Activity_model->get_activity_settings_data("texclusions");
-				$this->data['activitypayments'] = $this->Activity_model->get_activity_settings_data("tpayments");
-				$this->data['settings'] = $this->Settings_model->get_front_settings("activity");
-				$this->data['main_content'] = 'Activity/settings';
-				$this->data['page_title'] = 'Activity Settings';
-				$this->load->view('Admin/template', $this->data);*/
 		}
 
 		function manage($activityname) {
@@ -361,8 +347,19 @@ redirect('admin');
                         	$this->data['infantInput'] = "1";
                         }
 
-						$this->data['data_relate'] = $this->Activity_model->data_for_relate_near_by(); //
+
 						$this->data['all_activity'] = $this->Activity_model->select_related_activity($this->data['tdata'][0]->activity_id);
+					/* product_related add On  Manage Function */
+					$this->data['all_hotels'] = $this->Hotels_model->select_related_hotels($this->data['userloggedin']);
+					$this->data['all_restaurant'] = $this->Restaurant_model->select_related_restaurant($this->data['userloggedin']);
+					$this->data['all_wedding'] = $this->Wedding_model->select_related_wedding($this->data['userloggedin']);
+					$this->data['all_tours'] = $this->Tours_model->select_related_tours($this->data['userloggedin']);
+					$this->data['all_spa'] = $this->Spa_model->select_related_spa($this->data['userloggedin']);
+					//$this->data['all_activity'] = $this->Activity_model->select_related_activity($this->data['userloggedin']);
+					$this->data['all_cars'] = $this->Cars_model->select_related_cars($this->data['userloggedin']);
+					/* product_related */
+
+
 						$this->data['map_data'] = $this->Activity_model->get_activity_map($this->data['tdata'][0]->activity_id);
 						$this->data['maxmaporder'] = $this->Activity_model->max_map_order($this->data['tdata'][0]->activity_id);
 						$this->data['has_start'] = $this->Activity_model->has_start_end_city("start", $this->data['tdata'][0]->activity_id);

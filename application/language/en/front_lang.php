@@ -6,22 +6,15 @@
 $L1["Hotels"]         =  "Hotels   ";
 $L1["Ean"]            =  "Hotels   ";
 $L1["Hotelscombined"] =  "Hotels   ";
+$L1["Travelpayouts"]  =  "Flights  ";
 $L1["Flightsdohop"]   =  "Flights  ";
 $L1["Travelstart"]    =  "Flights  ";
 $L1["Wegoflights"]    =  "Flights  ";
 $L1["Tours"]          =  "Tours    ";
-$L1["Advertising"]          =  "Advertising    ";
 $L1["Cars"]           =  "Cars     ";
 $L1["Cartrawler"]     =  "Cars     ";
 $L1["Offers"]         =  "Offers   ";
 $L1["Blog"]           =  "Blog     ";
-$L1["Destination"]           =  "Destinations     ";
-$L1["Advertising"]           =  "Advertising     ";
-
-$L1["Points"]           =  "Points";
-$L1["NotAvailable"]           =  "Not Available";
-
-
 
 $L1["01"]  = "Home";
 $L1["02"]  = "Account";
@@ -473,7 +466,6 @@ $L1["0447"] = "Select Location";
 $L1["0448"] = "Operator's Email";
 $L1["0449"] = "Operator's Website";
 $L1["0450"] = "No.";
-
 $L1["0451"] = "Featured Tours";
 $L1["0452"] = "Top Rated Tours";
 $L1["0453"] = "Related Tours";
@@ -483,8 +475,6 @@ $L1["0456"] = "Maximum Number of Children exceeded for this tour";
 $L1["0457"] = "Maximum Number of Infants exceeded for this tour";
 $L1["0458"] = "Checkin Instructions";
 $L1["0459"] = "Payment Information";
-
-
 $L1["0460"] = "Billing Address";
 $L1["0461"] = "Please be aware that your bank may convert the payment to your local currency and charge you an additional conversion fee. This means that the amount you see on your credit or bank card statement may be in your local currency and therefore a different figure than the Total Price shown above. If you have any questions about this fee or the exchange rate applied to your booking, please contact your bank.";
 $L1["0462"] = "Notifications and Fees";
@@ -575,17 +565,5 @@ $L1["0546"] = "Booked Through";
 $L1["0547"] = "Booking Date";
 $L1["0548"] = "Contact Details";
 $L1["0549"] = "Car not available.";
-
-
-$L1["0601"] = "Featured Advertising";
-$L1["0602"] = "Top Rated Advertising";
-$L1["0603"] = "Related Advertising";
-$L1["0604"] = "Change Date";
-$L1["0605"] = "Maximum Number of Adults exceeded for this Advertising";
-$L1["0606"] = "Maximum Number of Children exceeded for this Advertising";
-$L1["0607"] = "Maximum Number of Infants exceeded for this Advertising";
-$L1["0608"] = "Checkin Instructions";
-$L1["0609"] = "Payment Information";
-$L1["0610"] = "Hotel";
-$L1["0611"] = "Checkin";
-$L1["0612"] = "Checkout";
+$L1["0550"] = "Checkin Instructions";
+$L1["0551"] = "Special Checkin Instructions";

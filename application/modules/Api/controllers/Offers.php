@@ -41,6 +41,7 @@ class Offers extends REST_Controller {
 
                 $this->offers_lib->set_id($this->get('id'));
                 $details = $this->offers_lib->offer_details();
+                $details->desc = html_entity_decode(strip_tags($details->desc),ENT_QUOTES);
 
                 if (!empty ($details)) {
 

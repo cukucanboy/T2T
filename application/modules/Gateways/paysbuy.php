@@ -1,7 +1,7 @@
 <?php
 
 // include the library
-include dirname(__FILE__) . 'paysbuy/lib/Paysbuy.php';
+include dirname(__FILE__) .'/paysbuy/lib/Paysbuy.php';
 
 function paysbuy_config()
 {

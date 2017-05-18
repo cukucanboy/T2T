@@ -68,8 +68,8 @@ class Tours extends REST_Controller {
         $suggestions = $this->Tours_lib->suggestionResults($query);
 
 
-         if (!empty ($suggestions['items'])) {
-              $this->response(array('response' => $suggestions['items'], 'error' => array('status' => FALSE,'msg' => '')), 200);
+         if (!empty ($suggestions['forApi']['items'])) {
+              $this->response(array('response' => $suggestions['forApi']['items'], 'error' => array('status' => FALSE,'msg' => '')), 200);
         }
         else {
             $this->response(array('response' => '', 'error' => array('status' => TRUE,'msg' => 'Results could not be found')), 200);
@@ -90,7 +90,7 @@ class Tours extends REST_Controller {
              $this->response(array('response' => '', 'error' => array('status' => TRUE,'msg' => 'Tour ID Missing')), 200);
         }
         $details['tour'] = $this->Tours_lib->tour_details($id, $date);
-        $details['tour']->desc = strip_tags($details['tour']->desc);
+        $details['tour']->desc = html_entity_decode(strip_tags($details['tour']->desc), ENT_QUOTES);
 
         if (pt_is_module_enabled('reviews')) {
                         $details['reviews'] = $this->Tours_lib->tour_reviews_for_api($details['tour']->id);
@@ -110,11 +110,11 @@ class Tours extends REST_Controller {
 
 
                 $offset = $this->input->get('offset');
-                $cityid = $this->get('location');
+                $cityid = $this->get('id');
 
                 /*$appCheckout = $this->get('checkout');
                 $checkout = date($this->settings[0]->date_f, strtotime($appCheckout));*/
-                $details = $this->Tours_lib->search_tours($cityid , $offset);
+                $details = $this->Tours_lib->search_tours_api($cityid , $offset);
                 $totalPages = ceil($details['paginationinfo']['totalrows'] / $details['paginationinfo']['perpage']);
 
                 if (!empty ($details['all_tours'])) {

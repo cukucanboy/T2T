@@ -107,30 +107,7 @@ class Modules_model extends CI_Model
         $data1 = array('page_status' => 'No');
         $this->db->where("page_slug", $menutitle);
         $this->db->update("pt_cms", $data1);
-        /*
-        $this->db->where('coltype','header');
-        $menudetail = $this->db->get('pt_menus')->result();
-        $mm = json_decode($menudetail[0]->menu_items);
-        foreach($mm as $k => $v){
-        if($v->id == $pageid){
-        unset($mm[$k]->id);
-        }
-        if(!empty($v->children)){
-
-        foreach($v->children as $kk => $vv){
-        if($vv->id == $pageid){
-        unset($v->children[$kk]->id);
-        }
-        }
-
-        }
-
-        }
-
-
-        $string = json_encode($mm);
-
-        $this->Menus_model->update_menu($string,$menudetail[0]->menu_id); */
+       
     }
 
 // get modules names
@@ -167,20 +144,12 @@ class Modules_model extends CI_Model
             $rslt = $this->db->get('pt_tours')->result();
         }
         //add Modules
-//advertising
-
-        elseif ($module == "advertising") {
-            $this->db->select('advertising_id AS id,advertising_title AS title');
-            $rslt = $this->db->get('pt_advertising')->result();
-        } //Mod #1
+         //Mod #1
         elseif ($module == "activity") {
             $this->db->select('activity_id AS id,activity_title AS title');
             $rslt = $this->db->get('pt_activity')->result();
         } //Mod #2
-        elseif ($module == "entertainment") {
-            $this->db->select('entertainment_id AS id,entertainment_title AS title');
-            $rslt = $this->db->get('pt_entertainment')->result();
-        } //Mod #3
+     
         elseif ($module == "restaurant") {
             $this->db->select('restaurant_id AS id,restaurant_title AS title');
             $rslt = $this->db->get('pt_restaurant')->result();
@@ -213,21 +182,13 @@ class Modules_model extends CI_Model
             $this->db->select('tour_id AS id,tour_title AS title');
             $this->db->where('tour_owned_by', $user);
             $rslt = $this->db->get('pt_tours')->result();
-        } elseif ($module == "advertising") {
-            $this->db->select('advertising_id AS id,advertising_title AS title');
-            $this->db->where('advertising_owned_by', $user);
-            $rslt = $this->db->get('pt_advertising')->result();
-        } //Mod #1
+        }  //Mod #1
         elseif ($module == "activity") {
             $this->db->select('activity_id AS id,activity_title AS title');
             $this->db->where('activity_owned_by', $user);
             $rslt = $this->db->get('pt_activity')->result();
         } //Mod #2
-        elseif ($module == "entertainment") {
-            $this->db->select('entertainment_id AS id,entertainment_title AS title');
-            $this->db->where('entertainment_owned_by', $user);
-            $rslt = $this->db->get('pt_entertainment')->result();
-        } //Mod #3
+       //Mod #3
         elseif ($module == "restaurant") {
             $this->db->select('restaurant_id AS id,restaurant_title AS title');
             $this->db->where('restaurant_owned_by', $user);
@@ -268,14 +229,8 @@ class Modules_model extends CI_Model
             foreach ($rslt as $r) {
                 $HTML .= "<option value='" . $r->id . "'>" . $r->title . "</option>";
             }
-        } elseif ($module == "advertising") {
-            $this->db->select('advertising_id AS id,advertising_title AS title');
-            $this->db->order_by('advertising_id', 'desc');
-            $rslt = $this->db->get('pt_advertising')->result();
-            foreach ($rslt as $r) {
-                $HTML .= "<option value='" . $r->id . "'>" . $r->title . "</option>";
-            }
-        } //Mod#1
+        }
+        //Mod#1
         elseif ($module == "activity") {
             $this->db->select('activity_id AS id,activity_title AS title');
             $this->db->order_by('activity_id', 'desc');
@@ -283,15 +238,8 @@ class Modules_model extends CI_Model
             foreach ($rslt as $r) {
                 $HTML .= "<option value='" . $r->id . "'>" . $r->title . "</option>";
             }
-        } //Mod#2
-        elseif ($module == "entertainment") {
-            $this->db->select('entertainment_id AS id,entertainment_title AS title');
-            $this->db->order_by('entertainment_id', 'desc');
-            $rslt = $this->db->get('pt_entertainment')->result();
-            foreach ($rslt as $r) {
-                $HTML .= "<option value='" . $r->id . "'>" . $r->title . "</option>";
-            }
-        } //Mod#3
+        }
+        //Mod#3
         elseif ($module == "restaurant") {
             $this->db->select('restaurant_id AS id,restaurant_title AS title');
             $this->db->order_by('restaurant_id', 'desc');
@@ -328,6 +276,7 @@ class Modules_model extends CI_Model
         return $HTML;
     }
 
+
 //get selected module items for specific user
     function get_supplier_module_items($module, $id)
     {
@@ -348,17 +297,14 @@ class Modules_model extends CI_Model
             foreach ($rslt as $r) {
                 $HTML .= "<option value='" . $r->id . "'>" . $r->title . "</option>";
             }
-        } //advertising
+        } 
+        //--------------
 
-        elseif ($module == "advertising") {
-            $this->db->select('advertising_id AS id,advertising_title AS title');
-            $this->db->where('advertising_owned_by', $id);
-            $this->db->order_by('advertising_id', 'desc');
-            $rslt = $this->db->get('pt_advertising')->result();
-            foreach ($rslt as $r) {
-                $HTML .= "<option value='" . $r->id . "'>" . $r->title . "</option>";
-            }
-        } elseif ($module == "cruises") {
+
+
+        //-------------
+
+       elseif ($module == "cruises") {
             $this->db->select('cruise_id AS id,cruise_title AS title');
             $this->db->where('cruise_owned_by', $id);
             $this->db->order_by('cruise_id', 'desc');
@@ -391,15 +337,7 @@ class Modules_model extends CI_Model
             $result['title'] = $rslt[0]->activity_title;
             $result['slug'] = "activity/" . $rslt[0]->activity_slug;
         } //Mod#2
-        elseif ($module == "entertainment") {
-            $this->db->select('entertainment_id,entertainment_title,entertainment_slug');
-            $this->db->where('entertainment_id', $id);
-            $this->db->order_by('entertainment_id', 'desc');
-            $rslt = $this->db->get('pt_entertainment')->result();
-            $result['id'] = $rslt[0]->entertainment_id;
-            $result['title'] = $rslt[0]->entertainment_title;
-            $result['slug'] = "entertainment/" . $rslt[0]->entertainment_slug;
-        } //Mod#3
+     
         elseif ($module == "restaurant") {
             $this->db->select('restaurant_id,restaurant_title,restaurant_slug');
             $this->db->where('restaurant_id', $id);
@@ -436,15 +374,7 @@ class Modules_model extends CI_Model
             $result['id'] = $rslt[0]->tour_id;
             $result['title'] = $rslt[0]->tour_title;
             $result['slug'] = "tours/" . $rslt[0]->tour_slug;
-        } elseif ($module == "advertising") {
-            $this->db->select('advertising_id,advertising_title,advertising_slug');
-            $this->db->where('advertising_id', $id);
-            $this->db->order_by('advertising_id', 'desc');
-            $rslt = $this->db->get('pt_advertising')->result();
-            $result['id'] = $rslt[0]->advertising_id;
-            $result['title'] = $rslt[0]->advertising_title;
-            $result['slug'] = "advertising/" . $rslt[0]->advertising_slug;
-        } elseif ($module == "cars") {
+        }  elseif ($module == "cars") {
             $this->db->select('car_id,car_title,car_slug');
             $this->db->where('car_id', $id);
             $this->db->order_by('car_id', 'desc');

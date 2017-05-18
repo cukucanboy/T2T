@@ -210,7 +210,7 @@
                             }
                         }
                     } ?>
-                    <?php if ($isadmin && $role != "admin") {
+                    <?php if (isset($role) && $isadmin && $role != "admin") {
                         if (pt_is_module_enabled('offers')) { ?>
                             <li>
                                 <a data-toggle="collapse" data-parent="#social-sidebar-menu" href="#SPECIAL_OFFERS"><i

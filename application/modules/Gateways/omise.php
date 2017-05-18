@@ -122,16 +122,13 @@ function create_token($params)
 
 function charge($tokenkey, $amount)
 {
-  try{
     $charge = OmiseCharge::create(array(
         'amount' => $amount, // it mean 400.00
         'currency' => 'thb',
         'card' => $tokenkey
     ));
+
     return $charge;
-  } catch (Exception $e) {
-      return array("status" => "tokenfail", "message" => "cannot requires process. please contact administrator.");
-  }
 }
 
 function generateRandomString($length = 10)

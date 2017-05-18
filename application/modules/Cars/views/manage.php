@@ -378,9 +378,12 @@
           <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
             <label class="col-md-2 control-label text-left">Nearby Related</label>
             <div class="col-md-8">
+              <?php
+                echo "nearby at ".$tdata[0]->car_nearby_related;
+               ?>
               <select multiple class="chosen-multi-select" name="nearbyrelatedcar[]">
                 <?php if(!empty($data_relate)){
-                  $carnearbyrelated = explode(",",$this->Cars_model->nearbyhtml($cdata[0]->car_nearby_related));
+                  $carnearbyrelated = explode(",",$this->Cars_model->nearbyhtml($tdata[0]->car_nearby_related));
                   foreach($data_relate as $t):
                     if($t->module == "hotel"){
                       $module = "ht";
@@ -405,6 +408,11 @@
                 <option value="<?= $value ?>" <?php if(in_array($value,$carnearbyrelated)){echo "selected";} ?>  ><?php echo $t->title;?></option>
                 <?php endforeach; } ?>
               </select>
+                <?php
+                  echo "<pre>";
+                  print_r($tdata[0]->car_nearby_related);
+                  echo "</pre>";
+                 ?>
             </div>
           </div>
 

@@ -54,7 +54,7 @@ class Spaback extends MX_Controller {
 if(!$chk){
 redirect('admin');
 }*/
-				$this->data['c_model'] = $this->countries_model;
+				$this->data['c_model'] = @$this->countries_model;
 				if (!pt_permissions('spa', $this->data['userloggedin'])) {
 						redirect('admin');
 				}
@@ -145,7 +145,7 @@ redirect('admin');
 
 				  }else{
 
-				$this->data['data_relate'] = $this->Spa_model->data_for_relate_near_by(); //add by poy
+
 				$addspa = $this->input->post('submittype');
 				$this->data['adultStatus'] = "";
 				$this->data['childStatus'] = "readonly";
@@ -362,7 +362,6 @@ redirect('admin');
                         }
 
 						$this->data['all_spa'] = $this->Spa_model->select_related_spa($this->data['tdata'][0]->spa_id);
-						$this->data['data_relate'] = $this->Spa_model->data_for_relate_near_by(); //add by poy
 						$this->data['map_data'] = $this->Spa_model->get_spa_map($this->data['tdata'][0]->spa_id);
 						$this->data['maxmaporder'] = $this->Spa_model->max_map_order($this->data['tdata'][0]->spa_id);
 						$this->data['has_start'] = $this->Spa_model->has_start_end_city("start", $this->data['tdata'][0]->spa_id);

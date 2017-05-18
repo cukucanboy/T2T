@@ -282,7 +282,7 @@
             <div class="panel-heading">Locations</div>
             <div class="panel-body">
 
-            <?php  for($i=1; $i<=10; $i++) { $locationName =  $weddinglocations[$i]->name; ?>
+            <?php  for($i=1; $i<=3; $i++) { $locationName =  $weddinglocations[$i]->name; ?>
 
             <label class="col-md-2 control-label text-left">Location <?php echo $i; ?></label>
             <div class="col-md-6">
@@ -364,8 +364,6 @@
               <input class="form-control" id="" Placeholder="" type="text" name="taxvalue" value="<?php echo $weddingtaxval; ?>"  />
             </div>
           </div>
-
-          <!--Related wedding-->
           <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
             <label class="col-md-2 control-label text-left">Related wedding</label>
             <div class="col-md-8">
@@ -379,39 +377,96 @@
             </div>
           </div>
 
-          <!--Near by tour-->
-          <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
-            <label class="col-md-2 control-label text-left">Nearby Related</label>
-            <div class="col-md-8">
-              <select multiple class="chosen-multi-select" name="nearbyrelatedwedding[]">
-                <?php if(!empty($data_relate)){
-                  $weddingnearbyrelated = explode(",",$this->Wedding_model->nearbyhtml($tdata[0]->wedding_nearby_related));
-                  foreach($data_relate as $t):
-                    if($t->module == "hotel"){
-                      $module = "ht";
-                    }elseif($t->module == "car"){
-                      $module = "ca";
-                    }elseif ($t->module == "spa") {
-                      $module = "sp";
-                    }elseif ($t->module == "activity") {
-                      $module = "at";
-                    }elseif ($t->module == "tour") {
-                      $module = "to";
-                    }elseif ($t->module == "restaurant") {
-                      $module = "rt";
-                    }elseif ($t->module == "wedding") {
-                      $module = "wd";
-                    }elseif ($t->module == "advertising") {
-                      $module = "ad";
-                    }
+          <!--Related Products-->
+                  <div class="panel panel-default">
+                        <div class="panel-heading">Related Products</div>
+                        <div class="panel-body">
 
-                    $value = $t->id.''.$module ;
-                  ?>
-                <option value="<?= $value ?>" <?php if(in_array($value,$weddingnearbyrelated)){echo "selected";} ?>  ><?php echo $t->title;?></option>
-                <?php endforeach; } ?>
-              </select>
-            </div>
-          </div>
+                    <!--Related Hotels -->
+                      <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
+                        <label class="col-md-2 control-label text-left">Related Hotels</label>
+                        <div class="col-md-8">
+                          <select multiple class="chosen-multi-select" name="relatedProdHotels[]">
+                            <?php if(!empty($all_hotels)){ $hotelsRelated = explode(",",$tdata[0]->product_related_hotels);
+                              foreach($all_hotels as $t):
+                              ?>
+                            <option value="<?php echo $t->hotel_id;?>" <?php if(in_array($t->hotel_id,$hotelsRelated)){echo "selected";} ?>  ><?php echo $t->hotel_title;?></option>
+                            <?php endforeach; } ?>
+                          </select>
+                        </div>
+                      </div>
+
+                    <!--Related Restaurant -->
+                      <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
+                        <label class="col-md-2 control-label text-left">Related Restaurant</label>
+                        <div class="col-md-8">
+                          <select multiple class="chosen-multi-select" name="relatedProdRestaurant[]">
+                            <?php if(!empty($all_restaurant)){ $restaurantRelated = explode(",",$tdata[0]->product_related_restaurant);
+                              foreach($all_restaurant as $t):
+                              ?>
+                            <option value="<?php echo $t->restaurant_id;?>" <?php if(in_array($t->restaurant_id,$restaurantRelated)){echo "selected";} ?>  ><?php echo $t->restaurant_title;?></option>
+                            <?php endforeach; } ?>
+                          </select>
+                        </div>
+                      </div>
+                    <!--Related Wedding -->
+                      <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
+                        <label class="col-md-2 control-label text-left">Related Wedding</label>
+                        <div class="col-md-8">
+                          <select multiple class="chosen-multi-select" name="relatedProdWedding[]">
+                            <?php if(!empty($all_wedding)){ $weddingRelated = explode(",",$tdata[0]->product_related_wedding);
+                              foreach($all_wedding as $t):
+                              ?>
+                            <option value="<?php echo $t->wedding_id;?>" <?php if(in_array($t->wedding_id,$weddingRelated)){echo "selected";} ?>  ><?php echo $t->wedding_title;?></option>
+                            <?php endforeach; } ?>
+                          </select>
+                        </div>
+                      </div>
+
+                    <!--Related Tour -->
+                      <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
+                        <label class="col-md-2 control-label text-left">Related tour</label>
+                        <div class="col-md-8">
+                          <select multiple class="chosen-multi-select" name="relatedProdTours[]">
+                            <?php if(!empty($all_tours)){$toursRelated = explode(",",$tdata[0]->product_related_tours);
+                              foreach($all_tours as $t):
+                              ?>
+                            <option value="<?php echo $t->tour_id;?>" <?php if(in_array($t->tour_id,$toursRelated)){echo "selected";} ?>  ><?php echo $t->tour_title;?></option>
+                            <?php endforeach; } ?>
+                          </select>
+                        </div>
+                      </div>
+
+                    <!--Related Spa -->
+                      <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
+                        <label class="col-md-2 control-label text-left">Related Spa</label>
+                        <div class="col-md-8">
+                          <select multiple class="chosen-multi-select" name="relatedProdspa[]">
+                            <?php if(!empty($all_spa)){ $spaRelated = explode(",",$tdata[0]->product_related_spa);
+                              foreach($all_spa as $t):
+                              ?>
+                            <option value="<?php echo $t->spa_id;?>" <?php if(in_array($t->spa_id,$spaRelated)){echo "selected";} ?>  ><?php echo $t->spa_title;?></option>
+                            <?php endforeach; } ?>
+                          </select>
+                        </div>
+                      </div>
+
+                    <!--Related Car -->
+                      <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
+                        <label class="col-md-2 control-label text-left">Related Car</label>
+                        <div class="col-md-8">
+                          <select multiple class="chosen-multi-select" name="relatedProdCars[]">
+                            <?php if(!empty($all_cars)){ $carsRelated = explode(",",$tdata[0]->product_related_cars);
+                              foreach($all_cars as $t):
+                              ?>
+                            <option value="<?php echo $t->car_id;?>" <?php if(in_array($t->car_id,$carsRelated)){echo "selected";} ?>  ><?php echo $t->car_title;?></option>
+                            <?php endforeach; } ?>
+                          </select>
+                        </div>
+                      </div>
+                        </div>
+                      </div>
+          <!--Related Products-->s
 
          <!-- Address and Map -->
 

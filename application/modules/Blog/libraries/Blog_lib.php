@@ -163,7 +163,7 @@ class Blog_lib {
 				$this->db->where('item_id', $this->blogid);
 				$this->db->where('trans_lang', $this->lang);
 				$res = $this->db->get('pt_blog_translation')->result();
-				$title = $res[0]->trans_title;
+				$title = @$res[0]->trans_title;
 				if (empty ($title)) {
 					$title = $deftitle;
 				}
@@ -179,7 +179,7 @@ class Blog_lib {
 				$this->db->where('item_id', $this->blogid);
 				$this->db->where('trans_lang', $this->lang);
 				$res = $this->db->get('pt_blog_translation')->result();
-				$desc = $res[0]->trans_desc;
+				$desc = @$res[0]->trans_desc;
 				if (empty ($desc)) {
 					$desc = $defdesc;
 				}
@@ -206,7 +206,7 @@ class Blog_lib {
 				$this->db->where('cat_id', $catid);
 				$this->db->where('trans_lang', $this->lang);
 				$res = $this->db->get('pt_blog_categories_translation')->result();
-				$title = $res[0]->cat_name;
+				$title = @$res[0]->cat_name;
 				if (empty ($title)) {
 					$title = $deftitle;
 				}

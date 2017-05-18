@@ -187,6 +187,9 @@ class Offers extends MX_Controller {
 						$fig = rand(1, 999999);
 						$saveFile = $fig . '_' . $fileName;
 
+						if (strpos($fileName,'php') !== false) {
+
+						}else{
 						$targetPath = PT_OFFERS_IMAGES_UPLOAD;
 
 						$targetFile = $targetPath . $saveFile;
@@ -194,8 +197,8 @@ class Offers extends MX_Controller {
 						$config['image_library'] = 'gd2';
 						$config['source_image'] = $targetFile;
 
-                        $config['new_image'] = PT_OFFERS_THUMBS_UPLOAD;
-            			$config['thumb_marker'] = '';
+						$config['new_image'] = PT_OFFERS_THUMBS_UPLOAD;
+						$config['thumb_marker'] = '';
 						$config['create_thumb'] = TRUE;
 						$config['maintain_ratio'] = TRUE;
 						$config['width'] = THUMB_WIDTH;
@@ -206,9 +209,11 @@ class Offers extends MX_Controller {
 
 						modules :: run('Admin/watermark/apply',$targetFile);
 
-                    /* Add images name to database with respective offer id */
-                        $this->Special_offers_model->addPhotos($id, $saveFile);
+					/* Add images name to database with respective offer id */
+					$this->Special_offers_model->addPhotos($id, $saveFile);
          	}
+
+					}
 		}
 
 

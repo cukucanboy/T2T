@@ -30,22 +30,21 @@ class MX_Controller
 
 	public function __get($class) {
 
-//var_dump($class);
-
 		return CI::$APP->$class;
+		
 	}
 
 	public function frontData(){
 		//$this->data['lang_set'] = $this->theme->_data['lang_set'];
 
-		$headerMenu = getHeaderMenu($this->data['lang_set']);
+		$headerMenu = @getHeaderMenu($this->data['lang_set']);
 
 
 		$this->data['headerMenu'] = $headerMenu;
 		$this->data['ishome'] = $this->uri->segment(1);
 		$this->data['currenturl'] = uri_string();
 
-		$this->data['isRTL'] = isRTL($this->data['lang_set']);
+		$this->data['isRTL'] = @isRTL($this->data['lang_set']);
 		$this->data['allowreg'] = $this->data['app_settings'][0]->allow_registration;
 		$this->data['allowsupplierreg'] = $this->data['app_settings'][0]->allow_supplier_registration;
 		$this->data['tripmodule'] = $this->ptmodules->is_mod_available_enabled("tripadvisor");

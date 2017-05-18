@@ -65,6 +65,7 @@ class Countries_model extends CI_Model {
 		}
 
 		function getCountryInfo($code){
+	
 			$name = $code;
 			$countries = $this->get_all_countries();
 			foreach($countries as $c){
@@ -75,6 +76,8 @@ class Countries_model extends CI_Model {
 			}
 
 			return $name;
+		
+
 		}
 
         // Get all countries

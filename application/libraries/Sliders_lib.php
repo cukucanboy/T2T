@@ -68,7 +68,7 @@ class sliders_lib
             $this->db->where('item_id', $this->slideid);
             $this->db->where('trans_lang', $this->lang);
             $res = $this->db->get('pt_sliders_translation')->result();
-            $title = $res[0]->trans_title;
+            $title = @$res[0]->trans_title;
             if (empty($title)) {
                 $title = $deftitle;
             }
@@ -85,7 +85,7 @@ class sliders_lib
             $this->db->where('item_id', $this->slideid);
             $this->db->where('trans_lang', $this->lang);
             $res = $this->db->get('pt_sliders_translation')->result();
-            $desc = $res[0]->trans_desc;
+            $desc = @$res[0]->trans_desc;
             if (empty($desc)) {
                 $desc = $defdesc;
             }
@@ -103,7 +103,7 @@ class sliders_lib
             $this->db->where('item_id', $this->slideid);
             $this->db->where('trans_lang', $this->lang);
             $res = $this->db->get('pt_sliders_translation')->result();
-            $txtopt = $res[0]->trans_optional;
+            $txtopt = @$res[0]->trans_optional;
             if (empty($txtopt)) {
                 $txtopt = $deftxt;
             }

@@ -151,7 +151,7 @@ class MY_Pagination extends CI_Pagination {
             else
             {
                 $i = ($i == 0) ? '' : $this->prefix.$i.$this->suffix;
-                $output .= $this->prev_tag_open.'<a '.$this->anchor_class.'href="'.$this->base_url.$i.'">'.$this->prev_link.'</a>'.$this->prev_tag_close;
+                @$output .= $this->prev_tag_open.'<a '.$this->anchor_class.'href="'.$this->base_url.$i.'">'.$this->prev_link.'</a>'.$this->prev_tag_close;
             }
 
         }elseif ($this->display_prev_link && $this->cur_page === 1){
@@ -188,13 +188,13 @@ class MY_Pagination extends CI_Pagination {
 
                         if ($n == '' && $this->first_url != '')
                         {
-                            $output .= $this->num_tag_open.'<a '.$this->anchor_class.'href="'.$this->first_url.'">'.$loop.'</a>'.$this->num_tag_close;
+                            @$output .= $this->num_tag_open.'<a '.$this->anchor_class.'href="'.$this->first_url.'">'.$loop.'</a>'.$this->num_tag_close;
                         }
                         else
                         {
                             $n = ($n == '') ? '' : $this->prefix.$n.$this->suffix;
-
-                            $output .= $this->num_tag_open.'<a '.$this->anchor_class.'href="'.$this->base_url.$n.'">'.$loop.'</a>'.$this->num_tag_close;
+                            
+                            @$output .= $this->num_tag_open.'<a '.$this->anchor_class.'href="'.$this->base_url.$n.'">'.$loop.'</a>'.$this->num_tag_close;
                         }
                     }
                 }
@@ -213,7 +213,7 @@ class MY_Pagination extends CI_Pagination {
                 $i = ($this->cur_page * $this->per_page);
             }
 
-            $output .= $this->next_tag_open.'<a '.$this->anchor_class.'href="'.$this->base_url.$this->prefix.$i.$this->suffix.'">'.$this->next_link.'</a>'.$this->next_tag_close;
+            @$output .= $this->next_tag_open.'<a '.$this->anchor_class.'href="'.$this->base_url.$this->prefix.$i.$this->suffix.'">'.$this->next_link.'</a>'.$this->next_tag_close;
         }elseif ($this->display_next_link && $this->cur_page >= $num_pages){
              $output .= $this->next_tag_open.'<a '.'href="javascript:void();">'.$this->next_link.'</a>'.$this->next_tag_close; 
         }

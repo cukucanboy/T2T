@@ -80,16 +80,18 @@ $this->db->join('pt_hotel_images','pt_hotels.hotel_id = pt_hotel_images.himg_hot
 			  $amenities = @ implode(",", $this->input->post('hotelamenities'));
 				$paymentopt = @ implode(",", $this->input->post('hotelpayments'));
 				$relatedhotels = @ implode(",", $this->input->post('relatedhotels'));
+				// Set  Related Products
+				$relatedProdActivity = @ implode(",", $this->input->post('relatedProdActivity'));
+				$relatedProdTestaurant = @ implode(",", $this->input->post('relatedProdRestaurant'));
+				$relatedProdTours = @ implode(",", $this->input->post('relatedProdTours'));
+				$relatedProdWedding = @ implode(",", $this->input->post('relatedProdWedding'));
+				$relatedProdCars = @ implode(",", $this->input->post('relatedProdCars'));
+				$relatedProdSpa = @ implode(",", $this->input->post('relatedProdspa'));
+				// End Related Products
 
-        //check empty value before insert data.
-        $nearbydata = $this->input->post('nearbyrelatedhotel');
-        if(!empty($nearbydata)){
-          $checknearby = $this->convert_json(@ implode(",", $nearbydata));
-          $nearbyrelatedhotel = $checknearby;
-        }else{
-          $nearbyrelatedhotel = '';
-        }
 
+        $checknearby = $this->convert_json(@ implode(",", $this->input->post('nearbyrelatedhotel')));
+        $nearbyrelatedhotel = $checknearby;
 				$featured = $this->input->post('isfeatured');
 
 				if(empty($featured)){
@@ -167,10 +169,19 @@ $this->db->join('pt_hotel_images','pt_hotels.hotel_id = pt_hotel_images.himg_hot
                 'hotel_children' => $this->input->post('children'),
                 'hotel_check_in' => $this->input->post('checkintime'),
                 'hotel_check_out' => $this->input->post('checkouttime'),
-				'hotel_policy' => $this->input->post('hotelpolicy'),
-				'hotel_status' => $this->input->post('hotelstatus'),
+				        'hotel_policy' => $this->input->post('hotelpolicy'),
+				        'hotel_status' => $this->input->post('hotelstatus'),
                 'hotel_related' => $relatedhotels,
-                'hotel_nearby_related' => $nearbyrelatedhotel,
+
+					/* product_related */
+					'product_related_activity' =>$relatedProdActivity,
+					'product_related_restaurant' =>$relatedProdTestaurant,
+					'product_related_wedding' =>$relatedProdWedding,
+					'product_related_tours' => $relatedProdTours,
+					'product_related_spa' => $relatedProdSpa,
+					'product_related_cars' => $relatedProdCars,
+					/* product_related */
+
                 'hotel_order' => $hotelorder,
                 'hotel_comm_fixed' => $commfixed,
                 'hotel_comm_percentage' => $commper,
@@ -196,18 +207,19 @@ $this->db->join('pt_hotel_images','pt_hotels.hotel_id = pt_hotel_images.himg_hot
 // update hotel data
 		function update_hotel($id) {
 
-			  $amenities = @ implode(",", $this->input->post('hotelamenities'));
+			    $amenities = @ implode(",", $this->input->post('hotelamenities'));
 				$paymentopt = @ implode(",", $this->input->post('hotelpayments'));
 				$relatedhotels = @ implode(",", $this->input->post('relatedhotels'));
 
-        //check empty value before insert data.
-        $nearbydata = $this->input->post('nearbyrelatedhotel');
-        if(!empty($nearbydata)){
-          $nearbytmp = @ implode(",", $nearbydata);
-          $nearbyrelatedhotel = $this->convert_json($nearbytmp);
-        }else{
-          $nearbyrelatedhotel = '';
-        }
+				// Set  Related Products
+				$relatedProdActivity = @ implode(",", $this->input->post('relatedProdActivity'));
+				$relatedProdTestaurant = @ implode(",", $this->input->post('relatedProdRestaurant'));
+				$relatedProdTours = @ implode(",", $this->input->post('relatedProdTours'));
+				$relatedProdWedding = @ implode(",", $this->input->post('relatedProdWedding'));
+				$relatedProdCars = @ implode(",", $this->input->post('relatedProdCars'));
+				$relatedProdSpa = @ implode(",", $this->input->post('relatedProdspa'));
+				// End Related Products
+
 
 				$featured = $this->input->post('isfeatured');
 
@@ -281,10 +293,19 @@ $this->db->join('pt_hotel_images','pt_hotels.hotel_id = pt_hotel_images.himg_hot
            //     'hotel_children' => $this->input->post('children'),
                 'hotel_check_in' => $this->input->post('checkintime'),
                 'hotel_check_out' => $this->input->post('checkouttime'),
-				        'hotel_policy' => $this->input->post('hotelpolicy'),
-				        'hotel_status' => $this->input->post('hotelstatus'),
+				'hotel_policy' => $this->input->post('hotelpolicy'),
+				'hotel_status' => $this->input->post('hotelstatus'),
                 'hotel_related' => $relatedhotels,
-                'hotel_nearby_related' => $nearbyrelatedhotel,
+                			/* product_related to do Save */
+					'product_related_activity' =>$relatedProdActivity,
+					'product_related_restaurant' =>$relatedProdTestaurant,
+					'product_related_wedding' =>$relatedProdWedding,
+					'product_related_tours' => $relatedProdTours,
+					'product_related_spa' => $relatedProdSpa,
+					'product_related_cars' => $relatedProdCars,
+					/* product_related */
+
+
                 'hotel_comm_fixed' => $commfixed,
                 'hotel_comm_percentage' => $commper,
                 'hotel_tax_fixed' => $taxfixed,

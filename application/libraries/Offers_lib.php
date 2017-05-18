@@ -140,9 +140,9 @@ class offers_lib {
 						$this->db->where('trans_offer_id', $offerid);
 						$this->db->where('trans_lang', $this->lang);
 						$res = $this->db->get('pt_offers_translation')->result();
-						$title = $res[0]->trans_title;
+						$title = @$res[0]->trans_title;
 						if (empty ($title)) {
-								$title = $deftitle;
+						$title = $deftitle;
 						}
 				}
 				return $title;
@@ -159,9 +159,9 @@ class offers_lib {
 						$this->db->where('trans_offer_id', $offerid);
 						$this->db->where('trans_lang', $this->lang);
 						$res = $this->db->get('pt_offers_translation')->result();
-						$desc = $res[0]->trans_desc;
+						$desc = @$res[0]->trans_desc;
 						if (empty ($desc)) {
-								$desc = $defdesc;
+							$desc = $defdesc;
 						}
 				}
 				return $desc;
@@ -187,6 +187,7 @@ class offers_lib {
 				$settings = $this->settings();
 				$sortby = $this->ci->input->get('sortby');
 				$perpage = $settings[0]->front_listings;
+				$totalSegments = $this->ci->uri->total_segments();
 				if (!empty ($sortby)) {
 						$orderby = $sortby;
 				}
@@ -197,7 +198,7 @@ class offers_lib {
 				$rh = $this->ci->Special_offers_model->list_specialOffers_front();
 			    $offers = $this->ci->Special_offers_model->list_specialOffers_front($perpage, $offset, $orderby);
                 $data['allOffers'] = $this->getResultObject($offers['all']);
-                $data['paginationinfo'] = array('base' => 'offers/listing', 'totalrows' => $rh['rows'], 'perpage' => $perpage);
+                $data['paginationinfo'] = array('base' => 'offers/listing', 'totalrows' => $rh['rows'], 'perpage' => $perpage,'urisegment' => $totalSegments);
 				return $data;
 		}
 

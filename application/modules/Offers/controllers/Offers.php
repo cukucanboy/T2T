@@ -74,7 +74,7 @@ class Offers extends MX_Controller {
                       /*$this->data['metakey'] = $this->data['hotel']->keywords;
 					  $this->data['metadesc'] = $this->data['hotel']->metadesc;*/
 					  $this->data['success'] = $this->session->flashdata('flashmsgs');
-					  $this->data['langurl'] = base_url()."offers/{langid}/".$this->data['offer']->slug;
+					  $this->data['langurl'] = base_url()."offers/{langid}/".@$this->data['offer']->slug;
 					  $this->theme->view('details', $this->data, $this);
 				}
                 else {

@@ -46,7 +46,7 @@ class Blogback extends MX_Controller {
 		}
 
 
-		$this->data['c_model'] = $this->countries_model;
+		$this->data['c_model'] = @$this->countries_model;
 		$this->data['addpermission'] = true;
 		if($this->accType == "supplier"){
 			$this->editpermission = pt_permissions("editblog", $this->data['userloggedin']);

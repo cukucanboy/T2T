@@ -18,11 +18,12 @@ class Blog extends REST_Controller {
                 $offset = $this->get('offset');
                 $perpage = $this->get('threshold');
                 $list = $this->Apiblog_model->get_posts($offset,$perpage);
+
                 if (!empty ($list)) {
-                        $this->response(array('response' => $list), 200); // 200 being the HTTP response code
+                      $this->response(array('response' => $list, 'error' => array('status' => FALSE,'msg' => '')), 200);
                 }
                 else {
-                        $this->response(array('response' => array('error' => 'No Post found')), 200);
+                    	$this->response(array('response' => '', 'error' => array('status' => TRUE,'msg' => 'Posts Not found')), 200);
                 }
         }
 

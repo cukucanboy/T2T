@@ -292,15 +292,7 @@ class Restaurant_lib
         } else {
             $rrestaurant = "";
         }
-
-        if (!empty($details[0]->restaurant_nearby_related)) {
-            $nearbyrestaurant = explode(",", $details[0]->restaurant_nearby_related);
-        } else {
-            $nearbyrestaurant = "";
-        }
-
         $relatedRestaurant = $this->getRelatedRestaurant($rrestaurant);
-        $nearbyrelatedRestaurant = $this->getNearbyRelatedRestaurant($nearbyrestaurant);
         $thumbnail = PT_RESTAURANT_SLIDER_THUMB . $details[0]->thumbnail_image;
         $city = pt_LocationsInfo($details[0]->restaurant_location, $this->lang);
         $location = $city->city; // $details[0]->restaurant_location;
@@ -492,19 +484,6 @@ class Restaurant_lib
         }
         $result = $this->getLimitedResultObject($resultrestaurant);
         return $result;
-    }
-
-    function getNearbyRelatedRestaurant($restaurant)
-    {
-      $resultrestaurant = array();
-      $result = array();
-      if (!empty($restaurant)) {
-          foreach ($restaurant as $t) {
-                  $resultrestaurant[] = (object)array('restaurant_id' => $t);
-          }
-      }
-      $result = $this->getLimitedResultObject($resultrestaurant);
-      return $result;
     }
 
 // Get Restaurant updated Price on changing adults, child and infant count.

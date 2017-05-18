@@ -195,13 +195,13 @@ class Menus_model extends CI_Model {
 				if (!empty ($res)) {
 						$result = $res[0]->content_page_title;
 				}
-				if (empty ($result)) {
+				if (empty($result)) {
 						$this->db->select('content_page_title');
 						$this->db->where('content_special', '0');
 						$this->db->where('content_page_id', $pageid);
 						$this->db->where('content_lang_id', DEFLANG);
 						$ress = $this->db->get('pt_cms_content')->result();
-						$result = $ress[0]->content_page_title;
+						$result = @$ress[0]->content_page_title;
 				}
 				return $result;
 		}
@@ -359,7 +359,7 @@ class Menus_model extends CI_Model {
 				$this->db->update('pt_menus', $data);
 		}
 
-		function get_page_details($pageid) {
+		function get_page_details($pageid = null) {
 				$this->db->select('pt_cms.*,pt_cms_content.content_lang_id,pt_cms_content.content_page_title,pt_cms_content.content_special');
 				$this->db->where('pt_cms_content.content_lang_id', DEFLANG);
 				$this->db->where('pt_cms.page_status', 'Yes');
@@ -370,7 +370,7 @@ class Menus_model extends CI_Model {
 				return $query->result();
 		}
 
-		function child_page_active($pages) {
+		function child_page_active($pages = null) {
 				$isactive = false;
 				if (!empty ($pages)) {
 						foreach ($pages as $page) {

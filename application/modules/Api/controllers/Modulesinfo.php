@@ -122,22 +122,8 @@ class Modulesinfo extends REST_Controller {
 					}
 
 					function travelstart_get(){
-						$this->load->model("Travelstart/Travelstart_model");
 
-						$result = $this->Travelstart_model->get_front_settings();
-
-
-							if ($result->affid) {
-
-									$this->response(array('response' => $result), 200);
-
-							}
-
-							else {
-
-									$this->response(array('response' => "",array('status' => TRUE,'msg' => 'Travelstart Module Not Found')), 200);
-
-							}
+							$this->response(array('response' => array('url' => base_url().'flightst?mobile=yes')), 200);
 
 						}
 
@@ -146,8 +132,6 @@ class Modulesinfo extends REST_Controller {
 							 $settings =  $this->Settings_model->get_front_settings("cartrawler");
 							 $result = new stdClass;
 							 $result->cid = $settings[0]->cid;
-						   $result->url = $settings[0]->secret;
-
 
 								if ($result->cid) {
 
@@ -157,23 +141,23 @@ class Modulesinfo extends REST_Controller {
 
 								else {
 
-										$this->response(array('response' => "",array('status' => TRUE,'msg' => 'HotelsCombined Module Not Found')), 200);
+										$this->response(array('response' => "",array('status' => TRUE,'msg' => 'Cartrawler Module Not Found')), 200);
 
 								}
 
 							}
 
 
+							function travelpayouts_get(){
+
+									$this->response(array('response' => array('url' => base_url().'travelpayouts/mobile')), 200);
+
+								}
+
+
 
 		function items_get(){
 			$hotelsEnable = pt_main_module_available("hotels");
-			//Add Modules
-			$activityEnable = pt_main_module_available("activity");
-			$entertainmentEnable = pt_main_module_available("entertainment");
-			$restaurantEnable = pt_main_module_available("restaurant");
-			$spaEnable = pt_main_module_available("spa");
-			$weddingEnable = pt_main_module_available("wedding");
-			//End Add Modules
 			$toursEnable = pt_main_module_available("tours");
 			$carsEnable = pt_main_module_available("cars");
 			if($hotelsEnable){
@@ -194,49 +178,7 @@ class Modulesinfo extends REST_Controller {
 			}
 
 			}
-//add Module
-if($activityEnable){
-$this->load->library('Activity/Activity_lib');
 
-$list2 = $this->Activity_lib->getLatestActivityForAPI();
-}else{
-$list2 = array();
-}
-
-if($entertainmentEnable){
-$this->load->library('Entertainment/Entertainment_lib');
-
-$list2 = $this->Entertainment_lib->getLatestEntertainmentForAPI();
-}else{
-$list2 = array();
-}
-
-if($restaurantEnable){
-$this->load->library('Restaurant/Restaurant_lib');
-
-$list2 = $this->Restaurant_lib->getLatestRestaurantForAPI();
-}else{
-$list2 = array();
-}
-
-if($spaEnable){
-$this->load->library('Spa/Spa_lib');
-
-$list2 = $this->Spa_lib->getLatestSpaForAPI();
-}else{
-$list2 = array();
-}
-
-if($weddingEnable){
-$this->load->library('Wedding/Wedding_lib');
-$list2 = $this->Wedding_lib->getLatestWeddingForAPI();
-}else{
-$list2 = array();
-}
-
-
-
-//End  Add Module
 
 			if($toursEnable){
 			$this->load->library('Tours/Tours_lib');
