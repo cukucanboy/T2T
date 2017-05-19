@@ -1,1 +1,0 @@
-<h1>SMS Template</h1>

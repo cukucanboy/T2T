@@ -380,7 +380,7 @@
             <div class="col-md-8">
               <select multiple class="chosen-multi-select" name="nearbyrelatedcar[]">
                 <?php if(!empty($data_relate)){
-                  $carnearbyrelated = explode(",",$this->Cars_model->nearbyhtml($tdata[0]->car_nearby_related));
+                  $carnearbyrelated = explode(",",$this->Cars_model->nearbyhtml($cdata[0]->car_nearby_related));
                   foreach($data_relate as $t):
                     if($t->module == "hotel"){
                       $module = "ht";
