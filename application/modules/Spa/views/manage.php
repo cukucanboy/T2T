@@ -1,4 +1,4 @@
-<script type="text/javascript">
+spa<script type="text/javascript">
   $(function(){
      var slug = $("#slug").val();
      $(".submitfrm").click(function(){
@@ -40,7 +40,7 @@
   })
 </script>
 <h3 class="margin-top-0"><?php //echo $tdata[0]->spa_title;?></h3>
-<?php print_r($tobj); ?>
+<?php print_r(@$tobj); ?>
 <div class="output"></div>
 <form class="form-horizontal spa-form" method="POST" action="" enctype="multipart/form-data"  onsubmit="return false;" >
   <div class="panel panel-default">
@@ -62,21 +62,21 @@
             <label class="col-md-2 control-label text-left">Status</label>
             <div class="col-md-2">
               <select  class="form-control" name="spatatus">
-                <option value="Yes" <?php if($tdata[0]->spa_status == "Yes"){echo "selected";} ?> >Enabled</option>
-                <option value="No" <?php if($tdata[0]->spa_status == "No"){echo "selected";} ?> >Disabled</option>
+                <option value="Yes" <?php if(@$tdata[0]->spa_status == "Yes"){echo "selected";} ?> >Enabled</option>
+                <option value="No" <?php if(@$tdata[0]->spa_status == "No"){echo "selected";} ?> >Disabled</option>
               </select>
             </div>
           </div>
           <div class="row form-group">
             <label class="col-md-2 control-label text-left">Spa Name</label>
             <div class="col-md-4">
-              <input class="form-control" type="text" placeholder="Spa Name" name="spaname" value="<?php echo $tdata[0]->spa_title;?>" >
+              <input class="form-control" type="text" placeholder="Spa Name" name="spaname" value="<?php echo @$tdata[0]->spa_title;?>" >
             </div>
           </div>
           <div class="row form-group">
             <label class="col-md-2 control-label text-left">Spa Description</label>
             <div class="col-md-10">
-              <?php $this->ckeditor->editor('spadesc', $tdata[0]->spa_desc, $ckconfig,'spadesc'); ?>
+              <?php $this->ckeditor->editor('spadesc', @$tdata[0]->spa_desc, $ckconfig,'spadesc'); ?>
             </div>
           </div>
           <div class="row form-group">
@@ -218,7 +218,7 @@
                 <option value="0">Select</option>
                 <?php
                   for($stars=0;$stars <=5;$stars++){?>
-                <option value="<?php echo $stars;?>" <?php if($stars == $tdata[0]->spa_stars ){echo "selected";} ?> ><?php echo $stars;?></option>
+                <option value="<?php echo $stars;?>" <?php if($stars == @$tdata[0]->spa_stars ){echo "selected";} ?> ><?php echo $stars;?></option>
                 <?php   } ?>
               </select>
             </div>
@@ -249,7 +249,7 @@
                 <option value="">Select</option>
                 <?php if(!empty($spatypes)){
                   foreach($spatypes as $tt){ ?>
-                <option value="<?php echo $tt->sett_id;?>" <?php if($tdata[0]->spa_type ==  $tt->sett_id ){echo "selected";} ?> ><?php echo $tt->sett_name;?></option>
+                <option value="<?php echo $tt->sett_id;?>" <?php if(@$tdata[0]->spa_type ==  $tt->sett_id ){echo "selected";} ?> ><?php echo $tt->sett_name;?></option>
                 <?php  } } ?>
               </select>
             </div>
@@ -259,20 +259,20 @@
             <label class="col-md-2 control-label text-left">Featured</label>
             <div class="col-md-2">
               <select  Placeholder="No" class="form-control" Placeholder="No" name="isfeatured" id="isfeatured" onchange="changecollapse(this.options[this.selectedIndex].value,'Featured')">
-                <option  value="no" <?php if($tdata[0]->spa_is_featured == "no"){echo "selected";} ?> >No</option>
-                <option  value="yes" <?php if($tdata[0]->spa_is_featured == "yes"){echo "selected";} ?> >Yes</option>
+                <option  value="no" <?php if(@$tdata[0]->spa_is_featured == "no"){echo "selected";} ?> >No</option>
+                <option  value="yes" <?php if(@$tdata[0]->spa_is_featured == "yes"){echo "selected";} ?> >Yes</option>
               </select>
             </div>
             <div class="col-md-2">
-              <input class="form-control dpd1" type="text" placeholder="From" value="<?php if(empty($tdata[0]->spa_featured_forever)){ echo pt_show_date_php($tdata[0]->spa_featured_from);}?>" name="ffrom" >
+              <input class="form-control dpd1" type="text" placeholder="From" value="<?php if(empty($tdata[0]->spa_featured_forever)){ echo @pt_show_date_php($tdata[0]->spa_featured_from);}?>" name="ffrom" >
             </div>
             <div class="col-md-2">
-              <input class="form-control dpd2" type="text" placeholder="To" value="<?php if(empty($tdata[0]->spa_featured_forever)){ echo pt_show_date_php($tdata[0]->spa_featured_to);}?>" name="fto" >
+              <input class="form-control dpd2" type="text" placeholder="To" value="<?php if(empty($tdata[0]->spa_featured_forever)){ echo @pt_show_date_php($tdata[0]->spa_featured_to);}?>" name="fto" >
             </div>
           <?php  }else{ ?>
-          <input type="hidden" name="isfeatured" value="<?php echo @$tdata[0]->spa_is_featured; ?>">
-          <input type="hidden" name="ffrom" value="<?php if(empty($tdata[0]->spa_featured_forever)){ echo pt_show_date_php($tdata[0]->spa_featured_from);}?>">
-          <input type="hidden" name="fto" value="<?php if(empty($tdata[0]->spa_featured_forever)){ echo pt_show_date_php($tdata[0]->spa_featured_to);}?>">
+          <input type="hidden" name="isfeatured" value="<?php echo $tdata[0]->spa_is_featured; ?>">
+          <input type="hidden" name="ffrom" value="<?php if(empty($tdata[0]->spa_featured_forever)){ echo @pt_show_date_php($tdata[0]->spa_featured_from);}?>">
+          <input type="hidden" name="fto" value="<?php if(empty($tdata[0]->spa_featured_forever)){ echo @pt_show_date_php($tdata[0]->spa_featured_to);}?>">
           <?php } ?>
 
           </div>
@@ -282,7 +282,7 @@
             <div class="panel-heading">Locations</div>
             <div class="panel-body">
 
-            <?php  for($i=1; $i<=10; $i++) { $locationName =  $spalocations[$i]->name; ?>
+            <?php  for($i=1; $i<=3; $i++) { $locationName =  @$spalocations[$i]->name; ?>
 
             <label class="col-md-2 control-label text-left">Location <?php echo $i; ?></label>
             <div class="col-md-6">
@@ -342,26 +342,26 @@
             <div class="col-md-2">
             <?php  if($isadmin){ ?>
               <select name="deposittype" class="form-control">
-                <option value="fixed" <?php if($spadeposittype == "fixed"){ echo "selected";} ?> >Fixed</option>
-                <option value="percentage" <?php if($spadeposittype == "percentage"){ echo "selected";} ?> >Percentage</option>
+                <option value="fixed" <?php if(@$spadeposittype == "fixed"){ echo "selected";} ?> >Fixed</option>
+                <option value="percentage" <?php if(@$spadeposittype == "percentage"){ echo "selected";} ?> >Percentage</option>
               </select>
                <?php }else{ ?><input type="text" class="form-control" name="deposittype" value="<?php echo $spadeposittype; ?>" readonly="readonly"><?php } ?>
 
             </div>
             <div class="col-md-2">
-              <input type="text" class="form-control" id="" placeholder="" name="depositvalue" value="<?php echo $spadepositval; ?>" <?php if(!$isadmin){ echo "readonly"; } ?>  >
+              <input type="text" class="form-control" id="" placeholder="" name="depositvalue" value="<?php echo @$spadepositval; ?>" <?php if(!$isadmin){ echo "readonly"; } ?>  >
             </div>
           </div>
           <div class="row form-group">
             <label class="col-md-2 control-label text-left text-danger">Vat Tax</label>
             <div class="col-md-2">
               <select name="taxtype" class="form-control">
-                <option value="fixed" <?php if($spataxtype == "fixed"){ echo "selected";} ?> >Fixed</option>
-                <option value="percentage" <?php if($spataxtype == "percentage"){ echo "selected";} ?> >Percentage</option>
+                <option value="fixed" <?php if(@$spataxtype == "fixed"){ echo "selected";} ?> >Fixed</option>
+                <option value="percentage" <?php if(@$spataxtype == "percentage"){ echo "selected";} ?> >Percentage</option>
               </select>
             </div>
             <div class="col-md-2">
-              <input class="form-control" id="" Placeholder="" type="text" name="taxvalue" value="<?php echo $spataxval; ?>"  />
+              <input class="form-control" id="" Placeholder="" type="text" name="taxvalue" value="<?php echo @$spataxval; ?>"  />
             </div>
           </div>
           <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
@@ -381,6 +381,20 @@
           <div class="panel panel-default">
                 <div class="panel-heading">Related Products</div>
                 <div class="panel-body">
+
+                  <!--Related Activity -->
+                    <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
+                      <label class="col-md-2 control-label text-left">Related Activity</label>
+                      <div class="col-md-8">
+                        <select multiple class="chosen-multi-select" name="relatedProdActivity[]">
+                          <?php if(!empty($all_activity)){ $activityRelated = explode(",",$tdata[0]->product_related_activity);
+                            foreach($all_activity as $t):
+                            ?>
+                          <option value="<?php echo $t->activity_id;?>" <?php if(in_array($t->activity_id,$activityRelated)){echo "selected";} ?>  ><?php echo $t->activity_title;?></option>
+                          <?php endforeach; } ?>
+                        </select>
+                      </div>
+                    </div>
 
             <!--Related Hotels -->
               <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
@@ -409,19 +423,7 @@
                   </select>
                 </div>
               </div>
-            <!--Related Wedding -->
-              <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
-                <label class="col-md-2 control-label text-left">Related Wedding</label>
-                <div class="col-md-8">
-                  <select multiple class="chosen-multi-select" name="relatedProdWedding[]">
-                    <?php if(!empty($all_wedding)){ $weddingRelated = explode(",",$tdata[0]->product_related_wedding);
-                      foreach($all_wedding as $t):
-                      ?>
-                    <option value="<?php echo $t->wedding_id;?>" <?php if(in_array($t->wedding_id,$weddingRelated)){echo "selected";} ?>  ><?php echo $t->wedding_title;?></option>
-                    <?php endforeach; } ?>
-                  </select>
-                </div>
-              </div>
+
 
             <!--Related Tour -->
               <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
@@ -437,19 +439,19 @@
                 </div>
               </div>
 
-            <!--Related Spa -->
-              <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
-                <label class="col-md-2 control-label text-left">Related Spa</label>
-                <div class="col-md-8">
-                  <select multiple class="chosen-multi-select" name="relatedProdspa[]">
-                    <?php if(!empty($all_spa)){ $spaRelated = explode(",",$tdata[0]->product_related_spa);
-                      foreach($all_spa as $t):
-                      ?>
-                    <option value="<?php echo $t->spa_id;?>" <?php if(in_array($t->spa_id,$spaRelated)){echo "selected";} ?>  ><?php echo $t->spa_title;?></option>
-                    <?php endforeach; } ?>
-                  </select>
+              <!--Related Activity -->
+                <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
+                  <label class="col-md-2 control-label text-left">Related Activity</label>
+                  <div class="col-md-8">
+                    <select multiple class="chosen-multi-select" name="relatedProdActivity[]">
+                      <?php if(!empty($all_activity)){$activityRelated = explode(",",$tdata[0]->product_related_activity);
+                        foreach($all_activity as $t):
+                        ?>
+                      <option value="<?php echo $t->activity_id;?>" <?php if(in_array($t->activity_id,$activityRelated)){echo "selected";} ?>  ><?php echo $t->activity_title;?></option>
+                      <?php endforeach; } ?>
+                    </select>
+                  </div>
                 </div>
-              </div>
 
             <!--Related Car -->
               <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
@@ -468,7 +470,7 @@
               </div>
   <!--Related Products-->
 
-  
+
          <!-- Address and Map -->
         <div class="panel panel-default">
         <div class="panel-heading"><strong>Map Address for Listing Page</strong></div>
@@ -478,7 +480,7 @@
         <tr>
         <td>Address on Map</td>
         <td>
-        <input type="text" class="form-control Places" id="mapaddress" name="spamapaddress" value="<?php echo $tdata[0]->spa_mapaddress;?>">
+        <input type="text" class="form-control Places" id="mapaddress" name="spamapaddress" value="<?php echo @$tdata[0]->spa_mapaddress;?>">
         </td>
         </tr>
         <tr>
@@ -486,11 +488,11 @@
         </tr>
         <tr>
         <td>Latitude</td>
-        <td><input type="text" class="form-control" id="latitude" value="<?php echo $tdata[0]->spa_latitude;?>"  name="latitude" /></td>
+        <td><input type="text" class="form-control" id="latitude" value="<?php echo @$tdata[0]->spa_latitude;?>"  name="latitude" /></td>
         </tr>
         <tr>
         <td>Longitude</td>
-        <td><input type="text" class="form-control" id="longitude" value="<?php echo $tdata[0]->spa_longitude;?>"  name="longitude" /></td>
+        <td><input type="text" class="form-control" id="longitude" value="<?php echo @$tdata[0]->spa_longitude;?>"  name="longitude" /></td>
         </tr>
         </table>
 
@@ -515,7 +517,11 @@
               <div class="clearfix"></div>
               <hr>
               <div class="clearfix"></div>
-              <?php   $inclusions = explode(",",$tdata[0]->spa_amenities);
+              <?php
+if(!empty($tdata[0]->spa_amenities)){
+  $inclusions = explode(",",$tdata[0]->spa_amenities);
+}
+
                 foreach($spainclusions as $ti){ ?>
               <div class="col-md-4">
                 <label class="pointer"><input class="checkboxcls" <?php if($submittype == "add"){ if( $ti->sett_selected == "Yes"){echo "checked";} }else{ if(in_array($ti->sett_id,$inclusions)){ echo "checked"; } } ?> type="checkbox" name="spaamenities[]" value="<?php echo $ti->sett_id;?>"  > <?php echo $ti->sett_name;?></label>
@@ -533,7 +539,11 @@
               <div class="clearfix"></div>
               <hr>
               <div class="clearfix"></div>
-              <?php  $exclusions = explode(",",$tdata[0]->spa_exclusions);
+              <?php
+if(!empty($tdata[0]->spa_exclusions)){
+  $exclusions = explode(",",$tdata[0]->spa_exclusions);
+}
+
                 foreach($spaexclusions as $te){ ?>
               <div class="col-md-4">
                 <label class="pointer"><input class="checkboxcls" <?php if($submittype == "add"){ if( $te->sett_selected == "Yes"){echo "checked";} }else{ if(in_array($te->sett_id,$exclusions)){ echo "checked"; } } ?> type="checkbox" name="spaexclusions[]" value="<?php echo $te->sett_id;?>"  > <?php echo $te->sett_name;?></label>
@@ -546,19 +556,19 @@
           <div class="row form-group">
             <label class="col-md-2 control-label text-left">Meta Title</label>
             <div class="col-md-6">
-              <input class="form-control" type="text" placeholder="Meta title" name="spametatitle"  value="<?php echo $tdata[0]->spa_meta_title;?>">
+              <input class="form-control" type="text" placeholder="Meta title" name="spametatitle"  value="<?php echo @$tdata[0]->spa_meta_title;?>">
             </div>
           </div>
           <div class="row form-group">
             <label class="col-md-2 control-label text-left">Meta Keywords</label>
             <div class="col-md-6">
-              <input class="form-control" type="text" placeholder="Meta keywords" name="spakeywords"  value="<?php echo $tdata[0]->spa_meta_keywords;?>">
+              <input class="form-control" type="text" placeholder="Meta keywords" name="spakeywords"  value="<?php echo @$tdata[0]->spa_meta_keywords;?>">
             </div>
           </div>
           <div class="row form-group">
             <label class="col-md-2 control-label text-left">Meta Description</label>
             <div class="col-md-6">
-              <textarea class="form-control" placeholder="Meta description here..." name="spametadesc" rows="5"><?php echo $tdata[0]->spa_meta_desc;?></textarea>
+              <textarea class="form-control" placeholder="Meta description here..." name="spametadesc" rows="5"><?php echo @$tdata[0]->spa_meta_desc;?></textarea>
             </div>
           </div>
         </div>
@@ -576,7 +586,7 @@
           <div class="row form-group">
             <label class="col-md-2 control-label text-left">Policy And Terms</label>
             <div class="col-md-8">
-              <textarea class="form-control" placeholder="Privacy Policy..." name="spaprivacy" rows="3"><?php echo $tdata[0]->spa_privacy;?> </textarea>
+              <textarea class="form-control" placeholder="Privacy Policy..." name="spaprivacy" rows="3"><?php echo @$tdata[0]->spa_privacy;?> </textarea>
             </div>
           </div>
         </div>
@@ -584,7 +594,7 @@
           <div class="row form-group">
             <label class="col-md-2 control-label text-left">Spa Operator's Email</label>
             <div class="col-md-4">
-              <input class="form-control" type="email" placeholder="Spa's Email" name="spaemail"  value="<?php echo $tdata[0]->spa_email;?>" >
+              <input class="form-control" type="email" placeholder="Spa's Email" name="spaemail"  value="<?php echo @$tdata[0]->spa_email;?>" >
             </div>
           </div>
           <div class="row form-group">

@@ -567,4 +567,3 @@ $L1["0548"] = "Contact Details";
 $L1["0549"] = "Car not available.";
 $L1["0550"] = "Checkin Instructions";
 $L1["0551"] = "Special Checkin Instructions";
-$L1["0552"] = "Related Activity";

@@ -173,6 +173,18 @@ class Tours_model extends CI_Model
     $exclusions = @ implode(",", $this->input->post('tourexclusions'));
     $paymentopt = @ implode(",", $this->input->post('tourpayments'));
     $relatedtours = @ implode(",", $this->input->post('relatedtours'));
+
+    // Start Related Products For  Tours Modules
+    $relatedProdHotels = @ implode(",", $this->input->post('relatedProdHotels'));
+    $relatedProdRestaurant = @ implode(",", $this->input->post('relatedProdRestaurant'));
+    $relatedProdActivity = @ implode(",", $this->input->post('relatedProdActivity'));
+    $relatedProdWedding = @ implode(",", $this->input->post('relatedProdWedding'));
+    $relatedProdCars = @ implode(",", $this->input->post('relatedProdCars'));
+    $relatedProdSpa = @ implode(",", $this->input->post('relatedProdSpa'));
+    // End Related Products
+
+
+
     $checknearby = $this->convert_json(@ implode(",", $this->input->post('nearbyrelatedtour')));
     $nearbyrelatedtour = $checknearby;
     //$nearbyrelatedtour = @ implode(",", $this->input->post('nearbyrelatedtour'));
@@ -240,7 +252,14 @@ class Tours_model extends CI_Model
     'tour_privacy' => $this->input->post('tourprivacy'),
     'tour_status' => $this->input->post('tourstatus'),
     'tour_related' => $relatedtours,
-    'tour_nearby_related' => $nearbyrelatedtour,
+    /* product_related */
+    'product_related_hotels' =>$relatedProdHotels,
+    'product_related_restaurant' =>$relatedProdRestaurant,
+    'product_related_wedding' =>$relatedProdWedding,
+    'product_related_activity' => $relatedProdActivity,
+    'product_related_spa' => $relatedProdSpa,
+    'product_related_cars' => $relatedProdCars,
+    /* product_related */
     'tour_order' => $tourorder,
     'tour_comm_fixed' => $commfixed, 'tour_comm_percentage' => $commper,
     'tour_tax_fixed' => $taxfixed, 'tour_tax_percentage' => $taxper,
@@ -301,6 +320,16 @@ class Tours_model extends CI_Model
     $exclusions = @ implode(",", $this->input->post('tourexclusions'));
     $paymentopt = @ implode(",", $this->input->post('tourpayments'));
     $relatedtours = @ implode(",", $this->input->post('relatedtours'));
+
+    // Start Related Products For  Tours Modules
+    $relatedProdHotels = @ implode(",", $this->input->post('relatedProdHotels'));
+    $relatedProdRestaurant = @ implode(",", $this->input->post('relatedProdRestaurant'));
+    $relatedProdActivity = @ implode(",", $this->input->post('relatedProdActivity'));
+    $relatedProdWedding = @ implode(",", $this->input->post('relatedProdWedding'));
+    $relatedProdCars = @ implode(",", $this->input->post('relatedProdCars'));
+    $relatedProdSpa = @ implode(",", $this->input->post('relatedProdSpa'));
+    // End Related Products
+
     $nearbytmp = @ implode(",", $this->input->post('nearbyrelatedtour'));
     $nearbyrelatedtour = $this->convert_json($nearbytmp);
     //$nearbyrelatedtour = $checknearby;
@@ -366,8 +395,17 @@ class Tours_model extends CI_Model
     'tour_privacy' => $this->input->post('tourprivacy'),
     'tour_status' => $this->input->post('tourstatus'),
     'tour_related' => $relatedtours,
-    'tour_nearby_related' => $nearbyrelatedtour,
-    'tour_comm_fixed' => $commfixed, 'tour_comm_percentage' => $commper,
+    /* product_related */
+    'product_related_hotels' =>$relatedProdHotels,
+    'product_related_restaurant' =>$relatedProdRestaurant,
+    'product_related_wedding' =>$relatedProdWedding,
+    'product_related_activity' => $relatedProdActivity,
+    'product_related_spa' => $relatedProdSpa,
+    'product_related_cars' => $relatedProdCars,
+    /* product_related */
+
+    'tour_comm_fixed' => $commfixed,
+    'tour_comm_percentage' => $commper,
     'tour_tax_fixed' => $taxfixed, 'tour_tax_percentage' => $taxper,
     'tour_email' => $this->input->post('touremail'),
     'tour_phone' => $this->input->post('tourphone'),
@@ -471,28 +509,6 @@ class Tours_model extends CI_Model
     return $this->db->get('pt_tours')->result();
   }
 
-  // get data all module to relate product
-  function data_for_relate_near_by()
-  {
-    $sql = ("SELECT hotel_id as id,hotel_title as title, 'hotel' as module FROM pt_hotels
-      UNION ALL
-      SELECT car_id as id,car_title as title, 'car' as module FROM pt_cars
-      UNION ALL
-      SELECT spa_id as id,spa_title as title, 'spa' as module FROM pt_spa
-      UNION ALL
-      SELECT activity_id as id,activity_title as title, 'activity' as module FROM pt_activity
-      UNION ALL
-      SELECT tour_id as id,tour_title as title, 'tour' as module FROM pt_tours
-      UNION ALL
-      SELECT restaurant_id as id,restaurant_title as title, 'restaurant' as module FROM pt_restaurant
-      UNION ALL
-      SELECT wedding_id as id,wedding_title as title, 'wedding' as module FROM pt_wedding
-      UNION ALL
-      SELECT entertainment_id as id,entertainment_title as title, 'entertainment' as module FROM pt_entertainment;"
-    );
-    $query = $this->db->query($sql);
-    return $query->result();
-  }
 
   // Get tour settings data
   function get_tour_settings_data($type = null)

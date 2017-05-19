@@ -82,11 +82,11 @@ $this->db->join('pt_hotel_images','pt_hotels.hotel_id = pt_hotel_images.himg_hot
 				$relatedhotels = @ implode(",", $this->input->post('relatedhotels'));
 				// Set  Related Products
 				$relatedProdActivity = @ implode(",", $this->input->post('relatedProdActivity'));
-				$relatedProdTestaurant = @ implode(",", $this->input->post('relatedProdRestaurant'));
+				$relatedProdRestaurant = @ implode(",", $this->input->post('relatedProdRestaurant'));
 				$relatedProdTours = @ implode(",", $this->input->post('relatedProdTours'));
 				$relatedProdWedding = @ implode(",", $this->input->post('relatedProdWedding'));
 				$relatedProdCars = @ implode(",", $this->input->post('relatedProdCars'));
-				$relatedProdSpa = @ implode(",", $this->input->post('relatedProdspa'));
+				$relatedProdSpa = @ implode(",", $this->input->post('relatedProdSpa'));
 				// End Related Products
 
 
@@ -175,7 +175,7 @@ $this->db->join('pt_hotel_images','pt_hotels.hotel_id = pt_hotel_images.himg_hot
 
 					/* product_related */
 					'product_related_activity' =>$relatedProdActivity,
-					'product_related_restaurant' =>$relatedProdTestaurant,
+					'product_related_restaurant' =>$relatedProdRestaurant,
 					'product_related_wedding' =>$relatedProdWedding,
 					'product_related_tours' => $relatedProdTours,
 					'product_related_spa' => $relatedProdSpa,
@@ -213,11 +213,11 @@ $this->db->join('pt_hotel_images','pt_hotels.hotel_id = pt_hotel_images.himg_hot
 
 				// Set  Related Products
 				$relatedProdActivity = @ implode(",", $this->input->post('relatedProdActivity'));
-				$relatedProdTestaurant = @ implode(",", $this->input->post('relatedProdRestaurant'));
+				$relatedProdRestaurant = @ implode(",", $this->input->post('relatedProdRestaurant'));
 				$relatedProdTours = @ implode(",", $this->input->post('relatedProdTours'));
 				$relatedProdWedding = @ implode(",", $this->input->post('relatedProdWedding'));
 				$relatedProdCars = @ implode(",", $this->input->post('relatedProdCars'));
-				$relatedProdSpa = @ implode(",", $this->input->post('relatedProdspa'));
+				$relatedProdSpa = @ implode(",", $this->input->post('relatedProdSpa'));
 				// End Related Products
 
 
@@ -298,7 +298,7 @@ $this->db->join('pt_hotel_images','pt_hotels.hotel_id = pt_hotel_images.himg_hot
                 'hotel_related' => $relatedhotels,
                 			/* product_related to do Save */
 					'product_related_activity' =>$relatedProdActivity,
-					'product_related_restaurant' =>$relatedProdTestaurant,
+					'product_related_restaurant' =>$relatedProdRestaurant,
 					'product_related_wedding' =>$relatedProdWedding,
 					'product_related_tours' => $relatedProdTours,
 					'product_related_spa' => $relatedProdSpa,
@@ -365,27 +365,6 @@ $this->db->join('pt_hotel_images','pt_hotels.hotel_id = pt_hotel_images.himg_hot
       return $list;
     }
 
-    function data_for_relate_near_by()
-    {
-      $sql = ("SELECT hotel_id as id,hotel_title as title, 'hotel' as module FROM pt_hotels
-        UNION ALL
-        SELECT car_id as id,car_title as title, 'car' as module FROM pt_cars
-        UNION ALL
-        SELECT spa_id as id,spa_title as title, 'spa' as module FROM pt_spa
-        UNION ALL
-        SELECT activity_id as id,activity_title as title, 'activity' as module FROM pt_activity
-        UNION ALL
-        SELECT tour_id as id,tour_title as title, 'tour' as module FROM pt_tours
-        UNION ALL
-        SELECT restaurant_id as id,restaurant_title as title, 'restaurant' as module FROM pt_restaurant
-        UNION ALL
-        SELECT wedding_id as id,wedding_title as title, 'wedding' as module FROM pt_wedding
-        UNION ALL
-        SELECT entertainment_id as id,entertainment_title as title, 'entertainment' as module FROM pt_entertainment;"
-      );
-      $query = $this->db->query($sql);
-      return $query->result();
-    }
 
 // add hotel images by type
 		function add_hotel_image($type, $filename, $hotelid) {
@@ -1010,7 +989,6 @@ $this->db->or_where('MATCH (pt_hotels.hotel_city) AGAINST ("'. $searchtxt .'")',
 						$this->db->where('hotel_owned_by', $id);
 				}
 				}
-
 
 				return $this->db->get('pt_hotels')->result();
 		}

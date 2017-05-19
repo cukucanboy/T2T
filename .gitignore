@@ -36,4 +36,6 @@ web.config
 .gitignore
 /application/json/visit.json
 /application_bak/
+/application_bak1/
 /application_bak2/
+/application_master/

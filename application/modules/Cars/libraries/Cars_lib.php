@@ -54,6 +54,15 @@ class Cars_lib
     public $error;
     public $totalDays = 1;
     public $createdAt;
+
+    public $relatedHotels;
+    public $relatedActivity;
+    public $relatedTours;
+    public $relatedSpa;
+    public $relatedCars;
+    public $relatedRestaurant;
+    public $relatedWedding;
+
     protected $lang;
 
 
@@ -348,43 +357,62 @@ class Cars_lib
             $rcars = "";
 
         }
-        if (!empty($details[0]->product_related_activity)) {
-          $ractivity = explode(",", $details[0]->product_related_activity);
-        }
-        else {
-          $ractivity = "";
-        }
-        if (!empty($details[0]->product_related_restaurant)) {
-          $rrestaurant = explode(",", $details[0]->product_related_restaurant);
-        }
-        else {
-          $rrestaurant = "";
-        }
-        if (!empty($details[0]->product_related_wedding)) {
-          $rwedding = explode(",", $details[0]->product_related_wedding);
-        }
-        else {
-          $rwedding = "";
-        }
-        if (!empty($details[0]->product_related_tours)) {
-          $rtour = explode(",", $details[0]->product_related_tours);
-        }
-        else {
-          $rtour = "";
-        }
-        if (!empty($details[0]->product_related_spa)) {
-          $rspa = explode(",", $details[0]->product_related_spa);
-        }
-        else {
-          $rspa = "";
+
+        if (!empty($details[0]->car_nearby_related)) {
+            $nearbyrcar = $details[0]->car_nearby_related;
+        } else {
+            $nearbyrcar = "";
         }
 
-        $relatedCars = $this->getRelatedCars($rcars);
+        ///Related Product  Get Activity
+        if (!empty($details[0]->product_related_activity)) {
+          $ractivity = explode(",", $details[0]->product_related_activity);
+        }else {
+          $ractivity = "";
+        }
         $relatedActivity = $this->ci->Activity_lib->getRelatedActivity($ractivity);
-        $relatedRestaurant = $this->ci->Restaurant_lib->getRelatedRestaurant($rrestaurant);
-        $relatedWedding = $this->ci->Wedding_lib->getRelatedWedding($rwedding);
-        $relatedTour = $this->ci->Tours_lib->getRelatedTours($rtour);
+
+        ///Related Product  List Tours
+        if (!empty($details[0]->product_related_tours)) {
+          $rtours = explode(",", $details[0]->product_related_tours);
+        }else {
+          $rtours = "";
+        }
+        $relatedTours = $this->ci->Tours_lib->getRelatedTours($rtours);
+
+        ///Related Product  List Spa
+        if (!empty($details[0]->product_related_spa)) {
+          $rspa = explode(",", $details[0]->product_related_spa);
+        }else {
+          $rspa = "";
+        }
         $relatedSpa = $this->ci->Spa_lib->getRelatedSpa($rspa);
+
+        ///Related Product  List Wedding
+        if (!empty($details[0]->product_related_wedding)) {
+          $rwedding = explode(",", $details[0]->product_related_wedding);
+        }else {
+          $rwedding = "";
+        }
+        $relatedWedding = $this->ci->Wedding_lib->getRelatedWedding($rwedding);
+
+        ///Related Product  List Restaurant
+        if (!empty($details[0]->product_related_restaurant)) {
+          $rrestaurant = explode(",", $details[0]->product_related_restaurant);
+        }else {
+          $rrestaurant = "";
+        }
+        $relatedRestaurant = $this->ci->Restaurant_lib->getRelatedRestaurant($rrestaurant);
+
+        ///Related Product  List Cars
+        if (!empty($details[0]->product_related_hotels)) {
+          $rhotels = explode(",", $details[0]->product_related_hotels);
+        }else {
+          $rhotels = "";
+        }
+        $relatedHotels = $this->ci->Hotels_lib->getRelatedHotels($rhotels);
+
+        $relatedCars = $this->getRelatedCars($rcars);
         //$nearbyrelatedCar = $this->getNearbyRelatedCar($nearbyrcar);
 
         $thumbnail = PT_CARS_SLIDER_THUMB . $details[0]->thumbnail_image;
@@ -448,10 +476,11 @@ class Cars_lib
           'sliderImages' => $sliderImages,
           'relatedItems' => $relatedCars,
           'relatedActivity' => $relatedActivity,
-          'relatedRestaurant' => $relatedRestaurant,
-          'relatedWedding' => $relatedWedding,
-          'relatedTour' => $relatedTour,
+          'relatedTours' => $relatedTours,
           'relatedSpa' => $relatedSpa,
+          'relatedHotels' => $relatedHotels,
+          'relatedWedding' => $relatedWedding,
+          'relatedRestaurant' => $relatedRestaurant,
         //  'nearbyrelatedItems' => $nearbyrelatedCar,
           'paymentOptions' => $paymentOptions,
           'metadesc' => $metadesc,

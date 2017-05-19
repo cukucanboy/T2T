@@ -164,6 +164,18 @@ class Wedding_model extends CI_Model {
 				$paymentopt = @ implode(",", $this->input->post('weddingpayments'));
 				$relatedwedding = @ implode(",", $this->input->post('relatedwedding'));
 
+        // Related Products for Wedding  to Do  Add
+				$relatedProdHotels = @ implode(",", $this->input->post('relatedProdHotels'));
+				$relatedProdRestaurant = @ implode(",", $this->input->post('relatedProdRestaurant'));
+				$relatedProdTours = @ implode(",", $this->input->post('relatedProdTours'));
+				$relatedProdActivity = @ implode(",", $this->input->post('relatedProdActivity'));
+				$relatedProdCars = @ implode(",", $this->input->post('relatedProdCars'));
+				$relatedProdSpa = @ implode(",", $this->input->post('relatedProdSpa'));
+				// End Related Products
+
+
+
+
 
 				$featured = $this->input->post('isfeatured');
 				if(empty($featured)){
@@ -224,8 +236,18 @@ class Wedding_model extends CI_Model {
 					'wedding_nights' => intval($this->input->post('weddingnights')),
 					'wedding_privacy' => $this->input->post('weddingprivacy'),
 					'wedding_status' => $this->input->post('weddingtatus'),
-					'wedding_related' => $relatedwedding, 'wedding_order' => $weddingorder,
-					'wedding_comm_fixed' => $commfixed, 'wedding_comm_percentage' => $commper,
+					'wedding_related' => $relatedwedding,
+          /* product_related */
+          'product_related_hotels' =>$relatedProdHotels,
+          'product_related_restaurant' =>$relatedProdRestaurant,
+          'product_related_activity' =>$relatedProdActivity,
+          'product_related_tours' => $relatedProdTours,
+          'product_related_spa' => $relatedProdSpa,
+          'product_related_cars' => $relatedProdCars,
+          /* product_related */
+           'wedding_order' => $weddingorder,
+					'wedding_comm_fixed' => $commfixed,
+           'wedding_comm_percentage' => $commper,
 					'wedding_tax_fixed' => $taxfixed, 'wedding_tax_percentage' => $taxper,
 					'wedding_email' => $this->input->post('weddingemail'),
 					'wedding_phone' => $this->input->post('weddingphone'),
@@ -284,7 +306,14 @@ class Wedding_model extends CI_Model {
 				$exclusions = @ implode(",", $this->input->post('weddingexclusions'));
 				$paymentopt = @ implode(",", $this->input->post('weddingpayments'));
 				$relatedwedding = @ implode(",", $this->input->post('relatedwedding'));
-
+        // Related Products for Wedding  to Do  Update
+				$relatedProdHotels = @ implode(",", $this->input->post('relatedProdHotels'));
+				$relatedProdRestaurant = @ implode(",", $this->input->post('relatedProdRestaurant'));
+				$relatedProdTours = @ implode(",", $this->input->post('relatedProdTours'));
+				$relatedProdActivity = @ implode(",", $this->input->post('relatedProdActivity'));
+				$relatedProdCars = @ implode(",", $this->input->post('relatedProdCars'));
+				$relatedProdSpa = @ implode(",", $this->input->post('relatedProdSpa'));
+				// End Related Products
 				$featured = $this->input->post('isfeatured');
 
 				if(empty($featured)){
@@ -345,7 +374,17 @@ class Wedding_model extends CI_Model {
 					'wedding_privacy' => $this->input->post('weddingprivacy'),
 					'wedding_status' => $this->input->post('weddingtatus'),
 					'wedding_related' => $relatedwedding,
-					'wedding_comm_fixed' => $commfixed, 'wedding_comm_percentage' => $commper,
+          /* product_related */
+          'product_related_hotels' =>$relatedProdHotels,
+          'product_related_restaurant' =>$relatedProdRestaurant,
+          'product_related_activity' =>$relatedProdActivity,
+          'product_related_tours' => $relatedProdTours,
+          'product_related_spa' => $relatedProdSpa,
+          'product_related_cars' => $relatedProdCars,
+          /* product_related */
+
+					'wedding_comm_fixed' => $commfixed,
+          'wedding_comm_percentage' => $commper,
 					'wedding_tax_fixed' => $taxfixed, 'wedding_tax_percentage' => $taxper,
 					'wedding_email' => $this->input->post('weddingemail'),
 					'wedding_phone' => $this->input->post('weddingphone'),

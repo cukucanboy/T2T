@@ -53,6 +53,14 @@ class Restaurant_lib
     public $createdAt;
     public $langdef;
 
+    public $relatedHotels;
+    public $relatedActivity;
+    public $relatedTours;
+    public $relatedSpa;
+    public $relatedCars;
+    public $relatedRestaurant;
+    public $relatedWedding;
+
     function __construct()
     {
 
@@ -292,42 +300,56 @@ class Restaurant_lib
         } else {
             $rrestaurant = "";
         }
+
+        ///Related Product  Get Activity
         if (!empty($details[0]->product_related_activity)) {
           $ractivity = explode(",", $details[0]->product_related_activity);
-        }
-        else {
+        }else {
           $ractivity = "";
         }
-        if (!empty($details[0]->product_related_Wedding)) {
-          $rwedding = explode(",", $details[0]->product_related_Wedding);
-        }
-        else {
-          $rwedding = "";
-        }
+        $relatedActivity = $this->ci->Activity_lib->getRelatedActivity($ractivity);
+
+        ///Related Product  List Tours
         if (!empty($details[0]->product_related_tours)) {
-          $rtour = explode(",", $details[0]->product_related_tours);
+          $rtours = explode(",", $details[0]->product_related_tours);
+        }else {
+          $rtours = "";
         }
-        else {
-          $rtour = "";
-        }
+        $relatedTours = $this->ci->Tours_lib->getRelatedTours($rtours);
+
+        ///Related Product  List Spa
         if (!empty($details[0]->product_related_spa)) {
           $rspa = explode(",", $details[0]->product_related_spa);
-        }
-        else {
+        }else {
           $rspa = "";
         }
-        if (!empty($details[0]->product_related_cars)) {
-          $rcar = explode(",", $details[0]->product_related_cars);
-        }
-        else {
-          $rcar = "";
-        }
-        $relatedRestaurant = $this->getRelatedRestaurant($rrestaurant);
-        $relatedActivity = $this->ci->Activity_lib->getRelatedActivity($ractivity);
-        $relatedWedding = $this->ci->Wedding_lib->getRelatedWedding($rwedding);
-        $relatedTour = $this->ci->Tours_lib->getRelatedTours($rtour);
         $relatedSpa = $this->ci->Spa_lib->getRelatedSpa($rspa);
-        $relatedCar = $this->ci->Cars_lib->getRelatedCars($rcar);
+
+        ///Related Product  List Wedding
+        if (!empty($details[0]->product_related_wedding)) {
+          $rwedding = explode(",", $details[0]->product_related_wedding);
+        }else {
+          $rwedding = "";
+        }
+        $relatedWedding = $this->ci->Wedding_lib->getRelatedWedding($rwedding);
+
+        ///Related Product  List Restaurant
+        if (!empty($details[0]->product_related_hotels)) {
+          $rhotels = explode(",", $details[0]->product_related_hotels);
+        }else {
+          $rhotels = "";
+        }
+        $relatedHotels = $this->ci->Hotels_lib->getRelatedHotels($rhotels);
+
+        ///Related Product  List Cars
+        if (!empty($details[0]->product_related_cars)) {
+          $rcars = explode(",", $details[0]->product_related_cars);
+        }else {
+          $rcars = "";
+        }
+        $relatedCars = $this->ci->Cars_lib->getRelatedCars($rcars);
+
+        $relatedRestaurant = $this->getRelatedRestaurant($rrestaurant);
         $thumbnail = PT_RESTAURANT_SLIDER_THUMB . $details[0]->thumbnail_image;
         $city = pt_LocationsInfo($details[0]->restaurant_location, $this->lang);
         $location = $city->city; // $details[0]->restaurant_location;
@@ -385,10 +407,11 @@ class Restaurant_lib
           'sliderImages' => $sliderImages,
           'relatedItems' => $relatedRestaurant,
           'relatedActivity' => $relatedActivity,
-          'relatedWedding' => $relatedWedding,
-          'relatedTour' => $relatedTour,
+          'relatedTours' => $relatedTours,
           'relatedSpa' => $relatedSpa,
-          'relatedCar' => $relatedCar,
+          'relatedCars' => $relatedCars,
+          'relatedWedding' => $relatedWedding,
+          'relatedHotels' => $relatedHotels,
           'paymentOptions' => $paymentOptions,
           'metadesc' => $metadesc,
           'keywords' => $keywords,

@@ -164,6 +164,14 @@ class Restaurant_model extends CI_Model {
 				$paymentopt = @ implode(",", $this->input->post('restaurantpayments'));
 				$relatedrestaurant = @ implode(",", $this->input->post('relatedrestaurant'));
 
+        // Set  Related Products
+				$relatedProdActivity = @ implode(",", $this->input->post('relatedProdActivity'));
+				$relatedProdHotels = @ implode(",", $this->input->post('relatedProdHotels'));
+				$relatedProdTours = @ implode(",", $this->input->post('relatedProdTours'));
+				$relatedProdWedding = @ implode(",", $this->input->post('relatedProdWedding'));
+				$relatedProdCars = @ implode(",", $this->input->post('relatedProdCars'));
+				$relatedProdSpa = @ implode(",", $this->input->post('relatedProdSpa'));
+				// End Related Products
 
 				$featured = $this->input->post('isfeatured');
 				if(empty($featured)){
@@ -197,6 +205,9 @@ class Restaurant_model extends CI_Model {
 					'restaurant_slug' => $restaurantlug, 'restaurant_desc' => $this->input->post('restaurantdesc'),
 					'restaurant_stars' => intval($stars),
 					'restaurant_is_featured' => $featured,
+
+
+
 					'restaurant_featured_from' => convert_to_unix($ffrom),
 					'restaurant_featured_to' => convert_to_unix($fto),
 					'restaurant_owned_by' => $user,
@@ -224,7 +235,18 @@ class Restaurant_model extends CI_Model {
 					'restaurant_nights' => intval($this->input->post('restaurantnights')),
 					'restaurant_privacy' => $this->input->post('restaurantprivacy'),
 					'restaurant_status' => $this->input->post('restauranttatus'),
-					'restaurant_related' => $relatedrestaurant, 'restaurant_order' => $restaurantorder,
+					'restaurant_related' => $relatedrestaurant,
+          /* product_related to do Save */
+'product_related_activity' =>$relatedProdActivity,
+'product_related_hotels' =>$relatedProdHotels,
+'product_related_wedding' =>$relatedProdWedding,
+'product_related_tours' => $relatedProdTours,
+'product_related_spa' => $relatedProdSpa,
+'product_related_cars' => $relatedProdCars,
+/* product_related */
+
+
+          'restaurant_order' => $restaurantorder,
 					'restaurant_comm_fixed' => $commfixed, 'restaurant_comm_percentage' => $commper,
 					'restaurant_tax_fixed' => $taxfixed, 'restaurant_tax_percentage' => $taxper,
 					'restaurant_email' => $this->input->post('restaurantemail'),
@@ -284,6 +306,19 @@ class Restaurant_model extends CI_Model {
 				$exclusions = @ implode(",", $this->input->post('restaurantexclusions'));
 				$paymentopt = @ implode(",", $this->input->post('restaurantpayments'));
 				$relatedrestaurant = @ implode(",", $this->input->post('relatedrestaurant'));
+
+        // Set  Related Products
+				$relatedProdActivity = @ implode(",", $this->input->post('relatedProdActivity'));
+				$relatedProdHotels = @ implode(",", $this->input->post('relatedProdHotels'));
+				$relatedProdTours = @ implode(",", $this->input->post('relatedProdTours'));
+				$relatedProdWedding = @ implode(",", $this->input->post('relatedProdWedding'));
+				$relatedProdCars = @ implode(",", $this->input->post('relatedProdCars'));
+				$relatedProdSpa = @ implode(",", $this->input->post('relatedProdSpa'));
+				// End Related Products
+
+
+
+
 
 				$featured = $this->input->post('isfeatured');
 
@@ -345,6 +380,17 @@ class Restaurant_model extends CI_Model {
 					'restaurant_privacy' => $this->input->post('restaurantprivacy'),
 					'restaurant_status' => $this->input->post('restauranttatus'),
 					'restaurant_related' => $relatedrestaurant,
+
+          /* product_related to do Save */
+'product_related_activity' =>$relatedProdActivity,
+'product_related_hotels' =>$relatedProdHotels,
+'product_related_wedding' =>$relatedProdWedding,
+'product_related_tours' => $relatedProdTours,
+'product_related_spa' => $relatedProdSpa,
+'product_related_cars' => $relatedProdCars,
+/* product_related */
+
+
 					'restaurant_comm_fixed' => $commfixed, 'restaurant_comm_percentage' => $commper,
 					'restaurant_tax_fixed' => $taxfixed, 'restaurant_tax_percentage' => $taxper,
 					'restaurant_email' => $this->input->post('restaurantemail'),

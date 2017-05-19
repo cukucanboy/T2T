@@ -43,8 +43,7 @@
                         name_point: '<?php echo character_limiter($module->title, 80);?>',
                         description_point: '<?php echo character_limiter(strip_tags(trim($module->desc)), 100);?>',
                         url_point: '<?php echo $module->slug;?>'
-                    },
-                    <?php foreach($module->relatedItems as $item):?>{
+                    }, <?php foreach($module->relatedItems as $item):?>{
                         name: 'hotel name',
                         location_latitude: "<?php echo $item->latitude;?>",
                         location_longitude: "<?php echo $item->longitude;?>",
@@ -441,6 +440,9 @@
             <?php if ($hasRooms > 0) {
                 if ($appModule == "hotels") {
                     include 'includes/rooms.php';
+                } else if ($appModule == "ean") {
+                    include 'includes/expedia_rooms.php';
+                    include 'integrations/ean/ages.php';
                 }
             } ?>
             <!-- rooms -->
@@ -842,18 +844,16 @@
     <div class="bgwhite">
         <div class="container">
             <br><br>
-            <?php if (pt_main_module_available('hotels')) { //Related Hotels ?>
+            <?php if (pt_main_module_available('hotels')) { ?>
                 <div class="col-md-12 row5">
                     <div class="form-group">
-                        <h2 class="main-title go-right">
-                          <?php if ($appModule == "hotels") {
+                        <h2 class="main-title go-right"><?php if ($appModule == "hotels" || $appModule == "ean") {
                                 echo trans('0290');
                             } else if ($appModule == "tours") {
                                 echo trans('0453');
                             } else if ($appModule == "cars") {
                                 echo trans('0493');
-                            } ?>
-                          </h2>
+                            } ?></h2>
                         <div class="clearfix"></div>
                         <i class="tiltle-line go-right"></i>
                     </div>
@@ -893,9 +893,6 @@
                         </a>
                     </div>
                 <?php } ?>
-
-
-
             <?php } ?>
 
             <!-- ending related -->
@@ -904,8 +901,7 @@
 <?php } ?>
 <!------------------------  Related Listings   ------------------------------>
 
-
-<!---  Product  Related Activity  ------->
+<!------------------------  Related Activity   ------------------------------>
 <?php if (!empty($module->relatedActivity)) { ?>
     <div class="bgwhite">
         <div class="container">
@@ -1074,7 +1070,7 @@
 <!------------------------  Related Wedding   ------------------------------>
 
 <!------------------------  Related Tours   ------------------------------>
-<?php if (!empty($module->relatedTours)) { ?>
+<?php if (!empty($module->relatedTour)) { ?>
     <div class="bgwhite">
         <div class="container">
             <br><br>
@@ -1086,7 +1082,7 @@
                         <i class="tiltle-line go-right"></i>
                     </div>
                 </div>
-                <?php foreach ($module->relatedTours as $item) { ?>
+                <?php foreach ($module->relatedTour as $item) { ?>
                     <div class="col-md-3 row5">
                         <a href="<?php echo $item->slug; ?>">
                             <div class="featured">
@@ -1186,11 +1182,11 @@
 <!------------------------  Related Spa   ------------------------------>
 
 <!------------------------  Related Car   ------------------------------>
-<?php if (!empty($module->relatedCars)) { ?>
+<?php if (!empty($module->relatedCar)) { ?>
     <div class="bgwhite">
         <div class="container">
             <br><br>
-            <?php if (pt_main_module_available('cars')) { ?>
+            <?php if (pt_main_module_available('car')) { ?>
                 <div class="col-md-12 row5">
                     <div class="form-group">
                         <h2 class="main-title go-right">Related Car</h2>
@@ -1198,7 +1194,7 @@
                         <i class="tiltle-line go-right"></i>
                     </div>
                 </div>
-                <?php foreach ($module->relatedCars as $item) { ?>
+                <?php foreach ($module->relatedCar as $item) { ?>
                     <div class="col-md-3 row5">
                         <a href="<?php echo $item->slug; ?>">
                             <div class="featured">
@@ -1239,8 +1235,70 @@
         </div>
     </div>
 <?php } ?>
-<!------------------------  Related  Protected Car   ------------------------------>
+<!------------------------  Related Car   ------------------------------>
 
+<!------------------------  Nearby Related Listings   ------------------------------>
+<hr />
+<?php if (!empty($module->nearbyrelatedItems)) { ?>
+    <div class="bgwhite">
+        <div class="container">
+            <br><br>
+            <?php if (pt_main_module_available('tours')) { // hotels ?>
+                <div class="col-md-12 row5">
+                    <div class="form-group">
+                        <h2 class="main-title go-right">Relate Product<?php /*if ($appModule == "hotels" || $appModule == "tours") { // ean
+                                echo trans('0290');
+                            } else if ($appModule == "tours") {
+                                echo trans('0453');
+                            } else if ($appModule == "cars") {
+                                echo trans('0493');
+                            }*/ ?></h2>
+                        <div class="clearfix"></div>
+                        <i class="tiltle-line go-right"></i>
+                    </div>
+                </div>
+                <?php foreach ($module->nearbyrelatedItems as $item) { ?>
+                    <div class="col-md-3 row5">
+                        <a href="<?php echo $item->slug; ?>">
+                            <div class="featured">
+                                <div class="col-xs-12 go-right wow fadeIn">
+                                    <div class="row">
+                                        <div class="load">
+                                            <img class="img-responsive lazy" <?php echo $lazy; ?>
+                                                 data-lazy="<?php echo $item->thumbnail; ?>"/>
+                                            <img class="overlay" src="<?php echo $theme_url; ?>assets/img/overlay.png"
+                                                 style="z-index: 3">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <?php if ($item->price > 0) { ?>
+                                    <div class="text-center featured-price">
+                                        <div class="text-center">
+                                            <small><?php echo $item->currCode; ?></small> <?php echo $item->currSymbol; ?><?php echo $item->price; ?>
+                                        </div>
+                                    </div>
+                                <?php } ?>
+                                <div class="col-xs-12 go-right wow fadeIn featured-title">
+                                    <div class="p5">
+                                        <div class="strong"><?php echo character_limiter($item->title, 25); ?></div>
+                                        <?php echo $item->stars; ?>
+                                        <div class=""><i
+                                                    class="icon-location-6 go-right"></i> <?php echo character_limiter($item->location, 20); ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                <?php } ?>
+            <?php } ?>
+
+            <!-- ending related -->
+        </div>
+    </div>
+<?php } ?>
+<!------------------------  Nearby Related Listings   ------------------------------>
 
 
 <script>

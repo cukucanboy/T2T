@@ -189,8 +189,15 @@ $this->db->join('pt_car_images','pt_cars.car_id = pt_car_images.cimg_car_id','le
 
         $paymentopt =  @implode(",",$this->input->post('carpayments'));
 				$relatedcars = @implode(",", $this->input->post('relatedcars'));
-				$checknearby = $this->convert_json(@ implode(",", $this->input->post('nearbyrelatedcar')));
-		    $nearbyrelatedcar = $checknearby;
+				// Start Related Products 1
+				$relatedProdHotels = @ implode(",", $this->input->post('relatedProdHotels'));
+				$relatedProdRestaurant = @ implode(",", $this->input->post('relatedProdRestaurant'));
+				$relatedProdTours = @ implode(",", $this->input->post('relatedProdTours'));
+				$relatedProdWedding = @ implode(",", $this->input->post('relatedProdWedding'));
+				$relatedProdActivity = @ implode(",", $this->input->post('relatedProdActivity'));
+				$relatedProdSpa = @ implode(",", $this->input->post('relatedProdSpa'));
+				// End Related Products
+
 
 				$stars = $this->input->post('carstars');
 				if(empty($stars)){
@@ -223,19 +230,18 @@ $this->db->join('pt_car_images','pt_cars.car_id = pt_car_images.cimg_car_id','le
 				'car_meta_keywords' => $this->input->post('carkeywords'),
 				'car_meta_desc' => $this->input->post('carmetadesc'),
 				'car_policy' => $this->input->post('carpolicy'),
-				//'car_address' => $this->input->post('address'),
-				//'car_location' => $this->input->post('location'),
-				//'car_country' => $this->input->post('country'),
-				//'car_city_address' => $this->input->post('city'),
-				//'car_mapaddress' => $this->input->post('carmapaddress'),
-				//'car_city' => $this->input->post('carcity'),
-				//'car_zip' => $this->input->post('zip'),
-				//'car_longitude' => $this->input->post('longitude'),
-				//'car_latitude' => $this->input->post('latitude'),
+
         'car_payment_opt' => $paymentopt,
 				'car_status' => $this->input->post('carstatus'),
 				'car_related' => $relatedcars,
-				'car_nearby_related' => $nearbyrelatedcar,
+				/* product_related */
+				'product_related_hotels' =>$relatedProdHotels,
+				'product_related_restaurant' =>$relatedProdRestaurant,
+				'product_related_wedding' =>$relatedProdWedding,
+				'product_related_tours' => $relatedProdTours,
+				'product_related_spa' => $relatedProdSpa,
+				'product_related_activity' => $relatedProdActivity,
+				/* product_related */
 				'car_order' => $carorder,
         'car_comm_fixed' => $commfixed,
 				'car_comm_percentage' => $commper,
@@ -295,8 +301,16 @@ $this->db->join('pt_car_images','pt_cars.car_id = pt_car_images.cimg_car_id','le
 
 				$paymentopt = @ implode(",", $this->input->post('carpayments'));
 				$relatedcars = @ implode(",", $this->input->post('relatedcars'));
-				$nearbytmp = @ implode(",", $this->input->post('nearbyrelatedcar'));
-		    $nearbyrelatedcar = $this->convert_json($nearbytmp);
+
+				// Start Related Products 1
+				$relatedProdHotels = @ implode(",", $this->input->post('relatedProdHotels'));
+				$relatedProdRestaurant = @ implode(",", $this->input->post('relatedProdRestaurant'));
+				$relatedProdTours = @ implode(",", $this->input->post('relatedProdTours'));
+				$relatedProdWedding = @ implode(",", $this->input->post('relatedProdWedding'));
+				$relatedProdActivity = @ implode(",", $this->input->post('relatedProdActivity'));
+				$relatedProdSpa = @ implode(",", $this->input->post('relatedProdSpa'));
+				// End Related Products
+
 
 				$featured = $this->input->post('isfeatured');
 
@@ -358,7 +372,14 @@ $this->db->join('pt_car_images','pt_cars.car_id = pt_car_images.cimg_car_id','le
         'car_payment_opt' => $paymentopt,
 				'car_status' => $this->input->post('carstatus'),
 				'car_related' => $relatedcars,
-				'car_nearby_related' => $nearbyrelatedcar,
+				/* product_related */
+				'product_related_hotels' =>$relatedProdHotels,
+				'product_related_restaurant' =>$relatedProdRestaurant,
+				'product_related_wedding' =>$relatedProdWedding,
+				'product_related_tours' => $relatedProdTours,
+				'product_related_spa' => $relatedProdSpa,
+				'product_related_activity' => $relatedProdActivity,
+				/* product_related */
         'car_comm_fixed' => $commfixed,
 				'car_comm_percentage' => $commper,
 			    'car_tax_fixed' => $taxfixed,

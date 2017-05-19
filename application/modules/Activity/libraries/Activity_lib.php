@@ -53,6 +53,14 @@ class Activity_lib
     public $createdAt;
     public $langdef;
 
+    public $relatedHotels;
+    public $relatedActivity;
+    public $relatedTours;
+    public $relatedSpa;
+    public $relatedCars;
+    public $relatedRestaurant;
+    public $relatedWedding;
+
     function __construct()
     {
 
@@ -292,6 +300,55 @@ class Activity_lib
         } else {
             $ractivity = "";
         }
+
+        ///Related Product  List Hotels
+        if (!empty($details[0]->product_related_hotels)) {
+          $rhotels = explode(",", $details[0]->product_related_hotels);
+        }else {
+          $rhotels = "";
+        }
+        $relatedHotels = $this->ci->Hotels_lib->getRelatedHotels($rhotels);
+
+        ///Related Product  List Tours
+        if (!empty($details[0]->product_related_tours)) {
+          $rtours = explode(",", $details[0]->product_related_tours);
+        }else {
+          $rtours = "";
+        }
+        $relatedTours = $this->ci->Tours_lib->getRelatedTours($rtours);
+
+        ///Related Product  List Spa
+        if (!empty($details[0]->product_related_spa)) {
+          $rspa = explode(",", $details[0]->product_related_spa);
+        }else {
+          $rspa = "";
+        }
+        $relatedSpa = $this->ci->Spa_lib->getRelatedSpa($rspa);
+
+        ///Related Product  List Wedding
+        if (!empty($details[0]->product_related_wedding)) {
+          $rwedding = explode(",", $details[0]->product_related_wedding);
+        }else {
+          $rwedding = "";
+        }
+        $relatedWedding = $this->ci->Wedding_lib->getRelatedWedding($rwedding);
+
+        ///Related Product  List Restaurant
+        if (!empty($details[0]->product_related_restaurant)) {
+          $rrestaurant = explode(",", $details[0]->product_related_restaurant);
+        }else {
+          $rrestaurant = "";
+        }
+        $relatedRestaurant = $this->ci->Restaurant_lib->getRelatedRestaurant($rrestaurant);
+
+        ///Related Product  List Cars
+        if (!empty($details[0]->product_related_cars)) {
+          $rcars = explode(",", $details[0]->product_related_cars);
+        }else {
+          $rcars = "";
+        }
+        $relatedCars = $this->ci->Cars_lib->getRelatedCars($rcars);
+
         $relatedActivity = $this->getRelatedActivity($ractivity);
         $thumbnail = PT_ACTIVITY_SLIDER_THUMB . $details[0]->thumbnail_image;
         $city = pt_LocationsInfo($details[0]->activity_location, $this->lang);
@@ -333,7 +390,63 @@ class Activity_lib
         $this->tax_value = $taxcom['taxval'];
         $this->setDeposit($curr->convertPriceFloat($totalCost, 2));
         $depositAmount = $this->deposit;
-        $detailResults = (object)array('id' => $details[0]->activity_id, 'title' => $title, 'slug' => $slug, 'bookingSlug' => $bookingSlug, 'thumbnail' => $thumbnail, 'stars' => pt_create_stars($stars), 'starsCount' => $stars, 'location' => $location, 'desc' => $desc, 'inclusions' => $inclusions, 'exclusions' => $exclusions, 'latitude' => $latitude, 'longitude' => $longitude, 'sliderImages' => $sliderImages, 'relatedItems' => $relatedActivity, 'paymentOptions' => $paymentOptions, 'metadesc' => $metadesc, 'keywords' => $keywords, 'policy' => $policy, 'website' => $website, 'email' => $email, 'phone' => $phone, 'maxAdults' => $maxAdults, 'maxChild' => $maxChild, 'maxInfant' => $maxInfant, 'adultStatus' => $adultStatus, 'childStatus' => $childStatus, 'infantStatus' => $infantStatus, 'adultPrice' => $adultPrice, 'childPrice' => $childPrice, 'infantPrice' => $infantPrice, 'perAdultPrice' => $perAdultPrice, 'perChildPrice' => $perChildPrice, 'perInfantPrice' => $perInfantPrice, 'currCode' => $curr->code, 'currSymbol' => $curr->symbol, 'date' => $this->date, 'totalCost' => $curr->convertPrice($totalCost), 'comType' => $comm_type, 'comValue' => $comm_value, 'taxType' => $tax_type, 'taxValue' => $tax_value, 'activityDays' => $activityDays, 'activityNights' => $activityNights, 'totalDeposit' => $depositAmount, 'mapAddress' => $details[0]->activity_mapaddress, 'ogimg' => $ogimg);
+        $detailResults = (object)array(
+          'id' => $details[0]->activity_id,
+          'title' => $title,
+          'slug' => $slug,
+          'bookingSlug' => $bookingSlug,
+          'thumbnail' => $thumbnail,
+          'stars' => pt_create_stars($stars),
+          'starsCount' => $stars,
+          'location' => $location,
+          'desc' => $desc,
+          'inclusions' => $inclusions,
+          'exclusions' => $exclusions,
+          'latitude' => $latitude,
+          'longitude' => $longitude,
+          'sliderImages' => $sliderImages,
+          'relatedItems' => $relatedActivity,
+
+          'relatedHotels' => $relatedHotels,
+          'relatedTours' => $relatedTours,
+          'relatedSpa' => $relatedSpa,
+          'relatedCars' => $relatedCars,
+          'relatedWedding' => $relatedWedding,
+          'relatedRestaurant' => $relatedRestaurant,
+
+          'paymentOptions' => $paymentOptions,
+          'metadesc' => $metadesc,
+          'keywords' => $keywords,
+          'policy' => $policy,
+          'website' => $website,
+          'email' => $email,
+          'phone' => $phone,
+          'maxAdults' => $maxAdults,
+          'maxChild' => $maxChild,
+          'maxInfant' => $maxInfant,
+          'adultStatus' => $adultStatus,
+          'childStatus' => $childStatus,
+          'infantStatus' => $infantStatus,
+          'adultPrice' => $adultPrice,
+          'childPrice' => $childPrice,
+          'infantPrice' => $infantPrice,
+          'perAdultPrice' => $perAdultPrice,
+          'perChildPrice' => $perChildPrice,
+          'perInfantPrice' => $perInfantPrice,
+          'currCode' => $curr->code,
+          'currSymbol' => $curr->symbol,
+          'date' => $this->date,
+          'totalCost' => $curr->convertPrice($totalCost),
+          'comType' => $comm_type,
+          'comValue' => $comm_value,
+          'taxType' => $tax_type,
+          'taxValue' => $tax_value,
+          'activityDays' => $activityDays,
+          'activityNights' => $activityNights,
+          'totalDeposit' => $depositAmount,
+          'mapAddress' => $details[0]->activity_mapaddress,
+          'ogimg' => $ogimg);
+
         return $detailResults;
     }
 

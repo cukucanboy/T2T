@@ -387,7 +387,7 @@
 
                   <!--Related Activity -->
                     <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
-                      <label class="col-md-2 control-label text-left">Related tour</label>
+                      <label class="col-md-2 control-label text-left">Related Activity</label>
                       <div class="col-md-8">
                         <select multiple class="chosen-multi-select" name="relatedProdActivity[]">
                           <?php if(!empty($all_activity)){$activityRelated = explode(",",$tdata[0]->product_related_activity);
@@ -398,7 +398,7 @@
                         </select>
                       </div>
                     </div>
-                    
+
             <!--Related Hotels -->
               <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
                 <label class="col-md-2 control-label text-left">Related Hotels</label>
@@ -446,7 +446,7 @@
               <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
                 <label class="col-md-2 control-label text-left">Related Spa</label>
                 <div class="col-md-8">
-                  <select multiple class="chosen-multi-select" name="relatedProdspa[]">
+                  <select multiple class="chosen-multi-select" name="relatedProdSpa[]">
                     <?php if(!empty($all_spa)){ $spaRelated = explode(",",$tdata[0]->product_related_spa);
                       foreach($all_spa as $t):
                       ?>
@@ -519,7 +519,11 @@
               <div class="clearfix"></div>
               <hr>
               <div class="clearfix"></div>
-              <?php   $inclusions = explode(",",$tdata[0]->tour_amenities);
+              <?php
+              if(!empty($tdata[0]->tour_amenities)){
+              $inclusions = explode(",",$tdata[0]->tour_amenities);
+              }
+
                 foreach($tourinclusions as $ti){ ?>
               <div class="col-md-4">
                 <label class="pointer"><input class="checkboxcls" <?php if($submittype == "add"){ if( $ti->sett_selected == "Yes"){echo "checked";} }else{ if(in_array($ti->sett_id,$inclusions)){ echo "checked"; } } ?> type="checkbox" name="touramenities[]" value="<?php echo $ti->sett_id;?>"  > <?php echo $ti->sett_name;?></label>
@@ -537,7 +541,11 @@
               <div class="clearfix"></div>
               <hr>
               <div class="clearfix"></div>
-              <?php  $exclusions = explode(",",$tdata[0]->tour_exclusions);
+              <?php
+if(!empty($tdata[0]->tour_exclusions)){
+    $exclusions = explode(",",$tdata[0]->tour_exclusions);
+}
+
                 foreach($tourexclusions as $te){ ?>
               <div class="col-md-4">
                 <label class="pointer"><input class="checkboxcls" <?php if($submittype == "add"){ if( $te->sett_selected == "Yes"){echo "checked";} }else{ if(in_array($te->sett_id,$exclusions)){ echo "checked"; } } ?> type="checkbox" name="tourexclusions[]" value="<?php echo $te->sett_id;?>"  > <?php echo $te->sett_name;?></label>
@@ -550,7 +558,7 @@
           <div class="row form-group">
             <label class="col-md-2 control-label text-left">Meta Title</label>
             <div class="col-md-6">
-              <input class="form-control" type="text" placeholder="Meta title" name="tourmetatitle"  value="<?php echo $tdata[0]->tour_meta_title;?>">
+              <input class="form-control" type="text" placeholder="Meta title" name="tourmetatitle"  value="<?php echo @$tdata[0]->tour_meta_title;?>">
             </div>
           </div>
           <div class="row form-group">

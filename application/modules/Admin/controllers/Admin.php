@@ -468,7 +468,7 @@ class Admin extends MX_Controller {
 				redirect('admin');
 		}
 
-	
+
 
 		function update_license_key($key) {
 				$ldata = array('license_key' => $key);
@@ -706,7 +706,7 @@ class Admin extends MX_Controller {
 
 // Spa module controller
 		function spa($args = null, $id = null, $lang = null) {
-				$spamod = modules :: load('wedding/weddingback/');
+				$spamod = modules :: load('spa/spaback/');
 				if (!method_exists($spamod, 'index')) {
 					redirect('admin');
 				}
@@ -733,9 +733,6 @@ class Admin extends MX_Controller {
 					$spamod->translate($id, $lang);
 				}
 		}
-
-
-
 
 
 

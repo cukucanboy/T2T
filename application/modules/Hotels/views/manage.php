@@ -170,11 +170,13 @@
             <label class="col-md-2 control-label text-left">Related Hotels</label>
             <div class="col-md-8">
               <select multiple class="chosen-multi-select" name="relatedhotels[]">
-                <?php foreach($all_hotels as $hotel){ if($hdata[0]->hotel_id != $hotel->hotel_id){ ?>
-                <option value="<?php echo $hotel->hotel_id;?>" <?php  if(in_array($hotel->hotel_id,@$hrelated)){ echo 'selected'; } ?>  >
-                  <?php echo $hotel->hotel_title;?>
-                </option>
-                <?php } } ?>
+                <?php if(!empty($all_hotels)){ $hrelated = explode(",",$hdata[0]->hotel_related);
+                  foreach($all_hotels as $t):
+                  ?>
+                <option value="<?php echo $t->hotel_id;?>" <?php if(in_array($t->hotel_id,$hrelated)){echo "selected";} ?>  ><?php echo $t->hotel_title;?></option>
+                <?php endforeach; } ?>
+
+
               </select>
             </div>
           </div>
@@ -186,10 +188,7 @@
                         <div class="panel-heading">Related Products</div>
                         <div class="panel-body">
 
-<?php
-//print_r($all_activity);
-echo @$tdata[0]->product_related_activity;
-?>
+
                     <!--Related Activity -->
                       <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
                         <label class="col-md-2 control-label text-left">Related Activity</label>
@@ -221,11 +220,8 @@ echo @$tdata[0]->product_related_activity;
                       <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
                         <label class="col-md-2 control-label text-left">Related Wedding</label>
                         <div class="col-md-8">
-                          <?php
-                            echo $hdata[0]->product_related_wedding;
-                           ?>
                           <select multiple class="chosen-multi-select" name="relatedProdWedding[]">
-                            <?php if(!empty($all_wedding)){ $weddingRelated = explode(",",$hdata[0]->product_related_Wedding);
+                            <?php if(!empty($all_wedding)){ $weddingRelated = explode(",",$hdata[0]->product_related_wedding);
                               foreach($all_wedding as $t):
                               ?>
                             <option value="<?php echo $t->wedding_id;?>" <?php if(in_array($t->wedding_id,$weddingRelated)){echo "selected";} ?>  ><?php echo $t->wedding_title;?></option>
@@ -252,7 +248,7 @@ echo @$tdata[0]->product_related_activity;
                       <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
                         <label class="col-md-2 control-label text-left">Related Spa</label>
                         <div class="col-md-8">
-                          <select multiple class="chosen-multi-select" name="relatedProdspa[]">
+                          <select multiple class="chosen-multi-select" name="relatedProdSpa[]">
                             <?php if(!empty($all_spa)){ $spaRelated = explode(",",$hdata[0]->product_related_spa);
                               foreach($all_spa as $t):
                               ?>
@@ -289,7 +285,7 @@ echo @$tdata[0]->product_related_activity;
         <tr>
         <td>Address on Map</td>
         <td>
-       <input type="text" class="form-control Places" id="mapaddress" name="hotelmapaddress" value="<?php echo $hdata[0]->hotel_map_city;?>">
+       <input type="text" class="form-control Places" id="mapaddress" name="hotelmapaddress" value="<?php echo @$hdata[0]->hotel_map_city;?>">
         </td>
         </tr>
         <tr>
@@ -297,11 +293,11 @@ echo @$tdata[0]->product_related_activity;
         </tr>
         <tr>
         <td>Latitude</td>
-        <td><input type="text" class="form-control" id="latitude" value="<?php echo $hdata[0]->hotel_latitude;?>"  name="latitude" /></td>
+        <td><input type="text" class="form-control" id="latitude" value="<?php echo @$hdata[0]->hotel_latitude;?>"  name="latitude" /></td>
         </tr>
         <tr>
         <td>Longitude</td>
-        <td><input type="text" class="form-control" id="longitude" value="<?php echo $hdata[0]->hotel_longitude;?>"  name="longitude" /></td>
+        <td><input type="text" class="form-control" id="longitude" value="<?php echo @$hdata[0]->hotel_longitude;?>"  name="longitude" /></td>
         </tr>
         </table>
 

@@ -50,6 +50,15 @@ class Tours_lib {
   public $guestCount;
   public $createdAt;
   public $langdef;
+
+  public $relatedHotels;
+  public $relatedActivity;
+  public $relatedTours;
+  public $relatedSpa;
+  public $relatedCars;
+  public $relatedRestaurant;
+  public $relatedWedding;
+
   function __construct() {
 
 //get the CI instance
@@ -298,6 +307,55 @@ class Tours_lib {
       $rtours = "";
     }
     $relatedTours = $this->getRelatedTours($rtours);
+
+    ///Related Product  Get Activity
+    if (!empty($details[0]->product_related_activity)) {
+      $ractivity = explode(",", $details[0]->product_related_activity);
+    }else {
+      $ractivity = "";
+    }
+    $relatedActivity = $this->ci->Activity_lib->getRelatedActivity($ractivity);
+
+    ///Related Product  List Tours
+    if (!empty($details[0]->product_related_hotels)) {
+      $rhotels = explode(",", $details[0]->product_related_hotels);
+    }else {
+      $rhotels = "";
+    }
+    $relatedHotels = $this->ci->Hotels_lib->getRelatedHotels($rhotels);
+
+    ///Related Product  List Spa
+    if (!empty($details[0]->product_related_spa)) {
+      $rspa = explode(",", $details[0]->product_related_spa);
+    }else {
+      $rspa = "";
+    }
+    $relatedSpa = $this->ci->Spa_lib->getRelatedSpa($rspa);
+
+    ///Related Product  List Wedding
+    if (!empty($details[0]->product_related_wedding)) {
+      $rwedding = explode(",", $details[0]->product_related_wedding);
+    }else {
+      $rwedding = "";
+    }
+    $relatedWedding = $this->ci->Wedding_lib->getRelatedWedding($rwedding);
+
+    ///Related Product  List Restaurant
+    if (!empty($details[0]->product_related_restaurant)) {
+      $rrestaurant = explode(",", $details[0]->product_related_restaurant);
+    }else {
+      $rrestaurant = "";
+    }
+    $relatedRestaurant = $this->ci->Restaurant_lib->getRelatedRestaurant($rrestaurant);
+
+    ///Related Product  List Cars
+    if (!empty($details[0]->product_related_cars)) {
+      $rcars = explode(",", $details[0]->product_related_cars);
+    }else {
+      $rcars = "";
+    }
+    $relatedCars = $this->ci->Cars_lib->getRelatedCars($rcars);
+
     $thumbnail = PT_TOURS_SLIDER_THUMB . $details[0]->thumbnail_image;
     $city = pt_LocationsInfo($details[0]->tour_location, $this->lang);
     $location = $city->city; // $details[0]->tour_location;
@@ -337,7 +395,60 @@ class Tours_lib {
     $this->tax_value = $taxcom['taxval'];
     $this->setDeposit($curr->convertPriceFloat($totalCost, 2));
     $depositAmount = $this->deposit;
-    $detailResults = (object) array('id' => $details[0]->tour_id, 'title' => $title, 'slug' => $slug, 'bookingSlug' => $bookingSlug, 'thumbnail' => $thumbnail, 'stars' => pt_create_stars($stars), 'starsCount' => $stars, 'location' => $location, 'desc' => $desc, 'inclusions' => $inclusions, 'exclusions' => $exclusions, 'latitude' => $latitude, 'longitude' => $longitude, 'sliderImages' => $sliderImages, 'relatedItems' => $relatedTours, 'paymentOptions' => $paymentOptions, 'metadesc' => $metadesc, 'keywords' => $keywords, 'policy' => $policy, 'website' => $website, 'email' => $email, 'phone' => $phone, 'maxAdults' => $maxAdults, 'maxChild' => $maxChild, 'maxInfant' => $maxInfant, 'adultStatus' => $adultStatus, 'childStatus' => $childStatus, 'infantStatus' => $infantStatus, 'adultPrice' => $adultPrice, 'childPrice' => $childPrice, 'infantPrice' => $infantPrice, 'perAdultPrice' => $perAdultPrice, 'perChildPrice' => $perChildPrice, 'perInfantPrice' => $perInfantPrice, 'currCode' => $curr->code, 'currSymbol' => $curr->symbol, 'date' => $this->date, 'totalCost' => $curr->convertPrice($totalCost), 'comType' => $comm_type, 'comValue' => $comm_value, 'taxType' => $tax_type, 'taxValue' => $tax_value, 'tourDays' => $tourDays, 'tourNights' => $tourNights, 'totalDeposit' => $depositAmount, 'mapAddress' => $details[0]->tour_mapaddress);
+    $detailResults = (object) array(
+      'id' => $details[0]->tour_id,
+      'title' => $title,
+      'slug' => $slug,
+      'bookingSlug' => $bookingSlug,
+      'thumbnail' => $thumbnail,
+      'stars' => pt_create_stars($stars),
+      'starsCount' => $stars,
+      'location' => $location,
+      'desc' => $desc,
+      'inclusions' => $inclusions,
+      'exclusions' => $exclusions,
+      'latitude' => $latitude,
+      'longitude' => $longitude,
+      'sliderImages' => $sliderImages,
+      'relatedItems' => $relatedTours,
+      'relatedActivity' => $relatedActivity,
+      'relatedHotels' => $relatedHotels,
+      'relatedSpa' => $relatedSpa,
+      'relatedCars' => $relatedCars,
+      'relatedWedding' => $relatedWedding,
+      'relatedRestaurant' => $relatedRestaurant,
+      'paymentOptions' => $paymentOptions,
+      'metadesc' => $metadesc,
+      'keywords' => $keywords,
+      'policy' => $policy,
+      'website' => $website,
+      'email' => $email,
+      'phone' => $phone,
+      'maxAdults' => $maxAdults,
+      'maxChild' => $maxChild,
+      'maxInfant' => $maxInfant,
+      'adultStatus' => $adultStatus,
+      'childStatus' => $childStatus,
+      'infantStatus' => $infantStatus,
+      'adultPrice' => $adultPrice,
+      'childPrice' => $childPrice,
+      'infantPrice' => $infantPrice,
+      'perAdultPrice' => $perAdultPrice,
+      'perChildPrice' => $perChildPrice,
+      'perInfantPrice' => $perInfantPrice,
+      'currCode' => $curr->code,
+      'currSymbol' => $curr->symbol,
+      'date' => $this->date,
+      'totalCost' => $curr->convertPrice($totalCost),
+      'comType' => $comm_type,
+      'comValue' => $comm_value,
+      'taxType' => $tax_type,
+      'taxValue' => $tax_value,
+      'tourDays' => $tourDays,
+      'tourNights' => $tourNights,
+      'totalDeposit' => $depositAmount,
+      'mapAddress' => $details[0]->tour_mapaddress);
+
     return $detailResults;
   }
   function tour_short_details($tourid = 0) {

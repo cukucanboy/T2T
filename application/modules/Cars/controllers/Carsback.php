@@ -67,7 +67,7 @@ class Carsback extends MX_Controller {
 				$this->load->helper('Cars/cars');
 				$this->data['languages'] = pt_get_languages();
 				$this->load->helper('xcrud');
-				$this->data['c_model'] = $this->countries_model;
+				$this->data['c_model'] = @$this->countries_model;
 
                 $this->data['addpermission'] = true;
                 if($this->role == "supplier" || $this->role == "admin"){
@@ -184,7 +184,6 @@ $this->data['all_wedding'] = $this->Wedding_model->select_related_wedding($this-
 $this->data['all_tours'] = $this->Tours_model->select_related_tours($this->data['userloggedin']);
 $this->data['all_spa'] = $this->Spa_model->select_related_spa($this->data['userloggedin']);
 $this->data['all_activity'] = $this->Activity_model->select_related_activity($this->data['userloggedin']);
-//$this->data['all_cars'] = $this->Cars_model->select_related_cars($this->data['userloggedin']);
 /* product_related */
 
 						$this->data['main_content'] = 'Cars/manage';
@@ -290,12 +289,24 @@ $this->data['all_activity'] = $this->Activity_model->select_related_activity($th
 								redirect($this->data['adminsegment'] . '/cars/');
 						}
 
-						$this->data['data_relate'] = $this->Cars_model->data_for_relate_near_by(); //
+
 						$this->data['carid'] = $this->data['cdata'][0]->car_id;
 						$this->data['submittype'] = "update";
 
 						$this->data['all_cars'] = $this->Cars_model->select_related_cars($this->data['cdata'][0]->car_id);
-            $this->data['cartypes'] = $this->Cars_model->get_csettings_data("ctypes");
+						/* product_related */
+						$this->data['all_hotels'] = $this->Hotels_model->select_related_hotels($this->data['userloggedin']);
+						$this->data['all_restaurant'] = $this->Restaurant_model->select_related_restaurant($this->data['userloggedin']);
+						$this->data['all_wedding'] = $this->Wedding_model->select_related_wedding($this->data['userloggedin']);
+						$this->data['all_tours'] = $this->Tours_model->select_related_tours($this->data['userloggedin']);
+						$this->data['all_spa'] = $this->Spa_model->select_related_spa($this->data['userloggedin']);
+						$this->data['all_activity'] = $this->Activity_model->select_related_activity($this->data['userloggedin']);
+						/* product_related */
+
+
+
+
+						$this->data['cartypes'] = $this->Cars_model->get_csettings_data("ctypes");
 						$this->data['carpayments'] = $this->Cars_model->get_csettings_data("cpayments");
 
 						$this->data['carlocations'] = $this->Cars_model->carSelectedLocations($this->data['cdata'][0]->car_id);

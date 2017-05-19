@@ -13,12 +13,6 @@ class Hotels extends MX_Controller {
 				}
 
         $this->load->library('Hotels/Hotels_lib');
-		    $this->load->library('Activity/Activity_lib');
-		    $this->load->library('Restaurant/Restaurant_lib');
-		    $this->load->library('Wedding/Wedding_lib');
-		    $this->load->library('Tours/Tours_lib');
-		    $this->load->library('Spa/Spa_lib');
-		    $this->load->library('Cars/Cars_lib');
         $this->load->model('Hotels/Hotels_model');
 				$this->data['phone'] = $this->load->get_var('phone');
 				$this->data['contactemail'] = $this->load->get_var('contactemail');
@@ -49,7 +43,17 @@ class Hotels extends MX_Controller {
 		}
 
 		public function index() {
-				$this->load->library('Hotels/Hotels_calendar_lib');
+$this->load->library('Hotels/Hotels_calendar_lib');
+//$this->load->library('Hotels/Hotels_lib');
+$this->load->library('Activity/Activity_lib');
+$this->load->library('Restaurant/Restaurant_lib');
+$this->load->library('Wedding/Wedding_lib');
+$this->load->library('Tours/Tours_lib');
+$this->load->library('Spa/Spa_lib');
+$this->load->library('Cars/Cars_lib');
+
+
+
 				$this->data['loadMap'] = TRUE;
 				$this->data['calendar'] = $this->Hotels_calendar_lib;
 				$settings = $this->Settings_model->get_front_settings('hotels');
@@ -128,7 +132,6 @@ class Hotels extends MX_Controller {
 					$this->data['totalStay'] = $this->Hotels_lib->stay;
 					$this->data['adults'] = $this->Hotels_lib->adults;
 					$this->data['child'] = (int) $this->Hotels_lib->children;
-
 
 					  $this->data['currencySign'] = $this->Hotels_lib->currencysign;
 					  $this->data['lowestPrice'] = $this->Hotels_lib->bestPrice($this->data['module']->id);

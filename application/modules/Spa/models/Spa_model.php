@@ -164,6 +164,14 @@ class Spa_model extends CI_Model {
 				$paymentopt = @ implode(",", $this->input->post('spapayments'));
 				$relatedspa = @ implode(",", $this->input->post('relatedspa'));
 
+        // Start Related Products For  Tours Modules
+        $relatedProdHotels = @ implode(",", $this->input->post('relatedProdHotels'));
+        $relatedProdRestaurant = @ implode(",", $this->input->post('relatedProdRestaurant'));
+        $relatedProdActivity = @ implode(",", $this->input->post('relatedProdActivity'));
+        $relatedProdWedding = @ implode(",", $this->input->post('relatedProdWedding'));
+        $relatedProdCars = @ implode(",", $this->input->post('relatedProdCars'));
+        $relatedProdTours = @ implode(",", $this->input->post('relatedProdTours'));
+        // End Related Products
 
 				$featured = $this->input->post('isfeatured');
 				if(empty($featured)){
@@ -224,7 +232,16 @@ class Spa_model extends CI_Model {
 					'spa_nights' => intval($this->input->post('spanights')),
 					'spa_privacy' => $this->input->post('spaprivacy'),
 					'spa_status' => $this->input->post('spatatus'),
-					'spa_related' => $relatedspa, 'spa_order' => $spaorder,
+					'spa_related' => $relatedspa,
+          /* product_related */
+          'product_related_hotels' =>$relatedProdHotels,
+          'product_related_restaurant' =>$relatedProdRestaurant,
+          'product_related_wedding' =>$relatedProdWedding,
+          'product_related_activity' => $relatedProdActivity,
+          'product_related_tours' => $relatedProdTours,
+          'product_related_cars' => $relatedProdCars,
+          /* product_related */
+          'spa_order' => $spaorder,
 					'spa_comm_fixed' => $commfixed, 'spa_comm_percentage' => $commper,
 					'spa_tax_fixed' => $taxfixed, 'spa_tax_percentage' => $taxper,
 					'spa_email' => $this->input->post('spaemail'),
@@ -284,7 +301,14 @@ class Spa_model extends CI_Model {
 				$exclusions = @ implode(",", $this->input->post('spaexclusions'));
 				$paymentopt = @ implode(",", $this->input->post('spapayments'));
 				$relatedspa = @ implode(",", $this->input->post('relatedspa'));
-
+        // Start Related Products For  SPA Modules
+        $relatedProdHotels = @ implode(",", $this->input->post('relatedProdHotels'));
+        $relatedProdRestaurant = @ implode(",", $this->input->post('relatedProdRestaurant'));
+        $relatedProdActivity = @ implode(",", $this->input->post('relatedProdActivity'));
+        $relatedProdWedding = @ implode(",", $this->input->post('relatedProdWedding'));
+        $relatedProdCars = @ implode(",", $this->input->post('relatedProdCars'));
+        $relatedProdTours = @ implode(",", $this->input->post('relatedProdTours'));
+        // End Related Products
 				$featured = $this->input->post('isfeatured');
 
 				if(empty($featured)){
@@ -345,6 +369,14 @@ class Spa_model extends CI_Model {
 					'spa_privacy' => $this->input->post('spaprivacy'),
 					'spa_status' => $this->input->post('spatatus'),
 					'spa_related' => $relatedspa,
+          /* product_related */
+          'product_related_hotels' =>$relatedProdHotels,
+          'product_related_restaurant' =>$relatedProdRestaurant,
+          'product_related_wedding' =>$relatedProdWedding,
+          'product_related_activity' => $relatedProdActivity,
+          'product_related_tours' => $relatedProdTours,
+          'product_related_cars' => $relatedProdCars,
+          /* product_related */
 					'spa_comm_fixed' => $commfixed, 'spa_comm_percentage' => $commper,
 					'spa_tax_fixed' => $taxfixed, 'spa_tax_percentage' => $taxper,
 					'spa_email' => $this->input->post('spaemail'),

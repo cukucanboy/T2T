@@ -154,7 +154,7 @@ redirect('admin');
 				$this->data['childInput'] = "0";
 				$this->data['infantInput'] = "0";
 
-                $this->data['submittype'] = "add";
+        $this->data['submittype'] = "add";
 
 				if (!empty ($addspa)) {
 						$this->form_validation->set_rules('spaname', 'Spa Name', 'trim|required');
@@ -192,11 +192,17 @@ redirect('admin');
 						$this->data['spapayments'] = $this->Spa_model->get_tsettings_data("tpayments");
 						$this->data['all_countries'] = $this->Countries_model->get_all_countries();
 						$this->data['all_spa'] = $this->Spa_model->select_related_spa($this->data['userloggedin']);
+						/* product_related  for Activity Modules  */
+						$this->data['all_hotels'] = $this->Hotels_model->select_related_hotels($this->data['userloggedin']);
+						$this->data['all_restaurant'] = $this->Restaurant_model->select_related_restaurant($this->data['userloggedin']);
+						$this->data['all_wedding'] = $this->Wedding_model->select_related_wedding($this->data['userloggedin']);
+						$this->data['all_tours'] = $this->Tours_model->select_related_tours($this->data['userloggedin']);
+						$this->data['all_activity'] = $this->Activity_model->select_related_activity($this->data['userloggedin']);
+						$this->data['all_cars'] = $this->Cars_model->select_related_cars($this->data['userloggedin']);
+						/* product_related */
 
 						$this->load->model('Admin/Locations_model');
-
 						//$this->data['locations'] = $this->Locations_model->getLocationsBackend();
-
 						$this->data['main_content'] = 'Spa/manage';
 						$this->data['page_title'] = 'Add Spa';
 						$this->data['headingText'] = 'Add Spa';
@@ -362,6 +368,14 @@ redirect('admin');
                         }
 
 						$this->data['all_spa'] = $this->Spa_model->select_related_spa($this->data['tdata'][0]->spa_id);
+						/* product_related  for Activity Modules  */
+						$this->data['all_hotels'] = $this->Hotels_model->select_related_hotels($this->data['userloggedin']);
+						$this->data['all_restaurant'] = $this->Restaurant_model->select_related_restaurant($this->data['userloggedin']);
+						$this->data['all_wedding'] = $this->Wedding_model->select_related_wedding($this->data['userloggedin']);
+						$this->data['all_tours'] = $this->Tours_model->select_related_tours($this->data['userloggedin']);
+						$this->data['all_activity'] = $this->Activity_model->select_related_activity($this->data['userloggedin']);
+						$this->data['all_cars'] = $this->Cars_model->select_related_cars($this->data['userloggedin']);
+						/* product_related */
 						$this->data['map_data'] = $this->Spa_model->get_spa_map($this->data['tdata'][0]->spa_id);
 						$this->data['maxmaporder'] = $this->Spa_model->max_map_order($this->data['tdata'][0]->spa_id);
 						$this->data['has_start'] = $this->Spa_model->has_start_end_city("start", $this->data['tdata'][0]->spa_id);

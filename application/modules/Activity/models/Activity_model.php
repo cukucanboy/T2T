@@ -166,11 +166,11 @@ class Activity_model extends CI_Model {
 
 				// Start Related Products 1
 				$relatedProdHotels = @ implode(",", $this->input->post('relatedProdHotels'));
-				$relatedProdTestaurant = @ implode(",", $this->input->post('relatedProdRestaurant'));
+				$relatedProdRestaurant = @ implode(",", $this->input->post('relatedProdRestaurant'));
 				$relatedProdTours = @ implode(",", $this->input->post('relatedProdTours'));
 				$relatedProdWedding = @ implode(",", $this->input->post('relatedProdWedding'));
 				$relatedProdCars = @ implode(",", $this->input->post('relatedProdCars'));
-				$relatedProdSpa = @ implode(",", $this->input->post('relatedProdspa'));
+				$relatedProdSpa = @ implode(",", $this->input->post('relatedProdSpa'));
 				// End Related Products
 
 
@@ -237,7 +237,7 @@ class Activity_model extends CI_Model {
 					'activity_related' => $relatedactivity,
 					/* product_related */
 					'product_related_hotels' =>$relatedProdHotels,
-					'product_related_restaurant' =>$relatedProdTestaurant,
+					'product_related_restaurant' =>$relatedProdRestaurant,
 					'product_related_wedding' =>$relatedProdWedding,
 					'product_related_tours' => $relatedProdTours,
 					'product_related_spa' => $relatedProdSpa,
@@ -308,11 +308,11 @@ class Activity_model extends CI_Model {
 
 				// Start Related Products
 				$relatedProdHotels = @ implode(",", $this->input->post('relatedProdHotels'));
-				$relatedProdTestaurant = @ implode(",", $this->input->post('relatedProdRestaurant'));
+				$relatedProdRestaurant = @ implode(",", $this->input->post('relatedProdRestaurant'));
 				$relatedProdTours = @ implode(",", $this->input->post('relatedProdTours'));
 				$relatedProdWedding = @ implode(",", $this->input->post('relatedProdWedding'));
 				$relatedProdCars = @ implode(",", $this->input->post('relatedProdCars'));
-				$relatedProdSpa = @ implode(",", $this->input->post('relatedProdspa'));
+				$relatedProdSpa = @ implode(",", $this->input->post('relatedProdSpa'));
 				// End Related Products
 
 
@@ -379,7 +379,7 @@ class Activity_model extends CI_Model {
 
 					/* product_related */
 					'product_related_hotels' =>$relatedProdHotels,
-					'product_related_restaurant' =>$relatedProdTestaurant,
+					'product_related_restaurant' =>$relatedProdRestaurant,
 					'product_related_wedding' =>$relatedProdWedding,
 					'product_related_tours' => $relatedProdTours,
 					'product_related_spa' => $relatedProdSpa,

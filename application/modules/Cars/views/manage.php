@@ -58,15 +58,15 @@
             <label class="col-md-2 control-label text-left">Status</label>
             <div class="col-md-2">
               <select  class="form-control" name="carstatus">
-                <option value="Yes" <?php if($cdata[0]->car_status == "Yes"){echo "selected";} ?> >Enabled</option>
-                <option value="No" <?php if($cdata[0]->car_status == "No"){echo "selected";} ?> >Disabled</option>
+                <option value="Yes" <?php if(@$cdata[0]->car_status == "Yes"){echo "selected";} ?> >Enabled</option>
+                <option value="No" <?php if(@$cdata[0]->car_status == "No"){echo "selected";} ?> >Disabled</option>
               </select>
             </div>
           </div>
           <div class="row form-group">
             <label class="col-md-2 control-label text-left">Car Name</label>
             <div class="col-md-4">
-              <input class="form-control" type="text" placeholder="Car Name" name="carname" value="<?php echo $cdata[0]->car_title;?>" >
+              <input class="form-control" type="text" placeholder="Car Name" name="carname" value="<?php echo @$cdata[0]->car_title;?>" >
             </div>
           </div>
           <div class="row form-group">
@@ -84,7 +84,7 @@
                 <option value="0">Select</option>
                 <?php
                   for($stars=0;$stars <=5;$stars++){?>
-                <option value="<?php echo $stars;?>" <?php if($stars == $cdata[0]->car_stars ){echo "selected";} ?> ><?php echo $stars;?></option>
+                <option value="<?php echo $stars;?>" <?php if($stars == @$cdata[0]->car_stars ){echo "selected";} ?> ><?php echo $stars;?></option>
                 <?php   } ?>
               </select>
             </div>
@@ -154,30 +154,6 @@
               </select>
             </div>
 
-           <!--  <label class="col-md-2 control-label text-left">Cancel Anytime</label>
-            <div class="col-md-2">
-              <select class="form-control" name="cancel">
-                <option value="yes" <?php makeSelected("yes",@$cdata[0]->car_cancel_anytime); ?> >Yes</option>
-                <option value="no" <?php makeSelected("no",@$cdata[0]->car_cancel_anytime); ?> >No</option>
-              </select>
-            </div>
-
-            <label class="col-md-2 control-label text-left">Free Amendment</label>
-            <div class="col-md-2">
-                      <select  class="form-control" name="amend">
-                      <option value="yes" <?php makeSelected("yes",@$cdata[0]->car_free_amend); ?> >Yes</option>
-                      <option value="no" <?php makeSelected("no",@$cdata[0]->car_free_amend); ?> >No</option>
-                    </select>
-            </div>
-              <label class="col-md-2 control-label text-left">Unlimited mile</label>
-            <div class="col-md-2">
-                      <select  class="form-control" name="mile">
-                      <option value="yes" <?php makeSelected("yes",@$cdata[0]->car_unlimited_mile); ?> >Yes</option>
-                      <option value="no" <?php makeSelected("no",@$cdata[0]->car_unlimited_mile); ?> >No</option>
-                    </select>
-            </div>
-
-            -->
             </div>
 
 
@@ -189,7 +165,7 @@
                 <option value="">Select</option>
                 <?php if(!empty($cartypes)){
                   foreach($cartypes as $tt){ ?>
-                <option value="<?php echo $tt->sett_id;?>" <?php if($cdata[0]->car_type ==  $tt->sett_id ){echo "selected";} ?> ><?php echo $tt->sett_name;?></option>
+                <option value="<?php echo $tt->sett_id;?>" <?php if(@$cdata[0]->car_type ==  $tt->sett_id ){echo "selected";} ?> ><?php echo $tt->sett_name;?></option>
                 <?php  } } ?>
               </select>
             </div>
@@ -198,7 +174,7 @@
                         <div class="row form-group">
 
 
-                                    <?php  for($i=1; $i<=10; $i++) { $price = $carlocations['price'][$i]; $pickuplocationName =  $carlocations['pickup'][$i]->name; $dropofflocationName =  $carlocations['dropoff'][$i]->name; ?>
+                                    <?php  for($i=1; $i<=3; $i++) { $price = @$carlocations['price'][$i]; $pickuplocationName =  @$carlocations['pickup'][$i]->name; $dropofflocationName =  @$carlocations['dropoff'][$i]->name; ?>
 
             <label class="col-md-2 control-label text-left">Pick Up Location</label>
             <div class="col-md-3">
@@ -304,64 +280,53 @@
             <label class="col-md-2 control-label text-left">Featured</label>
             <div class="col-md-2">
               <select  Placeholder="No" class="form-control" Placeholder="No" name="isfeatured" id="isfeatured" onchange="changecollapse(this.options[this.selectedIndex].value,'Featured')">
-                <option  value="no" <?php if($cdata[0]->car_is_featured == "no"){echo "selected";} ?> >No</option>
-                <option  value="yes" <?php if($cdata[0]->car_is_featured == "yes"){echo "selected";} ?> >Yes</option>
+                <option  value="no" <?php if(@$cdata[0]->car_is_featured == "no"){echo "selected";} ?> >No</option>
+                <option  value="yes" <?php if(@$cdata[0]->car_is_featured == "yes"){echo "selected";} ?> >Yes</option>
               </select>
             </div>
             <div class="col-md-2">
-              <input class="form-control dpd1" type="text" placeholder="From" value="<?php if(empty($cdata[0]->car_featured_forever)){ echo pt_show_date_php($cdata[0]->car_featured_from);}?>" name="ffrom" >
+              <input class="form-control dpd1" type="text" placeholder="From" value="<?php if(empty($cdata[0]->car_featured_forever)){ echo @pt_show_date_php($cdata[0]->car_featured_from);}?>" name="ffrom" >
             </div>
             <div class="col-md-2">
-              <input class="form-control dpd2" type="text" placeholder="To" value="<?php if(empty($cdata[0]->car_featured_forever)){ echo pt_show_date_php($cdata[0]->car_featured_to);}?>" name="fto" >
+              <input class="form-control dpd2" type="text" placeholder="To" value="<?php if(empty($cdata[0]->car_featured_forever)){ echo @pt_show_date_php($cdata[0]->car_featured_to);}?>" name="fto" >
             </div>
             <?php }else{ ?>
           <input type="hidden" name="isfeatured" value="<?php echo @$cdata[0]->car_is_featured; ?>">
-          <input type="hidden" name="ffrom" value="<?php if(empty($cdata[0]->car_featured_forever)){ echo pt_show_date_php($cdata[0]->car_featured_from);}?>">
-          <input type="hidden" name="fto" value="<?php if(empty($cdata[0]->car_featured_forever)){ echo pt_show_date_php($cdata[0]->car_featured_to);}?>>">
+          <input type="hidden" name="ffrom" value="<?php if(empty($cdata[0]->car_featured_forever)){ echo @pt_show_date_php($cdata[0]->car_featured_from);}?>">
+          <input type="hidden" name="fto" value="<?php if(empty($cdata[0]->car_featured_forever)){ echo @pt_show_date_php($cdata[0]->car_featured_to);}?>>">
 
            <?php } ?>
 
           </div>
-
-
-          <!-- <div class="row form-group">
-            <label class="col-md-2 control-label text-left">Price</label>
-            <div class="col-md-2">
-              <input type="text" class="form-control" placeholder="Car Price" name="carbasic" value="<?php echo @$cdata[0]->car_basic_price; ?>">
-            </div>
-
-
-          </div> -->
-
 
           <div class="row form-group">
             <label class="col-md-2 control-label text-left text-success">Deposit / Commission</label>
             <div class="col-md-2">
              <?php  if($isadmin){ ?>
               <select name="deposittype" class="form-control">
-                <option value="fixed" <?php if($cardeposittype == "fixed"){ echo "selected";} ?> >Fixed</option>
-                <option value="percentage" <?php if($cardeposittype == "percentage"){ echo "selected";} ?> >Percentage</option>
+                <option value="fixed" <?php if(@$cardeposittype == "fixed"){ echo "selected";} ?> >Fixed</option>
+                <option value="percentage" <?php if(@$cardeposittype == "percentage"){ echo "selected";} ?> >Percentage</option>
               </select>
-                 <?php }else{ ?><input type="text" class="form-control" name="deposittype" value="<?php echo $cardeposittype; ?>" readonly="readonly"><?php } ?>
+                 <?php }else{ ?><input type="text" class="form-control" name="deposittype" value="<?php echo @$cardeposittype; ?>" readonly="readonly"><?php } ?>
             </div>
             <div class="col-md-2">
-              <input type="text" class="form-control" id="" placeholder="" name="depositvalue" value="<?php echo $cardepositval; ?>" <?php if(!$isadmin){ echo "readonly"; } ?>  >
+              <input type="text" class="form-control" id="" placeholder="" name="depositvalue" value="<?php echo @$cardepositval; ?>" <?php if(!$isadmin){ echo "readonly"; } ?>  >
             </div>
           </div>
           <div class="row form-group">
             <label class="col-md-2 control-label text-left text-danger">Vat Tax</label>
             <div class="col-md-2">
               <select name="taxtype" class="form-control">
-                <option value="fixed" <?php if($cartaxtype == "fixed"){ echo "selected";} ?> >Fixed</option>
-                <option value="percentage" <?php if($cartaxtype == "percentage"){ echo "selected";} ?> >Percentage</option>
+                <option value="fixed" <?php if(@$cartaxtype == "fixed"){ echo "selected";} ?> >Fixed</option>
+                <option value="percentage" <?php if(@$cartaxtype == "percentage"){ echo "selected";} ?> >Percentage</option>
               </select>
             </div>
             <div class="col-md-2">
-              <input class="form-control" id="" Placeholder="" type="text" name="taxvalue" value="<?php echo $cartaxval; ?>"  />
+              <input class="form-control" id="" Placeholder="" type="text" name="taxvalue" value="<?php echo @$cartaxval; ?>"  />
             </div>
           </div>
 
-          <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
+          <div class="row form-group" style='<?php if(@$adminsegment == "supplier"){ echo "display:none;"; } ?>'>
             <label class="col-md-2 control-label text-left">Related Cars</label>
             <div class="col-md-8">
               <select multiple class="chosen-multi-select" name="relatedcars[]">
@@ -374,95 +339,118 @@
             </div>
           </div>
 
-          <!--Near by tour-->
-          <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
-            <label class="col-md-2 control-label text-left">Nearby Related</label>
-            <div class="col-md-8">
-              <select multiple class="chosen-multi-select" name="nearbyrelatedcar[]">
-                <?php if(!empty($data_relate)){
-                  $carnearbyrelated = explode(",",$this->Cars_model->nearbyhtml($cdata[0]->car_nearby_related));
-                  foreach($data_relate as $t):
-                    if($t->module == "hotel"){
-                      $module = "ht";
-                    }elseif($t->module == "car"){
-                      $module = "ca";
-                    }elseif ($t->module == "spa") {
-                      $module = "sp";
-                    }elseif ($t->module == "activity") {
-                      $module = "at";
-                    }elseif ($t->module == "tour") {
-                      $module = "to";
-                    }elseif ($t->module == "restaurant") {
-                      $module = "rt";
-                    }elseif ($t->module == "wedding") {
-                      $module = "wd";
-                    }elseif ($t->module == "advertising") {
-                      $module = "ad";
-                    }
 
-                    $value = $t->id.''.$module ;
-                  ?>
-                <option value="<?= $value ?>" <?php if(in_array($value,$carnearbyrelated)){echo "selected";} ?>  ><?php echo $t->title;?></option>
-                <?php endforeach; } ?>
-              </select>
-            </div>
-          </div>
+<!-- Related Products -->
+          <div class="panel panel-default">
+                <div class="panel-heading">Related Products</div>
+                <div class="panel-body">
 
-         <!-- Address and Map -->
+                  <!--Related Activity -->
+                    <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
+                      <label class="col-md-2 control-label text-left">Related Activity </label>
+                      <div class="col-md-8">
+                        <select multiple class="chosen-multi-select" name="relatedProdActivity[]">
+                          <?php if(!empty($all_activity)){$activityRelated = explode(",",$cdata[0]->product_related_activity);
+                            foreach($all_activity as $t):
+                            ?>
+                          <option value="<?php echo $t->activity_id;?>" <?php if(in_array($t->activity_id,$activityRelated)){echo "selected";} ?>  ><?php echo $t->activity_title;?></option>
+                          <?php endforeach; } ?>
+                        </select>
+                      </div>
+                    </div>
 
-       <!-- <div class="panel panel-default">
-        <div class="panel-heading"><strong>Map Address</strong></div>
-        <div class="well well-sm" style="margin-bottom: 0px;">
-        <div class="col-md-6 form-horizontal">
-        <table class="table">
-        <tr>
-        <td>Address on Map</td>
-        <td>
-        <input type="text" class="form-control Places" id="mapaddress" name="carmapaddress" value="<?php echo $cdata[0]->car_mapaddress;?>">
-        </td>
-        </tr>
-        <tr>
-        <td></td>
-        </tr>
-        <tr>
-        <td>Latitude</td>
-        <td><input type="text" class="form-control" id="latitude" value="<?php echo $cdata[0]->car_latitude;?>"  name="latitude" /></td>
-        </tr>
-        <tr>
-        <td>Longitude</td>
-        <td><input type="text" class="form-control" id="longitude" value="<?php echo $cdata[0]->car_longitude;?>"  name="longitude" /></td>
-        </tr>
-        </table>
+            <!--Related Hotels -->
+              <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
+                <label class="col-md-2 control-label text-left">Related Hotels</label>
+                <div class="col-md-8">
+                  <select multiple class="chosen-multi-select" name="relatedProdHotels[]">
+                    <?php if(!empty($all_hotels)){ $hotelsRelated = explode(",",$cdata[0]->product_related_hotels);
+                      foreach($all_hotels as $t):
+                      ?>
+                    <option value="<?php echo $t->hotel_id;?>" <?php if(in_array($t->hotel_id,$hotelsRelated)){echo "selected";} ?>  ><?php echo $t->hotel_title;?></option>
+                    <?php endforeach; } ?>
+                  </select>
+                </div>
+              </div>
 
-        </div>
-        <div class="col-md-6">
-        <div class="thumbnail">
-        <div id="map-canvas" style="height: 200px; width:400"></div>
-        </div>
-        </div>
-        <div class="clearfix"></div>
-        </div>
-        </div> -->
-          <!-- Address and Map -->
+            <!--Related Restaurant -->
+              <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
+                <label class="col-md-2 control-label text-left">Related Restaurant</label>
+                <div class="col-md-8">
+                  <select multiple class="chosen-multi-select" name="relatedProdRestaurant[]">
+                    <?php if(!empty($all_restaurant)){ $restaurantRelated = explode(",",$cdata[0]->product_related_restaurant);
+                      foreach($all_restaurant as $t):
+                      ?>
+                    <option value="<?php echo $t->restaurant_id;?>" <?php if(in_array($t->restaurant_id,$restaurantRelated)){echo "selected";} ?>  ><?php echo $t->restaurant_title;?></option>
+                    <?php endforeach; } ?>
+                  </select>
+                </div>
+              </div>
+            <!--Related Wedding -->
+              <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
+                <label class="col-md-2 control-label text-left">Related Wedding</label>
+                <div class="col-md-8">
+                  <select multiple class="chosen-multi-select" name="relatedProdWedding[]">
+                    <?php if(!empty($all_wedding)){ $weddingRelated = explode(",",$cdata[0]->product_related_wedding);
+                      foreach($all_wedding as $t):
+                      ?>
+                    <option value="<?php echo $t->wedding_id;?>" <?php if(in_array($t->wedding_id,$weddingRelated)){echo "selected";} ?>  ><?php echo $t->wedding_title;?></option>
+                    <?php endforeach; } ?>
+                  </select>
+                </div>
+              </div>
+
+              <!--Related Tour -->
+                <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
+                  <label class="col-md-2 control-label text-left">Related tour</label>
+                  <div class="col-md-8">
+                    <select multiple class="chosen-multi-select" name="relatedProdTours[]">
+                      <?php if(!empty($all_tours)){$toursRelated = explode(",",$hdata[0]->product_related_tours);
+                        foreach($all_tours as $t):
+                        ?>
+                      <option value="<?php echo $t->tour_id;?>" <?php if(in_array($t->tour_id,$toursRelated)){echo "selected";} ?>  ><?php echo $t->tour_title;?></option>
+                      <?php endforeach; } ?>
+                    </select>
+                  </div>
+                </div>    
+            <!--Related Spa -->
+              <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
+                <label class="col-md-2 control-label text-left">Related Spa</label>
+                <div class="col-md-8">
+                  <select multiple class="chosen-multi-select" name="relatedProdSpa[]">
+                    <?php if(!empty($all_spa)){ $spaRelated = explode(",",$cdata[0]->product_related_spa);
+                      foreach($all_spa as $t):
+                      ?>
+                    <option value="<?php echo $t->spa_id;?>" <?php if(in_array($t->spa_id,$spaRelated)){echo "selected";} ?>  ><?php echo $t->spa_title;?></option>
+                    <?php endforeach; } ?>
+                  </select>
+                </div>
+              </div>
+
+                </div>
+              </div>
+ <!-- Related Products -->
+
+
 
         </div>
         <div class="tab-pane wow fadeIn animated in" id="META_INFO">
           <div class="row form-group">
             <label class="col-md-2 control-label text-left">Meta Title</label>
             <div class="col-md-6">
-              <input class="form-control" type="text" placeholder="Meta title" name="carmetatitle"  value="<?php echo $cdata[0]->car_meta_title;?>">
+              <input class="form-control" type="text" placeholder="Meta title" name="carmetatitle"  value="<?php echo @$cdata[0]->car_meta_title;?>">
             </div>
           </div>
           <div class="row form-group">
             <label class="col-md-2 control-label text-left">Meta Keywords</label>
             <div class="col-md-6">
-              <input class="form-control" type="text" placeholder="Meta keywords" name="carkeywords"  value="<?php echo $cdata[0]->car_meta_keywords;?>">
+              <input class="form-control" type="text" placeholder="Meta keywords" name="carkeywords"  value="<?php echo @$cdata[0]->car_meta_keywords;?>">
             </div>
           </div>
           <div class="row form-group">
             <label class="col-md-2 control-label text-left">Meta Description</label>
             <div class="col-md-6">
-              <textarea class="form-control" placeholder="Meta description here..." name="carmetadesc" rows="5"><?php echo $cdata[0]->car_meta_desc;?></textarea>
+              <textarea class="form-control" placeholder="Meta description here..." name="carmetadesc" rows="5"><?php echo @$cdata[0]->car_meta_desc;?></textarea>
             </div>
           </div>
         </div>
@@ -480,7 +468,7 @@
           <div class="row form-group">
             <label class="col-md-2 control-label text-left">Policy And Terms</label>
             <div class="col-md-8">
-              <textarea class="form-control" placeholder="Privacy Policy..." name="carpolicy" rows="3"><?php echo $cdata[0]->car_policy;?> </textarea>
+              <textarea class="form-control" placeholder="Privacy Policy..." name="carpolicy" rows="3"><?php echo @$cdata[0]->car_policy;?> </textarea>
             </div>
           </div>
         </div>

@@ -13,11 +13,6 @@ class Restaurant extends MX_Controller {
 				}
 
 				$this->load->library("Restaurant_lib");
-		    $this->load->library('Activity/Activity_lib');
-		    $this->load->library('Wedding/Wedding_lib');
-		    $this->load->library('Tours/Tours_lib');
-		    $this->load->library('Spa/Spa_lib');
-		    $this->load->library('Cars/Cars_lib');
 				$this->load->model("restaurant_model");
 				$this->load->helper("Restaurant_front");
 
@@ -52,6 +47,14 @@ class Restaurant extends MX_Controller {
 		}
 
 		public function index() {
+
+			$this->load->library('Hotels/Hotels_lib');
+			$this->load->library('Activity/Activity_lib');
+			$this->load->library('Wedding/Wedding_lib');
+			$this->load->library('Tours/Tours_lib');
+			$this->load->library('Spa/Spa_lib');
+			$this->load->library('Cars/Cars_lib');
+
 				$settings = $this->Settings_model->get_front_settings('restaurant');
 				$this->data['minprice'] = $settings[0]->front_search_min_price;
 				$this->data['maxprice'] = $settings[0]->front_search_max_price;

@@ -40,7 +40,7 @@
   })
 </script>
 <h3 class="margin-top-0"><?php //echo $tdata[0]->wedding_title;?></h3>
-<?php print_r($tobj); ?>
+<?php print_r(@$tobj); ?>
 <div class="output"></div>
 <form class="form-horizontal wedding-form" method="POST" action="" enctype="multipart/form-data"  onsubmit="return false;" >
   <div class="panel panel-default">
@@ -62,21 +62,21 @@
             <label class="col-md-2 control-label text-left">Status</label>
             <div class="col-md-2">
               <select  class="form-control" name="weddingtatus">
-                <option value="Yes" <?php if($tdata[0]->wedding_status == "Yes"){echo "selected";} ?> >Enabled</option>
-                <option value="No" <?php if($tdata[0]->wedding_status == "No"){echo "selected";} ?> >Disabled</option>
+                <option value="Yes" <?php if(@$tdata[0]->wedding_status == "Yes"){echo "selected";} ?> >Enabled</option>
+                <option value="No" <?php if(@$tdata[0]->wedding_status == "No"){echo "selected";} ?> >Disabled</option>
               </select>
             </div>
           </div>
           <div class="row form-group">
             <label class="col-md-2 control-label text-left">Wedding Name</label>
             <div class="col-md-4">
-              <input class="form-control" type="text" placeholder="Wedding Name" name="weddingname" value="<?php echo $tdata[0]->wedding_title;?>" >
+              <input class="form-control" type="text" placeholder="Wedding Name" name="weddingname" value="<?php echo @$tdata[0]->wedding_title;?>" >
             </div>
           </div>
           <div class="row form-group">
             <label class="col-md-2 control-label text-left">Wedding Description</label>
             <div class="col-md-10">
-              <?php $this->ckeditor->editor('weddingdesc', $tdata[0]->wedding_desc, $ckconfig,'weddingdesc'); ?>
+              <?php $this->ckeditor->editor('weddingdesc', @$tdata[0]->wedding_desc, $ckconfig,'weddingdesc'); ?>
             </div>
           </div>
           <div class="row form-group">
@@ -218,7 +218,7 @@
                 <option value="0">Select</option>
                 <?php
                   for($stars=0;$stars <=5;$stars++){?>
-                <option value="<?php echo $stars;?>" <?php if($stars == $tdata[0]->wedding_stars ){echo "selected";} ?> ><?php echo $stars;?></option>
+                <option value="<?php echo $stars;?>" <?php if($stars == @$tdata[0]->wedding_stars ){echo "selected";} ?> ><?php echo $stars;?></option>
                 <?php   } ?>
               </select>
             </div>
@@ -249,7 +249,7 @@
                 <option value="">Select</option>
                 <?php if(!empty($weddingtypes)){
                   foreach($weddingtypes as $tt){ ?>
-                <option value="<?php echo $tt->sett_id;?>" <?php if($tdata[0]->wedding_type ==  $tt->sett_id ){echo "selected";} ?> ><?php echo $tt->sett_name;?></option>
+                <option value="<?php echo $tt->sett_id;?>" <?php if(@$tdata[0]->wedding_type ==  $tt->sett_id ){echo "selected";} ?> ><?php echo $tt->sett_name;?></option>
                 <?php  } } ?>
               </select>
             </div>
@@ -259,20 +259,20 @@
             <label class="col-md-2 control-label text-left">Featured</label>
             <div class="col-md-2">
               <select  Placeholder="No" class="form-control" Placeholder="No" name="isfeatured" id="isfeatured" onchange="changecollapse(this.options[this.selectedIndex].value,'Featured')">
-                <option  value="no" <?php if($tdata[0]->wedding_is_featured == "no"){echo "selected";} ?> >No</option>
-                <option  value="yes" <?php if($tdata[0]->wedding_is_featured == "yes"){echo "selected";} ?> >Yes</option>
+                <option  value="no" <?php if(@$tdata[0]->wedding_is_featured == "no"){echo "selected";} ?> >No</option>
+                <option  value="yes" <?php if(@$tdata[0]->wedding_is_featured == "yes"){echo "selected";} ?> >Yes</option>
               </select>
             </div>
             <div class="col-md-2">
-              <input class="form-control dpd1" type="text" placeholder="From" value="<?php if(empty($tdata[0]->wedding_featured_forever)){ echo pt_show_date_php($tdata[0]->wedding_featured_from);}?>" name="ffrom" >
+              <input class="form-control dpd1" type="text" placeholder="From" value="<?php if(empty($tdata[0]->wedding_featured_forever)){ echo @pt_show_date_php($tdata[0]->wedding_featured_from);}?>" name="ffrom" >
             </div>
             <div class="col-md-2">
-              <input class="form-control dpd2" type="text" placeholder="To" value="<?php if(empty($tdata[0]->wedding_featured_forever)){ echo pt_show_date_php($tdata[0]->wedding_featured_to);}?>" name="fto" >
+              <input class="form-control dpd2" type="text" placeholder="To" value="<?php if(empty($tdata[0]->wedding_featured_forever)){ echo @pt_show_date_php($tdata[0]->wedding_featured_to);}?>" name="fto" >
             </div>
           <?php  }else{ ?>
           <input type="hidden" name="isfeatured" value="<?php echo @$tdata[0]->wedding_is_featured; ?>">
-          <input type="hidden" name="ffrom" value="<?php if(empty($tdata[0]->wedding_featured_forever)){ echo pt_show_date_php($tdata[0]->wedding_featured_from);}?>">
-          <input type="hidden" name="fto" value="<?php if(empty($tdata[0]->wedding_featured_forever)){ echo pt_show_date_php($tdata[0]->wedding_featured_to);}?>">
+          <input type="hidden" name="ffrom" value="<?php if(empty($tdata[0]->wedding_featured_forever)){ echo @pt_show_date_php($tdata[0]->wedding_featured_from);}?>">
+          <input type="hidden" name="fto" value="<?php if(empty($tdata[0]->wedding_featured_forever)){ echo @pt_show_date_php($tdata[0]->wedding_featured_to);}?>">
           <?php } ?>
 
           </div>
@@ -282,7 +282,7 @@
             <div class="panel-heading">Locations</div>
             <div class="panel-body">
 
-            <?php  for($i=1; $i<=3; $i++) { $locationName =  $weddinglocations[$i]->name; ?>
+            <?php  for($i=1; $i<=3; $i++) { $locationName =  @$weddinglocations[$i]->name; ?>
 
             <label class="col-md-2 control-label text-left">Location <?php echo $i; ?></label>
             <div class="col-md-6">
@@ -342,26 +342,26 @@
             <div class="col-md-2">
             <?php  if($isadmin){ ?>
               <select name="deposittype" class="form-control">
-                <option value="fixed" <?php if($weddingdeposittype == "fixed"){ echo "selected";} ?> >Fixed</option>
-                <option value="percentage" <?php if($weddingdeposittype == "percentage"){ echo "selected";} ?> >Percentage</option>
+                <option value="fixed" <?php if(@$weddingdeposittype == "fixed"){ echo "selected";} ?> >Fixed</option>
+                <option value="percentage" <?php if(@$weddingdeposittype == "percentage"){ echo "selected";} ?> >Percentage</option>
               </select>
                <?php }else{ ?><input type="text" class="form-control" name="deposittype" value="<?php echo $weddingdeposittype; ?>" readonly="readonly"><?php } ?>
 
             </div>
             <div class="col-md-2">
-              <input type="text" class="form-control" id="" placeholder="" name="depositvalue" value="<?php echo $weddingdepositval; ?>" <?php if(!$isadmin){ echo "readonly"; } ?>  >
+              <input type="text" class="form-control" id="" placeholder="" name="depositvalue" value="<?php echo @$weddingdepositval; ?>" <?php if(!$isadmin){ echo "readonly"; } ?>  >
             </div>
           </div>
           <div class="row form-group">
             <label class="col-md-2 control-label text-left text-danger">Vat Tax</label>
             <div class="col-md-2">
               <select name="taxtype" class="form-control">
-                <option value="fixed" <?php if($weddingtaxtype == "fixed"){ echo "selected";} ?> >Fixed</option>
-                <option value="percentage" <?php if($weddingtaxtype == "percentage"){ echo "selected";} ?> >Percentage</option>
+                <option value="fixed" <?php if(@$weddingtaxtype == "fixed"){ echo "selected";} ?> >Fixed</option>
+                <option value="percentage" <?php if(@$weddingtaxtype == "percentage"){ echo "selected";} ?> >Percentage</option>
               </select>
             </div>
             <div class="col-md-2">
-              <input class="form-control" id="" Placeholder="" type="text" name="taxvalue" value="<?php echo $weddingtaxval; ?>"  />
+              <input class="form-control" id="" Placeholder="" type="text" name="taxvalue" value="<?php echo @$weddingtaxval; ?>"  />
             </div>
           </div>
           <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
@@ -409,15 +409,15 @@
                           </select>
                         </div>
                       </div>
-                    <!--Related Wedding -->
+                    <!--Related Activity -->
                       <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
-                        <label class="col-md-2 control-label text-left">Related Wedding</label>
+                        <label class="col-md-2 control-label text-left">Related Activity</label>
                         <div class="col-md-8">
-                          <select multiple class="chosen-multi-select" name="relatedProdWedding[]">
-                            <?php if(!empty($all_wedding)){ $weddingRelated = explode(",",$tdata[0]->product_related_wedding);
-                              foreach($all_wedding as $t):
+                          <select multiple class="chosen-multi-select" name="relatedProdActivity[]">
+                            <?php if(!empty($all_activity)){ $activityRelated = explode(",",$tdata[0]->product_related_activity);
+                              foreach($all_activity as $t):
                               ?>
-                            <option value="<?php echo $t->wedding_id;?>" <?php if(in_array($t->wedding_id,$weddingRelated)){echo "selected";} ?>  ><?php echo $t->wedding_title;?></option>
+                            <option value="<?php echo $t->activity_id;?>" <?php if(in_array($t->activity_id, $activityRelated)){echo "selected";} ?>  ><?php echo $t->activity_title;?></option>
                             <?php endforeach; } ?>
                           </select>
                         </div>
@@ -441,7 +441,7 @@
                       <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
                         <label class="col-md-2 control-label text-left">Related Spa</label>
                         <div class="col-md-8">
-                          <select multiple class="chosen-multi-select" name="relatedProdspa[]">
+                          <select multiple class="chosen-multi-select" name="relatedProdSpa[]">
                             <?php if(!empty($all_spa)){ $spaRelated = explode(",",$tdata[0]->product_related_spa);
                               foreach($all_spa as $t):
                               ?>
@@ -466,7 +466,7 @@
                       </div>
                         </div>
                       </div>
-          <!--Related Products-->s
+          <!--Related Products-->
 
          <!-- Address and Map -->
 
@@ -478,7 +478,7 @@
         <tr>
         <td>Address on Map</td>
         <td>
-        <input type="text" class="form-control Places" id="mapaddress" name="weddingmapaddress" value="<?php echo $tdata[0]->wedding_mapaddress;?>">
+        <input type="text" class="form-control Places" id="mapaddress" name="weddingmapaddress" value="<?php echo @$tdata[0]->wedding_mapaddress;?>">
         </td>
         </tr>
         <tr>
@@ -486,11 +486,11 @@
         </tr>
         <tr>
         <td>Latitude</td>
-        <td><input type="text" class="form-control" id="latitude" value="<?php echo $tdata[0]->wedding_latitude;?>"  name="latitude" /></td>
+        <td><input type="text" class="form-control" id="latitude" value="<?php echo @$tdata[0]->wedding_latitude;?>"  name="latitude" /></td>
         </tr>
         <tr>
         <td>Longitude</td>
-        <td><input type="text" class="form-control" id="longitude" value="<?php echo $tdata[0]->wedding_longitude;?>"  name="longitude" /></td>
+        <td><input type="text" class="form-control" id="longitude" value="<?php echo @$tdata[0]->wedding_longitude;?>"  name="longitude" /></td>
         </tr>
         </table>
 
@@ -515,7 +515,12 @@
               <div class="clearfix"></div>
               <hr>
               <div class="clearfix"></div>
-              <?php   $inclusions = explode(",",$tdata[0]->wedding_amenities);
+              <?php
+if(!empty($tdata[0]->wedding_amenities)){
+  $inclusions = explode(",",$tdata[0]->wedding_amenities);
+}
+
+
                 foreach($weddinginclusions as $ti){ ?>
               <div class="col-md-4">
                 <label class="pointer"><input class="checkboxcls" <?php if($submittype == "add"){ if( $ti->sett_selected == "Yes"){echo "checked";} }else{ if(in_array($ti->sett_id,$inclusions)){ echo "checked"; } } ?> type="checkbox" name="weddingamenities[]" value="<?php echo $ti->sett_id;?>"  > <?php echo $ti->sett_name;?></label>
@@ -533,7 +538,11 @@
               <div class="clearfix"></div>
               <hr>
               <div class="clearfix"></div>
-              <?php  $exclusions = explode(",",$tdata[0]->wedding_exclusions);
+              <?php
+if(!empty($tdata[0]->wedding_exclusions)){
+              $exclusions = explode(",",$tdata[0]->wedding_exclusions);
+}
+
                 foreach($weddingexclusions as $te){ ?>
               <div class="col-md-4">
                 <label class="pointer"><input class="checkboxcls" <?php if($submittype == "add"){ if( $te->sett_selected == "Yes"){echo "checked";} }else{ if(in_array($te->sett_id,$exclusions)){ echo "checked"; } } ?> type="checkbox" name="weddingexclusions[]" value="<?php echo $te->sett_id;?>"  > <?php echo $te->sett_name;?></label>
@@ -546,19 +555,19 @@
           <div class="row form-group">
             <label class="col-md-2 control-label text-left">Meta Title</label>
             <div class="col-md-6">
-              <input class="form-control" type="text" placeholder="Meta title" name="weddingmetatitle"  value="<?php echo $tdata[0]->wedding_meta_title;?>">
+              <input class="form-control" type="text" placeholder="Meta title" name="weddingmetatitle"  value="<?php echo @$tdata[0]->wedding_meta_title;?>">
             </div>
           </div>
           <div class="row form-group">
             <label class="col-md-2 control-label text-left">Meta Keywords</label>
             <div class="col-md-6">
-              <input class="form-control" type="text" placeholder="Meta keywords" name="weddingkeywords"  value="<?php echo $tdata[0]->wedding_meta_keywords;?>">
+              <input class="form-control" type="text" placeholder="Meta keywords" name="weddingkeywords"  value="<?php echo @$tdata[0]->wedding_meta_keywords;?>">
             </div>
           </div>
           <div class="row form-group">
             <label class="col-md-2 control-label text-left">Meta Description</label>
             <div class="col-md-6">
-              <textarea class="form-control" placeholder="Meta description here..." name="weddingmetadesc" rows="5"><?php echo $tdata[0]->wedding_meta_desc;?></textarea>
+              <textarea class="form-control" placeholder="Meta description here..." name="weddingmetadesc" rows="5"><?php echo @$tdata[0]->wedding_meta_desc;?></textarea>
             </div>
           </div>
         </div>
@@ -576,7 +585,7 @@
           <div class="row form-group">
             <label class="col-md-2 control-label text-left">Policy And Terms</label>
             <div class="col-md-8">
-              <textarea class="form-control" placeholder="Privacy Policy..." name="weddingprivacy" rows="3"><?php echo $tdata[0]->wedding_privacy;?> </textarea>
+              <textarea class="form-control" placeholder="Privacy Policy..." name="weddingprivacy" rows="3"><?php echo @$tdata[0]->wedding_privacy;?> </textarea>
             </div>
           </div>
         </div>
@@ -584,7 +593,7 @@
           <div class="row form-group">
             <label class="col-md-2 control-label text-left">Wedding Operator's Email</label>
             <div class="col-md-4">
-              <input class="form-control" type="email" placeholder="Wedding's Email" name="weddingemail"  value="<?php echo $tdata[0]->wedding_email;?>" >
+              <input class="form-control" type="email" placeholder="Wedding's Email" name="weddingemail"  value="<?php echo @$tdata[0]->wedding_email;?>" >
             </div>
           </div>
           <div class="row form-group">

@@ -48,6 +48,12 @@ class Activity extends MX_Controller {
 		}
 
 		public function index() {
+			$this->load->library('Hotels/Hotels_lib');
+			$this->load->library('Restaurant/Restaurant_lib');
+			$this->load->library('Wedding/Wedding_lib');
+			$this->load->library('Tours/Tours_lib');
+			$this->load->library('Spa/Spa_lib');
+			$this->load->library('Cars/Cars_lib');
 				$settings = $this->Settings_model->get_front_settings('activity');
 				$this->data['minprice'] = $settings[0]->front_search_min_price;
 				$this->data['maxprice'] = $settings[0]->front_search_max_price;

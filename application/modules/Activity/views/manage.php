@@ -150,6 +150,7 @@
                         $("#infantbtn").text("Enable");
                         $("#infantstatus").val("0");
 
+
                         }
 
                     });
@@ -173,6 +174,7 @@
                           $(".child").prop("readonly",true);
                         $("#childbtn").text("Enable");
                         $("#childstatus").val("0");
+
 
                         }
 
@@ -239,6 +241,7 @@
             </div>
           </div>
 
+
           <div class="row form-group">
             <label class="col-md-2 control-label text-left">Activity Type</label>
             <div class="col-md-4">
@@ -268,8 +271,8 @@
             </div>
           <?php  }else{ ?>
           <input type="hidden" name="isfeatured" value="<?php echo @$tdata[0]->activity_is_featured; ?>">
-          <input type="hidden" name="ffrom" value="<?php if(empty($tdata[0]->activity_featured_forever)){ echo pt_show_date_php($tdata[0]->activity_featured_from);}?>">
-          <input type="hidden" name="fto" value="<?php if(empty($tdata[0]->activity_featured_forever)){ echo pt_show_date_php($tdata[0]->activity_featured_to);}?>">
+          <input type="hidden" name="ffrom" value="<?php if(empty($tdata[0]->activity_featured_forever)){ echo @pt_show_date_php($tdata[0]->activity_featured_from);}?>">
+          <input type="hidden" name="fto" value="<?php if(empty($tdata[0]->activity_featured_forever)){ echo @pt_show_date_php($tdata[0]->activity_featured_to);}?>">
           <?php } ?>
 
           </div>
@@ -331,7 +334,9 @@
             </div>
           </div>
 
+          <div class="row form-group">
 
+          </div>
           <div class="row form-group">
             <label class="col-md-2 control-label text-left text-success">Deposit / Commission</label>
             <div class="col-md-2">
@@ -374,94 +379,99 @@
             </div>
           </div>
 
-      <div class="panel panel-default">
-            <div class="panel-heading">Related Products</div>
-            <div class="panel-body">
 
-        <!--Related Hotels -->
-          <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
-            <label class="col-md-2 control-label text-left">Related Hotels</label>
-            <div class="col-md-8">
-              <select multiple class="chosen-multi-select" name="relatedProdHotels[]">
-                <?php if(!empty($all_hotels)){ $hotelsRelated = explode(",",$tdata[0]->product_related_hotels);
-                  foreach($all_hotels as $t):
-                  ?>
-                <option value="<?php echo $t->hotel_id;?>" <?php if(in_array($t->hotel_id,$hotelsRelated)){echo "selected";} ?>  ><?php echo $t->hotel_title;?></option>
-                <?php endforeach; } ?>
-              </select>
-            </div>
-          </div>
+          <div class="panel panel-default">
+                <div class="panel-heading">Related Products</div>
+                <div class="panel-body">
 
-        <!--Related Restaurant -->
-          <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
-            <label class="col-md-2 control-label text-left">Related Restaurant</label>
-            <div class="col-md-8">
-              <select multiple class="chosen-multi-select" name="relatedProdRestaurant[]">
-                <?php if(!empty($all_restaurant)){ $restaurantRelated = explode(",",$tdata[0]->product_related_restaurant);
-                  foreach($all_restaurant as $t):
-                  ?>
-                <option value="<?php echo $t->restaurant_id;?>" <?php if(in_array($t->restaurant_id,$restaurantRelated)){echo "selected";} ?>  ><?php echo $t->restaurant_title;?></option>
-                <?php endforeach; } ?>
-              </select>
-            </div>
-          </div>
-        <!--Related Wedding -->
-          <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
-            <label class="col-md-2 control-label text-left">Related Wedding</label>
-            <div class="col-md-8">
-              <select multiple class="chosen-multi-select" name="relatedProdWedding[]">
-                <?php if(!empty($all_wedding)){ $weddingRelated = explode(",",$tdata[0]->product_related_wedding);
-                  foreach($all_wedding as $t):
-                  ?>
-                <option value="<?php echo $t->wedding_id;?>" <?php if(in_array($t->wedding_id,$weddingRelated)){echo "selected";} ?>  ><?php echo $t->wedding_title;?></option>
-                <?php endforeach; } ?>
-              </select>
-            </div>
-          </div>
 
-        <!--Related Tour -->
-          <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
-            <label class="col-md-2 control-label text-left">Related tour</label>
-            <div class="col-md-8">
-              <select multiple class="chosen-multi-select" name="relatedProdTours[]">
-                <?php if(!empty($all_tours)){$toursRelated = explode(",",$tdata[0]->product_related_tours);
-                  foreach($all_tours as $t):
-                  ?>
-                <option value="<?php echo $t->tour_id;?>" <?php if(in_array($t->tour_id,$toursRelated)){echo "selected";} ?>  ><?php echo $t->tour_title;?></option>
-                <?php endforeach; } ?>
-              </select>
-            </div>
-          </div>
 
-        <!--Related Spa -->
-          <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
-            <label class="col-md-2 control-label text-left">Related Spa</label>
-            <div class="col-md-8">
-              <select multiple class="chosen-multi-select" name="relatedProdspa[]">
-                <?php if(!empty($all_spa)){ $spaRelated = explode(",",$tdata[0]->product_related_spa);
-                  foreach($all_spa as $t):
-                  ?>
-                <option value="<?php echo $t->spa_id;?>" <?php if(in_array($t->spa_id,$spaRelated)){echo "selected";} ?>  ><?php echo $t->spa_title;?></option>
-                <?php endforeach; } ?>
-              </select>
-            </div>
-          </div>
+            <!--Related Hotels -->
+              <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
+                <label class="col-md-2 control-label text-left">Related Hotels</label>
+                <div class="col-md-8">
+                  <select multiple class="chosen-multi-select" name="relatedProdHotels[]">
+                    <?php if(!empty($all_hotels)){ $hotelsRelated = explode(",",$tdata[0]->product_related_hotels);
+                      foreach($all_hotels as $t):
+                      ?>
+                    <option value="<?php echo $t->hotel_id;?>" <?php if(in_array($t->hotel_id,$hotelsRelated)){echo "selected";} ?>  ><?php echo $t->hotel_title;?></option>
+                    <?php endforeach; } ?>
+                  </select>
+                </div>
+              </div>
 
-        <!--Related Car -->
-          <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
-            <label class="col-md-2 control-label text-left">Related Car</label>
-            <div class="col-md-8">
-              <select multiple class="chosen-multi-select" name="relatedProdCars[]">
-                <?php if(!empty($all_cars)){ $carsRelated = explode(",",$tdata[0]->product_related_cars);
-                  foreach($all_cars as $t):
-                  ?>
-                <option value="<?php echo $t->car_id;?>" <?php if(in_array($t->car_id,$carsRelated)){echo "selected";} ?>  ><?php echo $t->car_title;?></option>
-                <?php endforeach; } ?>
-              </select>
-            </div>
-          </div>
-            </div>
-          </div>
+            <!--Related Restaurant -->
+              <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
+                <label class="col-md-2 control-label text-left">Related Restaurant</label>
+                <div class="col-md-8">
+                  <select multiple class="chosen-multi-select" name="relatedProdRestaurant[]">
+                    <?php if(!empty($all_restaurant)){ $restaurantRelated = explode(",",$tdata[0]->product_related_restaurant);
+                      foreach($all_restaurant as $t):
+                      ?>
+                    <option value="<?php echo $t->restaurant_id;?>" <?php if(in_array($t->restaurant_id,$restaurantRelated)){echo "selected";} ?>  ><?php echo $t->restaurant_title;?></option>
+                    <?php endforeach; } ?>
+                  </select>
+                </div>
+              </div>
+              <!--Related Tour -->
+                <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
+                  <label class="col-md-2 control-label text-left">Related tour</label>
+                  <div class="col-md-8">
+                    <select multiple class="chosen-multi-select" name="relatedProdTours[]">
+                      <?php if(!empty($all_tours)){$toursRelated = explode(",",$tdata[0]->product_related_tours);
+                        foreach($all_tours as $t):
+                        ?>
+                      <option value="<?php echo $t->tour_id;?>" <?php if(in_array($t->tour_id,$toursRelated)){echo "selected";} ?>  ><?php echo $t->tour_title;?></option>
+                      <?php endforeach; } ?>
+                    </select>
+                  </div>
+                </div>
+
+            <!--Related Wedding -->
+              <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
+                <label class="col-md-2 control-label text-left">Related Wedding</label>
+                <div class="col-md-8">
+                  <select multiple class="chosen-multi-select" name="relatedProdWedding[]">
+                    <?php if(!empty($all_wedding)){ $weddingRelated = explode(",",$tdata[0]->product_related_wedding);
+                      foreach($all_wedding as $t):
+                      ?>
+                    <option value="<?php echo $t->wedding_id;?>" <?php if(in_array($t->wedding_id,$weddingRelated)){echo "selected";} ?>  ><?php echo $t->wedding_title;?></option>
+                    <?php endforeach; } ?>
+                  </select>
+                </div>
+              </div>
+
+
+
+            <!--Related Spa -->
+              <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
+                <label class="col-md-2 control-label text-left">Related Spa</label>
+                <div class="col-md-8">
+                  <select multiple class="chosen-multi-select" name="relatedProdSpa[]">
+                    <?php if(!empty($all_spa)){ $spaRelated = explode(",",$tdata[0]->product_related_spa);
+                      foreach($all_spa as $t):
+                      ?>
+                    <option value="<?php echo $t->spa_id;?>" <?php if(in_array($t->spa_id,$spaRelated)){echo "selected";} ?>  ><?php echo $t->spa_title;?></option>
+                    <?php endforeach; } ?>
+                  </select>
+                </div>
+              </div>
+
+            <!--Related Car -->
+              <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
+                <label class="col-md-2 control-label text-left">Related Car</label>
+                <div class="col-md-8">
+                  <select multiple class="chosen-multi-select" name="relatedProdCars[]">
+                    <?php if(!empty($all_cars)){ $carsRelated = explode(",",$tdata[0]->product_related_cars);
+                      foreach($all_cars as $t):
+                      ?>
+                    <option value="<?php echo $t->car_id;?>" <?php if(in_array($t->car_id,$carsRelated)){echo "selected";} ?>  ><?php echo $t->car_title;?></option>
+                    <?php endforeach; } ?>
+                  </select>
+                </div>
+              </div>
+                </div>
+              </div>
 
 
 
@@ -502,7 +512,7 @@
         </div>
           <!-- Address and Map -->
 
-
+        </div>
         <div class="tab-pane wow fadeIn animated in" id="INCLUSIONS">
           <div class="row form-group">
             <div class="col-md-12">
@@ -512,28 +522,18 @@
               <div class="clearfix"></div>
               <hr>
               <div class="clearfix"></div>
-
               <?php
-              if(isset($tdata[0]->activity_amenities)){
-              $inclusions = explode(",",$tdata[0]->activity_amenities);
+              if(!empty($tdata[0]->activity_amenities)){
+                $inclusions = explode(",",$tdata[0]->activity_amenities);
               }
-
-                foreach($activityinclusions as $ti){
-                  ?>
+                foreach($activityinclusions as $ti){ ?>
               <div class="col-md-4">
-                <label class="pointer"><input class="checkboxcls" <?php
-                if($submittype == "add"){
-                  if($ti->sett_selected == "Yes")
-                  {echo "checked";}
-                }else{
-                  if(in_array($ti->sett_id,$inclusions)){ echo "checked"; } } ?>
-                type="checkbox" name="activityamenities[]" value="<?php echo $ti->sett_id;?>"  > <?php echo $ti->sett_name;?></label>
+                <label class="pointer"><input class="checkboxcls" <?php if($submittype == "add"){ if( $ti->sett_selected == "Yes"){echo "checked";} }else{ if(in_array($ti->sett_id,$inclusions)){ echo "checked"; } } ?> type="checkbox" name="activityamenities[]" value="<?php echo $ti->sett_id;?>"  > <?php echo $ti->sett_name;?></label>
               </div>
               <?php } ?>
             </div>
           </div>
         </div>
-
         <div class="tab-pane wow fadeIn animated in" id="EXCLUSIONS">
           <div class="row form-group">
             <div class="col-md-12">
@@ -544,9 +544,9 @@
               <hr>
               <div class="clearfix"></div>
               <?php
-              if(isset($tdata[0]->activity_exclusions)){
-              $exclusions = explode(",",$tdata[0]->activity_exclusions);
-              }
+if(!empty($tdata[0]->activity_exclusions)){
+                $exclusions = explode(",",$tdata[0]->activity_exclusions);
+}
 
                 foreach($activityexclusions as $te){ ?>
               <div class="col-md-4">
@@ -669,11 +669,7 @@
           <?php } } ?>
         </div>
       </div>
-
-
-
- </div>
-
+    </div>
     <div class="panel-footer">
       <input type="hidden" id="slug" value="<?php echo @$tdata[0]->activity_slug;?>" />
       <input type="hidden" name="submittype" value="<?php echo $submittype;?>" />
@@ -683,7 +679,6 @@
       <input type="hidden" name="infantstatus" id="infantstatus" value="<?php echo $infantInput;?>" />
       <button class="btn btn-primary submitfrm" id="<?php echo $submittype; ?>"> Submit </button>
     </div>
-
   </div>
 </form>
 
@@ -737,6 +732,8 @@
                 $('#latitude').val(marker_positions.lat());
 
                 $('#longitude').val(marker_positions.lng());
+
+
 
             });
 
@@ -822,7 +819,11 @@ map.setZoom(16);
 
                 $('#longitude').val(marker_positions.lng());
 
+
+
             });
+
+
 
       $('#latitude').val(place.geometry.location.lat());
       $('#longitude').val(place.geometry.location.lng());
@@ -837,6 +838,9 @@ map.setZoom(16);
 
         });
 
+
+
+
       }
 
 
@@ -844,6 +848,7 @@ map.setZoom(16);
 <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $appSettings->mapApi; ?>&libraries=places&callback=initAutocomplete"
          async defer></script>
  <!-- Google Places -->
+
 <script>
   $(document).ready(function() {
       if (window.location.hash != "") {

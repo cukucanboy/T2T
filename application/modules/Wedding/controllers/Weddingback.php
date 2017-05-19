@@ -196,7 +196,6 @@ redirect('admin');
 						/* product_related */
 $this->data['all_hotels'] = $this->Hotels_model->select_related_hotels($this->data['userloggedin']);
 $this->data['all_restaurant'] = $this->Restaurant_model->select_related_restaurant($this->data['userloggedin']);
-//$this->data['all_wedding'] = $this->Wedding_model->select_related_wedding($this->data['userloggedin']);
 $this->data['all_tours'] = $this->Tours_model->select_related_tours($this->data['userloggedin']);
 $this->data['all_spa'] = $this->Spa_model->select_related_spa($this->data['userloggedin']);
 $this->data['all_activity'] = $this->Activity_model->select_related_activity($this->data['userloggedin']);
@@ -259,24 +258,7 @@ $this->data['all_cars'] = $this->Cars_model->select_related_cars($this->data['us
 				$this->data['page_title'] = 'Wedding Settings';
 				$this->load->view('Admin/template', $this->data);
 
-		/*
-				$this->load->model('admin/settings_model');
-				$this->data['all_countries'] = $this->Countries_model->get_all_countries();
-				$updatesett = $this->input->post('updatesettings');
-				if (!empty ($updatesett)) {
-						$this->Settings_model->update_front_settings();
-						redirect('admin/wedding/settings');
-				}
-				$this->data['weddingtypes'] = $this->Wedding_model->get_wedding_settings_data("ttypes");
-				$this->data['weddingcategories'] = $this->Wedding_model->get_wedding_settings_data("tcategory");
-				$this->data['weddingratings'] = $this->Wedding_model->get_wedding_settings_data("tratings");
-				$this->data['weddinginclusions'] = $this->Wedding_model->get_wedding_settings_data("tamenities");
-				$this->data['weddingexclusions'] = $this->Wedding_model->get_wedding_settings_data("texclusions");
-				$this->data['weddingpayments'] = $this->Wedding_model->get_wedding_settings_data("tpayments");
-				$this->data['settings'] = $this->Settings_model->get_front_settings("wedding");
-				$this->data['main_content'] = 'Wedding/settings';
-				$this->data['page_title'] = 'Wedding Settings';
-				$this->load->view('Admin/template', $this->data);*/
+
 		}
 
 		function manage($weddingname) {
@@ -371,6 +353,17 @@ $this->data['all_cars'] = $this->Cars_model->select_related_cars($this->data['us
                         }
 
 						$this->data['all_wedding'] = $this->Wedding_model->select_related_wedding($this->data['tdata'][0]->wedding_id);
+						/* product_related */
+$this->data['all_hotels'] = $this->Hotels_model->select_related_hotels($this->data['userloggedin']);
+$this->data['all_restaurant'] = $this->Restaurant_model->select_related_restaurant($this->data['userloggedin']);
+$this->data['all_tours'] = $this->Tours_model->select_related_tours($this->data['userloggedin']);
+$this->data['all_spa'] = $this->Spa_model->select_related_spa($this->data['userloggedin']);
+$this->data['all_activity'] = $this->Activity_model->select_related_activity($this->data['userloggedin']);
+$this->data['all_cars'] = $this->Cars_model->select_related_cars($this->data['userloggedin']);
+/* product_related */
+
+
+
 						$this->data['map_data'] = $this->Wedding_model->get_wedding_map($this->data['tdata'][0]->wedding_id);
 						$this->data['maxmaporder'] = $this->Wedding_model->max_map_order($this->data['tdata'][0]->wedding_id);
 						$this->data['has_start'] = $this->Wedding_model->has_start_end_city("start", $this->data['tdata'][0]->wedding_id);

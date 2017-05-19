@@ -50,6 +50,15 @@ class Spa_lib {
   public $guestCount;
   public $createdAt;
   public $langdef;
+
+  public $relatedHotels;
+  public $relatedActivity;
+  public $relatedTours;
+  public $relatedSpa;
+  public $relatedCars;
+  public $relatedRestaurant;
+  public $relatedWedding;
+
   function __construct() {
 
 //get the CI instance
@@ -230,6 +239,55 @@ class Spa_lib {
     if (!empty($date)) {
       $this->date = $date;
     }
+
+    ///Related Product  Get Activity
+    if (!empty($details[0]->product_related_activity)) {
+      $ractivity = explode(",", $details[0]->product_related_activity);
+    }else {
+      $ractivity = "";
+    }
+    $relatedActivity = $this->ci->Activity_lib->getRelatedActivity($ractivity);
+
+    ///Related Product  List Tours
+    if (!empty($details[0]->product_related_tours)) {
+      $rtours = explode(",", $details[0]->product_related_tours);
+    }else {
+      $rtours = "";
+    }
+    $relatedTours = $this->ci->Tours_lib->getRelatedTours($rtours);
+
+    ///Related Product  List Spa
+    if (!empty($details[0]->product_related_hotels)) {
+      $rhotels = explode(",", $details[0]->product_related_hotels);
+    }else {
+      $rhotels = "";
+    }
+    $relatedHotels = $this->ci->Hotels_lib->getRelatedHotels($rhotels);
+
+    ///Related Product  List Wedding
+    if (!empty($details[0]->product_related_wedding)) {
+      $rwedding = explode(",", $details[0]->product_related_wedding);
+    }else {
+      $rwedding = "";
+    }
+    $relatedWedding = $this->ci->Wedding_lib->getRelatedWedding($rwedding);
+
+    ///Related Product  List Restaurant
+    if (!empty($details[0]->product_related_restaurant)) {
+      $rrestaurant = explode(",", $details[0]->product_related_restaurant);
+    }else {
+      $rrestaurant = "";
+    }
+    $relatedRestaurant = $this->ci->Restaurant_lib->getRelatedRestaurant($rrestaurant);
+
+    ///Related Product  List Cars
+    if (!empty($details[0]->product_related_cars)) {
+      $rcars = explode(",", $details[0]->product_related_cars);
+    }else {
+      $rcars = "";
+    }
+    $relatedCars = $this->ci->Cars_lib->getRelatedCars($rcars);
+
     $this->db->where('spa_id', $spaid);
     $details = $this->db->get('pt_spa')->result();
     $title = $this->get_title($details[0]->spa_title, $details[0]->spa_id);
@@ -281,42 +339,56 @@ class Spa_lib {
     else {
       $rspa = "";
     }
+    $relatedSpa = $this->getRelatedSpa($rspa);
+
+    ///Related Product  Get Activity
     if (!empty($details[0]->product_related_activity)) {
       $ractivity = explode(",", $details[0]->product_related_activity);
-    }
-    else {
+    }else {
       $ractivity = "";
     }
-    if (!empty($details[0]->product_related_restaurant)) {
-      $rrestaurant = explode(",", $details[0]->product_related_restaurant);
+    $relatedActivity = $this->ci->Activity_lib->getRelatedActivity($ractivity);
+
+    ///Related Product  List Tours
+    if (!empty($details[0]->product_related_tours)) {
+      $rtours = explode(",", $details[0]->product_related_tours);
+    }else {
+      $rtours = "";
     }
-    else {
-      $rrestaurant = "";
+    $relatedTours = $this->ci->Tours_lib->getRelatedTours($rtours);
+
+    ///Related Product  List Spa
+    if (!empty($details[0]->product_related_hotels)) {
+      $rhotels = explode(",", $details[0]->product_related_hotels);
+    }else {
+      $rhotels = "";
     }
+    $relatedHotels = $this->ci->Hotels_lib->getRelatedHotels($rhotels);
+
+    ///Related Product  List Wedding
     if (!empty($details[0]->product_related_wedding)) {
       $rwedding = explode(",", $details[0]->product_related_wedding);
-    }
-    else {
+    }else {
       $rwedding = "";
     }
-    if (!empty($details[0]->product_related_tours)) {
-      $rtour = explode(",", $details[0]->product_related_tours);
-    }
-    else {
-      $rtour = "";
-    }
-    if (!empty($details[0]->product_related_cars)) {
-      $rcar = explode(",", $details[0]->product_related_cars);
-    }
-    else {
-      $rcar = "";
-    }
-    $relatedSpa = $this->getRelatedSpa($rspa);
-    $relatedActivity = $this->ci->Activity_lib->getRelatedActivity($ractivity);
-    $relatedRestaurant = $this->ci->Restaurant_lib->getRelatedRestaurant($rrestaurant);
     $relatedWedding = $this->ci->Wedding_lib->getRelatedWedding($rwedding);
-    $relatedTour = $this->ci->Tours_lib->getRelatedTours($rtour);
-    $relatedCar = $this->ci->Cars_lib->getRelatedCars($rcar);
+
+    ///Related Product  List Restaurant
+    if (!empty($details[0]->product_related_restaurant)) {
+      $rrestaurant = explode(",", $details[0]->product_related_restaurant);
+    }else {
+      $rrestaurant = "";
+    }
+    $relatedRestaurant = $this->ci->Restaurant_lib->getRelatedRestaurant($rrestaurant);
+
+    ///Related Product  List Cars
+    if (!empty($details[0]->product_related_cars)) {
+      $rcars = explode(",", $details[0]->product_related_cars);
+    }else {
+      $rcars = "";
+    }
+    $relatedCars = $this->ci->Cars_lib->getRelatedCars($rcars);
+
     $thumbnail = PT_SPA_SLIDER_THUMB . $details[0]->thumbnail_image;
     $city = pt_LocationsInfo($details[0]->spa_location, $this->lang);
     $location = $city->city; // $details[0]->spa_location;
@@ -373,10 +445,11 @@ class Spa_lib {
       'sliderImages' => $sliderImages,
       'relatedItems' => $relatedSpa,
       'relatedActivity' => $relatedActivity,
-      'relatedRestaurant' => $relatedRestaurant,
+      'relatedTours' => $relatedTours,
+      'relatedHotels' => $relatedHotels,
+      'relatedCars' => $relatedCars,
       'relatedWedding' => $relatedWedding,
-      'relatedTour' => $relatedTour,
-      'relatedCar' => $relatedCar,
+      'relatedRestaurant' => $relatedRestaurant,
       'paymentOptions' => $paymentOptions,
       'metadesc' => $metadesc,
       'keywords' => $keywords,
@@ -408,6 +481,7 @@ class Spa_lib {
       'spaNights' => $spaNights,
       'totalDeposit' => $depositAmount,
       'mapAddress' => $details[0]->spa_mapaddress);
+
     return $detailResults;
   }
   function spa_short_details($spaid) {

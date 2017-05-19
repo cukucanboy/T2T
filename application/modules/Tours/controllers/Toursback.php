@@ -153,7 +153,6 @@ redirect('admin');
 				$this->data['adultInput'] = "1";
 				$this->data['childInput'] = "0";
 				$this->data['infantInput'] = "0";
-				$this->data['data_relate'] = $this->Tours_model->data_for_relate_near_by(); //
 
                 $this->data['submittype'] = "add";
 
@@ -194,7 +193,7 @@ redirect('admin');
 						$this->data['all_countries'] = $this->Countries_model->get_all_countries();
 						$this->data['all_tours'] = $this->Tours_model->select_related_tours($this->data['userloggedin']);
 
-						/* product_related */
+						/* product_related  for Tours Modules  */
 $this->data['all_hotels'] = $this->Hotels_model->select_related_hotels($this->data['userloggedin']);
 $this->data['all_restaurant'] = $this->Restaurant_model->select_related_restaurant($this->data['userloggedin']);
 $this->data['all_wedding'] = $this->Wedding_model->select_related_wedding($this->data['userloggedin']);
@@ -260,24 +259,7 @@ $this->data['all_cars'] = $this->Cars_model->select_related_cars($this->data['us
 				$this->data['page_title'] = 'Tours Settings';
 				$this->load->view('Admin/template', $this->data);
 
-		/*
-				$this->load->model('admin/settings_model');
-				$this->data['all_countries'] = $this->Countries_model->get_all_countries();
-				$updatesett = $this->input->post('updatesettings');
-				if (!empty ($updatesett)) {
-						$this->Settings_model->update_front_settings();
-						redirect('admin/tours/settings');
-				}
-				$this->data['tourtypes'] = $this->Tours_model->get_tour_settings_data("ttypes");
-				$this->data['tourcategories'] = $this->Tours_model->get_tour_settings_data("tcategory");
-				$this->data['tourratings'] = $this->Tours_model->get_tour_settings_data("tratings");
-				$this->data['tourinclusions'] = $this->Tours_model->get_tour_settings_data("tamenities");
-				$this->data['tourexclusions'] = $this->Tours_model->get_tour_settings_data("texclusions");
-				$this->data['tourpayments'] = $this->Tours_model->get_tour_settings_data("tpayments");
-				$this->data['settings'] = $this->Settings_model->get_front_settings("tours");
-				$this->data['main_content'] = 'Tours/settings';
-				$this->data['page_title'] = 'Tours Settings';
-				$this->load->view('Admin/template', $this->data);*/
+
 		}
 
 		function manage($tourname) {
@@ -370,7 +352,7 @@ $this->data['all_cars'] = $this->Cars_model->select_related_cars($this->data['us
                         }
 
 						$this->data['all_tours'] = $this->Tours_model->select_related_tours($this->data['tdata'][0]->tour_id);
-						/* product_related */
+/* product_related for  Tours Modules */
 $this->data['all_hotels'] = $this->Hotels_model->select_related_hotels($this->data['userloggedin']);
 $this->data['all_restaurant'] = $this->Restaurant_model->select_related_restaurant($this->data['userloggedin']);
 $this->data['all_wedding'] = $this->Wedding_model->select_related_wedding($this->data['userloggedin']);
@@ -379,7 +361,7 @@ $this->data['all_activity'] = $this->Activity_model->select_related_activity($th
 $this->data['all_cars'] = $this->Cars_model->select_related_cars($this->data['userloggedin']);
 /* product_related */
 
-						$this->data['data_relate'] = $this->Tours_model->data_for_relate_near_by(); //
+
 						$this->data['map_data'] = $this->Tours_model->get_tour_map($this->data['tdata'][0]->tour_id);
 						$this->data['maxmaporder'] = $this->Tours_model->max_map_order($this->data['tdata'][0]->tour_id);
 						$this->data['has_start'] = $this->Tours_model->has_start_end_city("start", $this->data['tdata'][0]->tour_id);
