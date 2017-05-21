@@ -405,14 +405,14 @@
                   <label class="col-md-2 control-label text-left">Related tour</label>
                   <div class="col-md-8">
                     <select multiple class="chosen-multi-select" name="relatedProdTours[]">
-                      <?php if(!empty($all_tours)){$toursRelated = explode(",",$hdata[0]->product_related_tours);
+                      <?php if(!empty($all_tours)){$toursRelated = explode(",",$cdata[0]->product_related_tours);
                         foreach($all_tours as $t):
                         ?>
                       <option value="<?php echo $t->tour_id;?>" <?php if(in_array($t->tour_id,$toursRelated)){echo "selected";} ?>  ><?php echo $t->tour_title;?></option>
                       <?php endforeach; } ?>
                     </select>
                   </div>
-                </div>    
+                </div>
             <!--Related Spa -->
               <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
                 <label class="col-md-2 control-label text-left">Related Spa</label>

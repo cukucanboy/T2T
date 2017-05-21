@@ -439,15 +439,15 @@ spa<script type="text/javascript">
                 </div>
               </div>
 
-              <!--Related Activity -->
+              <!--Related Wedding -->
                 <div class="row form-group" style='<?php if($adminsegment == "supplier"){ echo "display:none;"; } ?>'>
-                  <label class="col-md-2 control-label text-left">Related Activity</label>
+                  <label class="col-md-2 control-label text-left">Related Wedding</label>
                   <div class="col-md-8">
-                    <select multiple class="chosen-multi-select" name="relatedProdActivity[]">
-                      <?php if(!empty($all_activity)){$activityRelated = explode(",",$tdata[0]->product_related_activity);
-                        foreach($all_activity as $t):
+                    <select multiple class="chosen-multi-select" name="relatedProdWedding[]">
+                      <?php if(!empty($all_wedding)){$WeddingRelated = explode(",",$tdata[0]->product_related_wedding);
+                        foreach($all_wedding as $t):
                         ?>
-                      <option value="<?php echo $t->activity_id;?>" <?php if(in_array($t->activity_id,$activityRelated)){echo "selected";} ?>  ><?php echo $t->activity_title;?></option>
+                      <option value="<?php echo $t->wedding_id;?>" <?php if(in_array($t->wedding_id,$WeddingRelated)){echo "selected";} ?>  ><?php echo $t->wedding_title;?></option>
                       <?php endforeach; } ?>
                     </select>
                   </div>
