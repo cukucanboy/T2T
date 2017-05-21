@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html ng-app="phptravelsApp">
-<head>
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/website#">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,14 +14,15 @@
     <link href="<?php echo $theme_url; ?>style.css" rel="stylesheet">
 
     <!-- facebook -->
+    <meta property="og:type" content="website" />
     <meta property="og:title" content="<?php echo @$pageTitle; ?>"/>
     <meta property="og:site_name" content="TOUCHTOTHAILAND<?php //echo $app_settings[0]->site_title;?>"/>
     <meta property="og:description" content="<?php if ($app_settings[0]->seo_status == "1") {
         echo $metadescription;
     } ?>"/>
     <meta property="og:image" content="<?php echo @$metaogimg; ?>"/>
-    <meta property="og:url" content="<?php echo $app_settings[0]->site_url; ?>/"/>
-    <meta property="og:publisher" content="https://www.facebook.com/<?php echo $app_settings[0]->site_title; ?>"/>
+    <meta property="og:url" content="http://<?php echo $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"]; ?>"/>
+    <meta property="og:publisher" content="https://www.facebook.com/touchtothailand"/>
     <script type="application/ld+json">
         {"@context":"http://schema.org/","@type":"Organization","name":"<?php echo $app_settings[0]->site_title; ?>
         ","url":"<?php echo $app_settings[0]->site_url; ?>/","logo":"<?php echo base_url(); ?>
